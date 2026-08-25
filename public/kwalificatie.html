@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kwalificatie | Webjoy</title>
+<meta name="description" content="Check in één minuut of Metamorphosis een match is voor jouw bedrijf." />
+<meta name="robots" content="noindex" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2 L21 7 L21 17 L12 22 L3 17 L3 7 Z' fill='%235E9BFF'/%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          primary: '#5E9BFF',
+          'bg-light': '#F3EFEA',
+          'bg-dark': '#1A1A1A',
+          'fg-light': '#323232',
+          'card-light': '#FFFFFF',
+        },
+        fontFamily: {
+          sans: ['"Google Sans Flex"', '"Google Sans"', 'Helvetica', 'Arial', 'sans-serif'],
+          gothic: ['"Google Sans Flex"', '"Google Sans"', 'Helvetica', 'Arial', 'sans-serif'],
+          mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        },
+        maxWidth: { content: '1300px' },
+      },
+    },
+  };
+</script>
+
+<style>
+  /* Dezelfde tokens als de homepage, zodat de funnel één geheel vormt met de site. */
+  :root {
+    --primary: #5E9BFF;
+    --bg-light: #F3EFEA;
+    --bg-dark: #1A1A1A;
+    --fg-light: #323232;
+    --card-light: #FFFFFF;
+    --border-low: #E8DFD5;
+    --border-mid: #DDD3C7;
+    --text-secondary: rgba(50, 50, 50, .8);
+    --shape-green: #48F08B;
+    --gl-radius-card: 2.4rem;
+    --shadow-flyout: 0 12px 32px -8px rgba(50, 50, 50, 0.16), 0 2px 8px rgba(50, 50, 50, 0.06);
+  }
+
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg-light); color: var(--fg-light); }
+  .text-secondary { color: var(--text-secondary); }
+  .font-gothic { font-family: 'Google Sans Flex', 'Google Sans', Helvetica, Arial, sans-serif; }
+  .font-mono-token { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+  a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Enige donkere element op de pagina, precies zoals gevraagd: de CTA. */
+  .btn-primary {
+    background: var(--bg-dark);
+    color: #fff;
+    border-radius: 999rem;
+    padding: 1em 2em;
+    font-weight: 500;
+    transition: background .2s ease, transform .2s ease;
+  }
+  .btn-primary:hover { background: #000; }
+  .btn-primary:disabled { opacity: .35; cursor: not-allowed; }
+  .btn-primary:not(:disabled):active { transform: scale(.98); }
+
+  .card {
+    background: var(--card-light);
+    border: 1px solid var(--border-low);
+    border-radius: var(--gl-radius-card);
+  }
+
+  /* ---- Iconenset (outline, 24x24 grid). De set heeft stroke="#212121" hardcoded;
+     hier via currentColor, zodat een icoon de kleur van zijn tekst overneemt en
+     dus ook op donkere vlakken en in de primaire kleur werkt. ---- */
+  .ico { flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 2; stroke-miterlimit: 10; stroke-linecap: square; }
+
+  /* ---- Voortgangsbalk ---- */
+  .progress-track { height: 4px; background: var(--border-low); border-radius: 999rem; overflow: hidden; }
+  .progress-fill {
+    height: 100%; width: 0%;
+    background: var(--primary);
+    border-radius: 999rem;
+    transition: width .45s cubic-bezier(.16,1,.3,1);
+  }
+
+  /* ---- Antwoordopties ---- */
+  .option {
+    display: flex; align-items: center; gap: 14px;
+    width: 100%; text-align: left;
+    padding: 16px 20px;
+    background: var(--bg-light);
+    border: 1.5px solid var(--border-low);
+    border-radius: 1.1rem;
+    font-family: inherit; font-size: 15px; color: var(--fg-light);
+    cursor: pointer;
+    transition: border-color .18s ease, background .18s ease, transform .18s ease;
+  }
+  .option:hover { border-color: var(--border-mid); background: #fff; }
+  .option:active { transform: scale(.995); }
+  .option-key {
+    flex-shrink: 0;
+    width: 26px; height: 26px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1.5px solid var(--border-mid);
+    border-radius: 7px;
+    font-size: 12px; font-weight: 500;
+    background: #fff;
+    transition: border-color .18s ease, background .18s ease, color .18s ease;
+  }
+  .option[aria-checked="true"] { border-color: var(--primary); background: rgba(94,155,255,.07); }
+  .option[aria-checked="true"] .option-key { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+  /* ---- Telefoonveld ---- */
+  .phone-field {
+    display: flex; align-items: center; gap: 12px;
+    border-bottom: 1.5px solid var(--border-mid);
+    padding-bottom: 10px;
+    transition: border-color .2s ease;
+  }
+  .phone-field:focus-within { border-color: var(--primary); }
+  .phone-field input {
+    flex: 1; border: none; background: none; outline: none;
+    font-family: inherit; font-size: 24px; color: var(--fg-light);
+  }
+  .phone-field input::placeholder { color: rgba(50,50,50,.3); }
+
+  /* ---- Stap-overgang: zelfde spring-curve als de homepage ---- */
+  .step { display: none; }
+  .step.is-active { display: block; animation: step-in .5s cubic-bezier(.16,1,.3,1) both; }
+  @keyframes step-in {
+    from { opacity: 0; filter: blur(8px); transform: translateY(12px); }
+    to   { opacity: 1; filter: blur(0);    transform: translateY(0); }
+  }
+  .stagger > * { animation: step-in .5s cubic-bezier(.16,1,.3,1) both; animation-delay: var(--d, 0s); }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .step.is-active, .stagger > * { animation: none; }
+    .progress-fill { transition: none; }
+  }
+
+  /* Zachte vormen op de achtergrond, in dezelfde sfeer als de homepage */
+  .bg-blob { position: absolute; border-radius: 999rem; filter: blur(60px); opacity: .5; pointer-events: none; }
+</style>
+</head>
+
+<body class="font-sans antialiased min-h-screen">
+
+<div aria-hidden="true" class="bg-blob" style="width:380px; height:380px; background:rgba(94,155,255,.18); top:-120px; left:-100px;"></div>
+<div aria-hidden="true" class="bg-blob" style="width:300px; height:300px; background:rgba(255,189,249,.20); top:120px; right:-90px;"></div>
+
+<header class="relative z-10 max-w-content mx-auto px-5 md:px-8 py-6 flex items-center justify-between">
+  <a href="index.html" class="flex items-center" aria-label="Webjoy, terug naar home">
+    <img src="assets/logo/webjoy-logo.svg" alt="Webjoy" style="height:20px; width:auto;">
+  </a>
+  <a href="index.html" class="text-secondary text-[14px] hover:text-black transition-colors">&larr; Terug naar site</a>
+</header>
+
+<main class="relative z-10 max-w-content mx-auto px-5 md:px-8 pb-20">
+
+  <!-- ================= INTRO BOVEN HET FORMULIER ================= -->
+  <div class="text-center max-w-2xl mx-auto stagger">
+    <span class="inline-flex items-center gap-2 text-[12px] font-medium uppercase tracking-wide text-fg-light bg-white border border-low px-4 py-1.5 rounded-full mb-6"
+          style="border-color:var(--border-low); --d:.05s">
+      <span class="inline-block w-2 h-2 rounded-full" style="background:var(--shape-green)"></span>
+      Je bent er bijna
+    </span>
+    <h1 class="font-gothic font-medium text-[1.75rem] md:text-[2.5rem] leading-tight mb-5" style="--d:.15s">
+      Vul de vragen in &amp; check in 1 minuutje of je kwalificeert
+    </h1>
+    <p class="text-secondary text-[15px] leading-relaxed mb-10 max-w-lg mx-auto" style="--d:.25s">
+      We zitten <span class="font-medium" style="color:var(--fg-light)">tijdelijk vol</span>. Wil je volgende maand de eerste zijn die kan starten? Check dan <span class="font-medium" style="color:var(--fg-light)">hieronder</span> of het een match is. Zo ja, dan stuur ik je meer info 🤝
+    </p>
+  </div>
+
+  <!-- ================= FORMULIERKAART ================= -->
+  <div class="card max-w-3xl mx-auto overflow-hidden" style="box-shadow:var(--shadow-flyout); animation:step-in .6s cubic-bezier(.16,1,.3,1) both; animation-delay:.35s">
+
+    <div class="px-6 md:px-10 pt-6">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+
+    <form id="kwalificatie" novalidate class="px-6 md:px-10 py-10 md:py-14 min-h-[420px] flex flex-col">
+
+      <!-- ---- Stap 0: welkom ---- -->
+      <section class="step is-active flex-1" data-step="0">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-8" style="background:rgba(94,155,255,.12)">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 2 L21 7 L21 17 L12 22 L3 17 L3 7 Z"/>
+          </svg>
+        </div>
+        <h2 class="font-gothic font-medium text-[1.5rem] md:text-[2rem] leading-tight mb-4">
+          Welkom, dit is de kwalificatie voor 'Metamorphosis'
+        </h2>
+        <p class="text-secondary text-[15px] leading-relaxed max-w-xl mb-9">
+          Ik ga je een paar vragen stellen. Als het op basis daarvan een match kan zijn, dan nodig ik je uit voor een kort 5-10 min. belletje ☎️🤝
+        </p>
+        <button type="button" class="btn-primary text-[15px]" data-next>Begin de kwalificatie</button>
+        <p class="flex items-center gap-2 text-secondary text-[13px] mt-4">
+          <svg class="ico" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"/><path d="M12 6V12L16 15"/></svg>
+          Duurt 30 seconden
+        </p>
+      </section>
+
+      <!-- ---- Stap 1: omzet ---- -->
+      <section class="step flex-1" data-step="1">
+        <div class="flex items-start gap-3 mb-2">
+          <span class="font-mono-token text-[12px] text-secondary mt-1.5 px-2 py-0.5 rounded-md" style="background:var(--bg-light)">1</span>
+          <h2 class="font-gothic font-medium text-[1.35rem] md:text-[1.75rem] leading-snug">Waar zit je ongeveer qua omzet?</h2>
+        </div>
+        <p class="text-secondary text-[14px] mb-7 md:pl-9">Kijk bijvoorbeeld naar het gemiddelde van de afgelopen 3 maanden</p>
+        <div class="flex flex-col gap-2.5 md:pl-9 max-w-md" role="radiogroup" aria-label="Omzet per maand" data-field="omzet"></div>
+      </section>
+
+      <!-- ---- Stap 2: behoefte ---- -->
+      <section class="step flex-1" data-step="2">
+        <div class="flex items-start gap-3 mb-7">
+          <span class="font-mono-token text-[12px] text-secondary mt-1.5 px-2 py-0.5 rounded-md" style="background:var(--bg-light)">2</span>
+          <h2 class="font-gothic font-medium text-[1.35rem] md:text-[1.75rem] leading-snug">Wat zou waardevol voor je zijn?</h2>
+        </div>
+        <div class="flex flex-col gap-2.5 md:pl-9 max-w-md" role="radiogroup" aria-label="Wat zou waardevol zijn" data-field="behoefte"></div>
+      </section>
+
+      <!-- ---- Stap 3: telefoonnummer ---- -->
+      <section class="step flex-1" data-step="3">
+        <div class="flex items-start gap-3 mb-2">
+          <span class="font-mono-token text-[12px] text-secondary mt-1.5 px-2 py-0.5 rounded-md" style="background:var(--bg-light)">3</span>
+          <h2 class="font-gothic font-medium text-[1.35rem] md:text-[1.75rem] leading-snug">Top, en op welk nummer kan ik je bereiken?</h2>
+        </div>
+        <div class="md:pl-9">
+          <p class="text-secondary text-[15px] leading-relaxed mb-2">Als het een match is, dan doen we even een 5-10 min. belletje.</p>
+          <p class="text-secondary text-[15px] leading-relaxed mb-8">(Voordat we een uitgebreide call doen)</p>
+
+          <label for="telefoon" class="block font-medium text-[15px] mb-4">Telefoonnummer<span class="text-secondary">*</span></label>
+          <div class="phone-field max-w-sm">
+            <span class="flex items-center gap-1.5 text-[15px] text-secondary shrink-0" aria-hidden="true">🇳🇱 +31</span>
+            <input id="telefoon" name="telefoon" type="tel" inputmode="tel" autocomplete="tel"
+                   placeholder="06 12345678" aria-describedby="telefoonFout">
+          </div>
+          <p id="telefoonFout" class="text-[13px] mt-3 hidden" style="color:#c0392b">Vul een geldig telefoonnummer in.</p>
+        </div>
+      </section>
+
+      <!-- ---- Stap 4: bedankt ---- -->
+      <section class="step flex-1" data-step="4">
+        <div class="w-11 h-11 rounded-xl flex items-center justify-center mb-8" style="background:rgba(72,240,139,.18)">
+          <svg class="ico" width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" style="color:#1f9d55"><path d="M3 13L8 19L21 5"/></svg>
+        </div>
+        <h2 class="font-gothic font-medium text-[1.5rem] md:text-[2rem] leading-tight mb-4">Dankjewel, ik heb alles binnen 🤝</h2>
+        <p class="text-secondary text-[15px] leading-relaxed max-w-xl mb-9">
+          Ik bekijk je antwoorden persoonlijk. Is het een match, dan bel ik je binnen één werkdag voor een kort kennismakingsgesprek van 5-10 minuten.
+        </p>
+        <a href="index.html" class="btn-primary text-[15px] inline-block">Terug naar de site</a>
+      </section>
+
+      <!-- ---- Navigatie ---- -->
+      <div class="flex items-center justify-between gap-4 pt-10 mt-auto" id="nav">
+        <button type="button" class="btn-primary text-[15px]" id="okBtn">Oké</button>
+        <div class="flex items-center gap-2">
+          <button type="button" id="prevBtn" aria-label="Vorige vraag"
+                  class="w-10 h-10 rounded-xl border flex items-center justify-center bg-white transition-colors hover:bg-[#faf8f5] disabled:opacity-30"
+                  style="border-color:var(--border-mid)">
+            <svg class="ico" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 16L12 7L3 16"/></svg>
+          </button>
+          <button type="button" id="nextBtn" aria-label="Volgende vraag"
+                  class="w-10 h-10 rounded-xl border flex items-center justify-center bg-white transition-colors hover:bg-[#faf8f5] disabled:opacity-30"
+                  style="border-color:var(--border-mid)">
+            <svg class="ico" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8L12 17L3 8"/></svg>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <p class="text-center text-secondary text-[12px] mt-6">Je gegevens worden alleen gebruikt om contact met je op te nemen.</p>
+</main>
+
+<script>
+  /* ---- Antwoordopties ---- */
+  const velden = {
+    omzet: [
+      '€0 – €5K per maand',
+      '€5K – €10K per maand',
+      '€10K – €15K per maand',
+      '€15K – €20K per maand',
+      '€20K per maand of meer',
+    ],
+    behoefte: [
+      'Een volledige rebrand',
+      'Een premium funnel',
+      'Een nieuwe website',
+      'All of the above',
+      'Wat kleine, losse designs',
+    ],
+  };
+  const LETTERS = ['A','B','C','D','E','F'];
+  const antwoorden = {};
+
+  document.querySelectorAll('[data-field]').forEach(groep => {
+    const veld = groep.dataset.field;
+    groep.innerHTML = velden[veld].map((label, i) => `
+      <button type="button" class="option" role="radio" aria-checked="false" data-waarde="${label}">
+        <span class="option-key" aria-hidden="true">${LETTERS[i]}</span>
+        <span>${label}</span>
+      </button>`).join('');
+
+    groep.addEventListener('click', e => {
+      const knop = e.target.closest('.option');
+      if (!knop) return;
+      groep.querySelectorAll('.option').forEach(o => o.setAttribute('aria-checked', 'false'));
+      knop.setAttribute('aria-checked', 'true');
+      antwoorden[veld] = knop.dataset.waarde;
+    });
+  });
+
+  /* ---- Stappen ---- */
+  const stappen   = [...document.querySelectorAll('.step')];
+  const LAATSTE   = stappen.length - 1;          // bedankscherm
+  const fill      = document.getElementById('progressFill');
+  const okBtn     = document.getElementById('okBtn');
+  const prevBtn   = document.getElementById('prevBtn');
+  const nextBtn   = document.getElementById('nextBtn');
+  const nav       = document.getElementById('nav');
+  const telefoon  = document.getElementById('telefoon');
+  const telFout   = document.getElementById('telefoonFout');
+  let huidige = 0;
+
+  const toon = (i) => {
+    huidige = i;
+    stappen.forEach((s, idx) => s.classList.toggle('is-active', idx === i));
+    /* De voortgangsbalk telt alleen de vragen, niet het welkom- en bedankscherm. */
+    fill.style.width = Math.round((Math.min(i, LAATSTE) / LAATSTE) * 100) + '%';
+    /* Welkom heeft een eigen knop, bedankt heeft een eigen link: nav daar verbergen. */
+    const toonNav = i > 0 && i < LAATSTE;
+    nav.style.display = toonNav ? 'flex' : 'none';
+    okBtn.textContent = i === LAATSTE - 1 ? 'Versturen' : 'Oké';
+    prevBtn.disabled = i <= 1;
+    nextBtn.disabled = i >= LAATSTE - 1;
+    if (i === 3) setTimeout(() => telefoon.focus(), 420);
+  };
+
+  /* Minimaal 8 cijfers: streng genoeg om typefouten te vangen, ruim genoeg
+     voor spaties, streepjes en een landcode. */
+  const geldigNummer = (v) => (v.replace(/\D/g, '').length >= 8);
+
+  const valideer = () => {
+    if (huidige === 1 && !antwoorden.omzet)    return false;
+    if (huidige === 2 && !antwoorden.behoefte) return false;
+    if (huidige === 3) {
+      const ok = geldigNummer(telefoon.value);
+      telFout.classList.toggle('hidden', ok);
+      return ok;
+    }
+    return true;
+  };
+
+  const verder = () => {
+    if (!valideer()) return;
+    if (huidige === LAATSTE - 1) { verstuur(); return; }
+    toon(Math.min(huidige + 1, LAATSTE));
+  };
+
+  okBtn.addEventListener('click', verder);
+  nextBtn.addEventListener('click', verder);
+  prevBtn.addEventListener('click', () => toon(Math.max(huidige - 1, 1)));
+  document.querySelectorAll('[data-next]').forEach(b => b.addEventListener('click', () => toon(1)));
+
+  /* Enter = volgende. Letter A-E kiest een optie, zoals in een typeform. */
+  document.addEventListener('keydown', e => {
+    if (huidige === 0 && e.key === 'Enter') { toon(1); return; }
+    if (huidige < 1 || huidige >= LAATSTE) return;
+    if (e.key === 'Enter') { e.preventDefault(); verder(); return; }
+    const groep = stappen[huidige].querySelector('[data-field]');
+    if (!groep || e.metaKey || e.ctrlKey || e.altKey) return;
+    const i = LETTERS.indexOf(e.key.toUpperCase());
+    if (i > -1) {
+      const optie = groep.querySelectorAll('.option')[i];
+      if (optie) optie.click();
+    }
+  });
+
+  telefoon.addEventListener('input', () => {
+    if (geldigNummer(telefoon.value)) telFout.classList.add('hidden');
+  });
+
+  function verstuur() {
+    antwoorden.telefoon = telefoon.value.trim();
+    /* Nog geen koppeling: de antwoorden gaan hier nergens heen. Zodra er een
+       endpoint is (Typeform, Formspree, eigen mailscript) volstaat één fetch. */
+    console.log('Kwalificatie ingevuld:', antwoorden);
+    toon(LAATSTE);
+  }
+
+  toon(0);
+</script>
+
+</body>
+</html>

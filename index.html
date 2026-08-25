@@ -1,0 +1,1690 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Webjoy | Domineer je branche, trek betere leads aan</title>
+<meta name="description" content="Wij bouwen websites en merkidentiteiten die niche-experts positioneren als de duidelijke marktleider." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2 L21 7 L21 17 L12 22 L3 17 L3 7 Z' fill='%235E9BFF'/%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,300..700&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          primary: '#5E9BFF',
+          'bg-light': '#F3EFEA',
+          'bg-dark': '#1A1A1A',
+          'fg-light': '#323232',
+          'fg-dark': '#D1D1D1',
+          'card-light': '#FFFFFF',
+          'card-dark': '#242424',
+        },
+        fontFamily: {
+          sans: ['"Google Sans Flex"', '"Google Sans"', 'Helvetica', 'Arial', 'sans-serif'],
+          gothic: ['"Google Sans Flex"', '"Google Sans"', 'Helvetica', 'Arial', 'sans-serif'],
+          mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        },
+        borderRadius: {
+          xs: '12px',
+        },
+        maxWidth: {
+          content: '1300px',
+        },
+        transitionTimingFunction: {
+          spring: 'ease',
+        },
+      },
+    },
+  };
+</script>
+
+<style>
+  :root {
+    /* Google Labs tokens */
+    --primary: #5E9BFF;
+    --bg-light: #F3EFEA;
+    --bg-dark: #1A1A1A;
+    --fg-light: #323232;
+    --fg-dark: #D1D1D1;
+    --card-light: #FFFFFF;
+    --border-low: #E8DFD5;
+    --border-mid: #DDD3C7;
+    --text-secondary: rgba(50, 50, 50, .8);
+    --shape-green: #48F08B;
+    --shape-blue: #5E9BFF;
+    --shape-pink: #FFBDF9;
+    --shape-yellow: #FCC934;
+    --shape-orange: #FF864A;
+    --gl-radius-card: 2.4rem;
+    --shadow-flyout: 0 12px 32px -8px rgba(50, 50, 50, 0.16), 0 2px 8px rgba(50, 50, 50, 0.06);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+  html, body {
+    background: var(--bg-light);
+    color: var(--fg-light);
+    font-family: 'Google Sans Flex', 'Google Sans', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Onepager-navigatie: laat sectie-ankers niet achter de sticky header verdwijnen */
+  #diensten, #werkwijze, #cases, #contact {
+    scroll-margin-top: 84px;
+  }
+
+  .font-gothic { font-family: 'Google Sans Flex', 'Google Sans', Helvetica, Arial, sans-serif; }
+  .font-mono-token { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+  .text-secondary { color: var(--text-secondary); }
+  .border-low { border-color: var(--border-low); }
+  .border-mid { border-color: var(--border-mid); }
+
+  .transition-spring { transition: all .2s ease; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  }
+
+  a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .btn-primary {
+    background: var(--bg-dark);
+    color: #fff;
+    border-radius: 999rem;
+    padding: 1em 2em;
+    font-weight: 500;
+  }
+  .btn-primary:hover { background: #000; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--fg-light);
+    border: .2rem solid var(--border-mid);
+    border-radius: 999rem;
+    padding: calc(1em - .2rem) calc(2em - .2rem);
+    font-weight: 500;
+  }
+  .btn-ghost:hover { background: rgba(50,50,50,0.05); }
+
+  .link-arrow { color: var(--primary); }
+  .link-arrow svg { transition: transform .2s ease; }
+  .link-arrow:hover svg { transform: translateX(3px); }
+
+  .card {
+    background: var(--card-light);
+    border: 1px solid var(--border-low);
+    border-radius: var(--gl-radius-card);
+  }
+  .card-hover:hover { background: #fbfaf8; }
+
+  .landscape-art {
+    background:
+      radial-gradient(circle at 15% 25%, rgba(94,155,255,0.18), transparent 45%),
+      radial-gradient(circle at 80% 15%, rgba(255,189,249,0.22), transparent 50%),
+      radial-gradient(circle at 60% 75%, rgba(72,240,139,0.16), transparent 55%),
+      linear-gradient(160deg, #EDE7DD 0%, #E8DFD5 45%, #EDE7DD 100%);
+  }
+  .glow-cta {
+    background: var(--bg-dark);
+  }
+
+  .macos-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  .nav-submenu {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity .2s ease, transform .2s ease, visibility .2s;
+  }
+  .nav-item:hover .nav-submenu,
+  .nav-item:focus-within .nav-submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .avatar-initial {
+    width: 40px; height: 40px; border-radius: 999rem;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Google Sans Flex', sans-serif; font-weight: 500; font-size: 0.85rem; color: #1A1A1A;
+  }
+
+  ::selection { background: var(--primary); color: #fff; }
+
+  /* ---- Header: licht, frosted, progressive blur + gradient opacity ---- */
+  .gl-header-blur span {
+    position: absolute; inset: 0;
+  }
+  .gl-header-blur span:nth-child(1) {
+    backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+    background: rgba(243,239,234,.28);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 70%); mask-image: linear-gradient(to bottom, #000 0%, transparent 70%);
+  }
+  .gl-header-blur span:nth-child(2) {
+    backdrop-filter: blur(9px); -webkit-backdrop-filter: blur(9px);
+    background: rgba(243,239,234,.45);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 45%); mask-image: linear-gradient(to bottom, #000 0%, transparent 45%);
+  }
+  .gl-header-blur span:nth-child(3) {
+    backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+    background: rgba(243,239,234,.7);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 25%); mask-image: linear-gradient(to bottom, #000 0%, transparent 25%);
+  }
+
+  .header__links a {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--fg-light);
+    transition: color .2s ease;
+  }
+  .header__links a:hover, .header__links a:focus-visible { color: rgba(50,50,50,.55); }
+
+  /* ---- Floating decorative shapes ---- */
+  .gl-shape { position: absolute; opacity: .85; will-change: transform; }
+  .gl-shape svg { display: block; width: 100%; height: 100%; }
+
+  /* Hero-smileys: op mobiel 2x zo groot, altijd zichtbaar en zwevend. Nooit negatieve
+     top/left/right, want de hero-sectie zelf heeft geen eigen padding, dus een negatieve
+     waarde duikt direct onder de sticky header en wordt daar afgesneden. */
+  @media (max-width: 767px) {
+    .gl-shape-1 { width: 128px !important; height: 128px !important; top: 6px !important; left: 4px !important; }
+    .gl-shape-2 { width: 96px !important; height: 96px !important; top: 10px !important; right: 4px !important; }
+    .gl-shape-3 { width: 68px !important; height: 68px !important; top: 72px !important; right: 22% !important; }
+    .gl-shape-4 { width: 44px !important; height: 44px !important; top: 92px !important; left: 28% !important; }
+  }
+
+  @keyframes gl-float-1 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25%      { transform: translate(10px, -12px) rotate(4deg); }
+    75%      { transform: translate(-8px, 8px) rotate(-3deg); }
+  }
+  @keyframes gl-float-2 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25%      { transform: translate(-12px, 10px) rotate(-5deg); }
+    75%      { transform: translate(9px, -6px) rotate(3deg); }
+  }
+  @keyframes gl-float-3 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25%      { transform: translate(8px, 9px) rotate(3deg); }
+    75%      { transform: translate(-9px, -7px) rotate(-4deg); }
+  }
+  .gl-float-1 { animation: gl-float-1 9s ease-in-out infinite; }
+  .gl-float-2 { animation: gl-float-2 11s ease-in-out infinite; }
+  .gl-float-3 { animation: gl-float-3 7.5s ease-in-out infinite; }
+
+  /* ---- Achtergrond-smiley: drijvende afbeelding (zelfde beweging als labs.google) ---- */
+  .section-blob-wrap {
+    position: absolute;
+    width: 210px;
+    height: 210px;
+    z-index: 0;
+    opacity: 1;
+    pointer-events: none;
+    animation: case-blob-drift 14s ease-in-out infinite;
+  }
+  .section-blob { display: block; width: 100%; height: 100%; object-fit: contain; }
+
+  @keyframes case-blob-drift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50%      { transform: translate(18px, 22px) scale(1.08); }
+  }
+
+  /* ---- USP-marquee: twee rijen, beide traag en soepel naar rechts, infinite loop ---- */
+  .marquee-row { display: flex; width: max-content; will-change: transform; }
+  .marquee-track { overflow: hidden; -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent); }
+  @keyframes marquee-right {
+    from { transform: translateX(-50%); }
+    to   { transform: translateX(0%); }
+  }
+  @keyframes marquee-left {
+    from { transform: translateX(0%); }
+    to   { transform: translateX(-50%); }
+  }
+  /* Tegengestelde richtingen: dat leest rustiger dan twee rijen die dezelfde kant op schuiven. */
+  .marquee-row-1 { animation: marquee-right 52s linear infinite; }
+  .marquee-row-2 { animation: marquee-left  60s linear infinite; }
+  .marquee-row-3 { animation: marquee-right 80s linear infinite; }
+  .marquee-row-4 { animation: marquee-right 90s linear infinite; }
+
+  /* ---- Reviewkaart in de hero-slider: portretfoto vult de kaart, tekst op een
+     donker verloop onderaan. De kaarten rekken mee met de langste quote (flex
+     stretch), zodat de rij één hoogte houdt zonder tekst af te kappen. ---- */
+  .review-card {
+    flex-shrink: 0;
+    width: 340px;
+    margin-right: 20px;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--gl-radius-card);
+    border: 1px solid var(--border-low);
+    /* Zichtbaar zolang een portretfoto nog ontbreekt. */
+    background: linear-gradient(160deg, #FBF9F6, var(--border-low));
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 440px;
+  }
+  .review-foto { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  /* Licht verloop i.p.v. zwart: wit vlak dat naar boven uitvloeit over de foto. */
+  .review-inhoud {
+    position: relative;
+    padding: 190px 24px 24px;
+    background: linear-gradient(to top, rgba(255,255,255,.96) 0%, rgba(255,255,255,.85) 38%, transparent 100%);
+  }
+  .review-sterren { display: flex; gap: 3px; margin-bottom: 10px; color: var(--primary); }
+  /* De set levert een ster als contour; gevuld leest hij beter op een foto. */
+  .review-sterren .ico { fill: currentColor; stroke: none; }
+  .review-naam  { color: var(--fg-light); font-weight: 500; font-size: 16px; line-height: 1.25; margin-bottom: 6px; }
+  .review-rol   { color: var(--text-secondary); font-size: 12px; line-height: 1.3; margin-bottom: 10px; }
+  .review-card blockquote { margin: 0; color: var(--text-secondary); font-size: 13.5px; line-height: 1.55; }
+  @media (max-width: 767px) {
+    .review-card { width: 265px; margin-right: 14px; border-radius: 1.6rem; min-height: 400px; }
+    .review-inhoud { padding: 150px 20px 20px; }
+    /* Smallere kaarten = kortere rij, dus korter draaien om dezelfde ~20px/s te houden. */
+    .marquee-row-4 { animation-duration: 70s; }
+  }
+  /* Tussenruimte staat als margin-right ÓP het item, niet als flex-gap op de rij.
+     Bij een gap telt de rij 2N items + (2N-1) gaps, waardoor translateX(-50%) een halve
+     gap naast de naad landt en de lus zichtbaar verspringt. Met margin-right is de
+     halve breedte exact één set inclusief zijn eigen tussenruimte: naadloos. */
+  .marquee-pill {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-right: 16px;
+    white-space: nowrap;
+    background: var(--card-light);
+    border: 1px solid var(--border-mid);
+    border-radius: 999rem;
+    padding: 12px 22px;
+    font-size: 14px; font-weight: 500;
+    color: var(--fg-light);
+  }
+  .marquee-pill svg { flex-shrink: 0; color: var(--primary); }
+
+  /* ---- Klantlogo's: uniforme optische grootte ondanks sterk verschillende verhoudingen ----
+     Hoogte begrenzen alleen is niet genoeg: een breed logo (Urban Arrow) zou dan veel
+     zwaarder wegen dan een compact logo (Clarify). Daarom ook een max-breedte. */
+  .logo-strip img {
+    height: 26px; width: auto;
+    max-width: 140px; object-fit: contain;
+    filter: grayscale(1); opacity: .6;
+  }
+  .logo-strip .logo-fallback {
+    font-family: 'Google Sans Flex', sans-serif; font-weight: 500;
+    font-size: 17px; color: var(--fg-light); opacity: .55;
+  }
+  /* Koffiebazen heeft een rond beeldmerk en oogt op 26px kleiner dan de brede woordmerken;
+     iets hoger zetten (het bestand is strak bijgesneden, dus dit is nu echte beeldhoogte). */
+  .logo-strip img[src*="koffiebazen"] { height: 42px; }
+  @media (max-width: 767px) {
+    .logo-strip img { height: 20px; max-width: 110px; }
+    .logo-strip .logo-fallback { font-size: 15px; }
+  }
+
+  /* ---- Werk-slider: zelfde infinite marquee, maar met projectmockups ---- */
+  .work-card {
+    flex-shrink: 0;
+    width: 300px;
+    margin-right: 20px;
+    border-radius: 1.6rem;
+    overflow: hidden;
+    border: 1px solid var(--border-low);
+    background: var(--card-light);
+    /* Geen schaduw: de overflow-clip van de marquee snijdt die boven en onder af,
+       wat een rommelige rand geeft. Vlak, met rand, net als de reviewkaarten. */
+  }
+  .work-card img { display: block; width: 100%; aspect-ratio: 1/1; object-fit: cover; }
+  @media (max-width: 767px) {
+    .work-card { width: 220px; margin-right: 14px; border-radius: 1.2rem; }
+    /* Smallere kaarten = kortere rij, dus met dezelfde duur zou de strook trager ogen.
+       59s houdt de snelheid op ~20px/s, gelijk aan de USP-pillen hierboven. */
+    .marquee-row-3 { animation-duration: 59s; }
+  }
+
+  /* ---- Iconenset (outline, 24x24 grid). De set heeft stroke="#212121" hardcoded;
+     hier via currentColor, zodat een icoon de kleur van zijn tekst overneemt en
+     dus ook op donkere vlakken en in de primaire kleur werkt. ---- */
+  .ico { flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 2; stroke-miterlimit: 10; stroke-linecap: square; }
+
+  /* ---- Telefoon-mockup: trilt bij inscrollen alsof je gebeld wordt ----
+     Eén trilling met een rustpauze aan het eind (70-100%), twee keer afgespeeld
+     via iteration-count: 2. Zo krijg je twee losse rinkels in plaats van één
+     lange wiebel. De rotatie zit op een eigen wrapper, zodat de md:rotate van
+     het handschrift ernaast er niet mee in de knoop komt. */
+  @keyframes telefoon-trilling {
+    0%       { transform: rotate(0deg); }
+    8%       { transform: rotate(-5deg); }
+    16%      { transform: rotate(5deg); }
+    24%      { transform: rotate(-4deg); }
+    32%      { transform: rotate(4deg); }
+    40%      { transform: rotate(-2.5deg); }
+    48%      { transform: rotate(2.5deg); }
+    56%      { transform: rotate(-1deg); }
+    64%      { transform: rotate(0deg); }
+    100%     { transform: rotate(0deg); }
+  }
+  .telefoon-belt { animation: telefoon-trilling .95s ease-in-out 2 both; }
+  @media (prefers-reduced-motion: reduce) {
+    .telefoon-belt { animation: none; }
+  }
+
+  /* ---- Handgeschreven accent ---- */
+  .font-hand { font-family: 'Caveat', cursive; }
+
+  /* ---- Spring-in tekst-animatie: woord-voor-woord bij inscrollen ----
+     Nabouw van Framer's physics-spring (stiffness 400, damping 75, mass 1,
+     overdamped, dus geen overshoot/bounce) via cubic-bezier + per-woord delay. */
+  .reveal-word {
+    display: inline-block;
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(10px);
+    transition: opacity .65s cubic-bezier(.16,1,.3,1), filter .65s cubic-bezier(.16,1,.3,1), transform .65s cubic-bezier(.16,1,.3,1);
+    transition-delay: var(--reveal-delay, .05s);
+    will-change: opacity, filter, transform;
+  }
+  .reveal-word.is-visible { opacity: 1; filter: blur(0); transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-word { transition: none !important; opacity: 1 !important; filter: none !important; transform: none !important; }
+  }
+
+  /* ---- Hero page-load: één georkestreerde binnenkomst ----
+     Zelfde spring-curve als de scroll-reveal, puur CSS via gestapelde animation-delay (--d).
+     De h1 doet zijn woord-voor-woord reveal (0,05s + 0,1s per woord); de rest volgt daar
+     overlappend op, zodat het één beweging is en geen reeks losse effecten. */
+  @keyframes hero-rise {
+    from { opacity: 0; filter: blur(10px); transform: translateY(12px); }
+    to   { opacity: 1; filter: blur(0);    transform: translateY(0); }
+  }
+  @keyframes hero-pop {
+    from { opacity: 0; transform: scale(.6); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  .hero-in     { animation: hero-rise .7s cubic-bezier(.16,1,.3,1) both; animation-delay: var(--d, 0s); }
+  /* Op de <img> binnen .gl-shape, niet op de wrapper: die heeft al een oneindige
+     float-animatie op transform en die mag niet overschreven worden. */
+  .hero-pop-in { animation: hero-pop .6s cubic-bezier(.16,1,.3,1) both; animation-delay: var(--d, 0s); }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-in, .hero-pop-in { animation: none; }
+  }
+
+  /* Positie per sectie: aan de randen, weg van de gecentreerde koppen/subtekst, zodat het gezicht zichtbaar blijft */
+  .blob-fit       { top: 6px; right: 2%; }
+  .blob-projects  { top: 6px; left: 2%; }
+  .blob-usp       { top: 8px; right: 3%; }
+  .blob-phases    { top: 8px; left: 3%; }
+  .blob-image     { top: -48px; right: 8%; width: 170px; height: 170px; }
+  .blob-invite    { top: 16px; right: 4%; width: 150px; height: 150px; opacity: .9; }
+
+  @media (max-width: 767px) {
+    .section-blob-wrap { width: 110px; height: 110px; opacity: 1; }
+    .blob-fit       { top: 100px; right: 0 !important; left: auto !important; }
+    .blob-projects  { top: 210px; left: 0 !important; right: auto !important; }
+    .blob-usp       { top: 270px; right: 0 !important; left: auto !important; }
+    .blob-phases    { top: 200px; left: 0 !important; right: auto !important; }
+    .blob-image     { top: 335px; left: -4% !important; right: auto !important; width: 110px; height: 110px; }
+    /* Verplaatst weg van de koptekst naar de lege ruimte tussen intro-tekst en telefoon-mockup */
+    .blob-invite    { top: 388px; right: 26px !important; left: auto !important; width: 80px; height: 80px; opacity: .9; }
+    .blob-faq       { top: 300px; right: 30px !important; left: auto !important; width: 80px; height: 80px; }
+  }
+
+  /* ---- FAQ ---- */
+  .blob-faq { top: 8px; right: 7%; }
+
+  .faq-watermark {
+    position: absolute;
+    top: -34px;
+    right: 0;
+    font-family: 'Google Sans Flex', sans-serif;
+    font-weight: 700;
+    font-size: clamp(3rem, 9vw, 7rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: rgba(50, 50, 50, .045);
+    white-space: nowrap;
+    z-index: 0;
+    pointer-events: none;
+  }
+  @media (max-width: 767px) { .faq-watermark { display: none; } }
+
+  .faq-item { transition: background .2s ease; }
+  .faq-question {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    width: 100%; text-align: left;
+    padding: 22px 24px;
+    background: none; border: none; font-family: inherit; cursor: pointer;
+    color: var(--fg-light);
+  }
+  .faq-icon {
+    flex-shrink: 0; width: 32px; height: 32px; border-radius: 999rem;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(50,50,50,.06); color: var(--fg-light);
+    transition: transform .25s ease, background .2s ease, color .2s ease;
+  }
+  .faq-item.open .faq-icon { transform: rotate(45deg); background: var(--primary); color: #fff; }
+  .faq-answer { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+  .faq-answer p { padding: 0 24px 22px; margin: 0; color: var(--text-secondary); font-size: 14px; line-height: 1.65; max-width: 34rem; }
+
+  /* ---- Oversized footer wordmark (echte logo, geen tekst) ---- */
+  .footer-wordmark {
+    display: block;
+    width: clamp(14rem, 58vw, 44rem);
+    height: auto;
+  }
+
+  /* ---- 4-fasenplan carousel ---- */
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: .5;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .phase-track {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .phase-track::-webkit-scrollbar { display: none; }
+
+  .phase-card {
+    transition: transform .3s ease;
+  }
+  .phase-card:hover, .phase-card:focus-within {
+    transform: rotate(0deg) translateY(-6px) !important;
+  }
+
+  .carousel-arrow {
+    width: 44px; height: 44px;
+    border-radius: 999rem;
+    border: 1px solid var(--border-mid);
+    background: var(--card-light);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--fg-light);
+    transition: background .2s ease, transform .2s ease;
+  }
+  .carousel-arrow:hover { background: #fbfaf8; }
+  .carousel-arrow:active { transform: scale(.94); }
+
+  .social-circle {
+    width: 44px; height: 44px;
+    border-radius: 999rem;
+    border: 1px solid var(--border-mid);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--fg-light);
+    transition: background .2s ease, transform .2s ease;
+  }
+  .social-circle:hover { background: rgba(50,50,50,.05); }
+
+  /* transform: scale() keeps reserving its untransformed box in the document flow, so we
+     compensate with a negative margin-bottom (based on the unused space at each scale) to
+     keep a consistent ~20px gap below the cluster without clipping any smiley. */
+  .shape-cluster { transform: scale(1); transform-origin: top center; transition: none; }
+  .shape-cluster-viewport { overflow: visible; margin-bottom: 20px; }
+  @media (max-width: 900px) {
+    .shape-cluster { transform: scale(.78); }
+    .shape-cluster-viewport { margin-bottom: -99px; }
+  }
+  @media (max-width: 640px) {
+    .shape-cluster { transform: scale(.46); margin: 0 -170px; }
+    .shape-cluster-viewport { margin-bottom: -272px; }
+  }
+
+  .phase-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-mid);
+    border-radius: 999rem;
+    padding: 2px 10px;
+  }
+
+  /* ---- USP carousel (light) ---- */
+  .usp-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--fg-light);
+    background: rgba(50,50,50,.06);
+    border-radius: 999rem;
+    padding: 6px 14px;
+  }
+
+  /* Case-screenshot vult de hele kaart-header; de gradient eronder blijft als fallback zichtbaar
+     wanneer een afbeelding ontbreekt (zie img.onerror-handler onderaan het script). */
+  .case-shot { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  /* Witte variant van .usp-tag: leesbaar bovenop een foto i.p.v. op een egale achtergrond. */
+  .usp-tag-light { background: rgba(255,255,255,.92); box-shadow: 0 1px 4px rgba(50,50,50,.12); }
+
+  .usp-card {
+    width: 280px;
+    min-height: 460px;
+    border-radius: var(--gl-radius-card);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    color: var(--fg-light);
+    border: 1px solid var(--border-low);
+  }
+
+  /* ---- Services: drie kaarten in de stijl van de usp-kaarten ----
+     Desktop: waaier (zijkaarten gedraaid, midden recht en iets groter).
+     Mobiel: snap-slider die opent met focus op de middelste kaart, met
+     de buren nog net zichtbaar aan weerszijden. */
+  .service-card {
+    border-radius: var(--gl-radius-card);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    color: var(--fg-light);
+    border: 1px solid var(--border-low);
+    padding: 28px;
+    transition: transform .45s cubic-bezier(.16,1,.3,1);
+  }
+  @media (min-width: 768px) {
+    .service-links  { transform: rotate(-5deg); }
+    .service-rechts { transform: rotate(5deg); }
+    .service-midden { transform: translateY(-18px) scale(1.04); z-index: 1; }
+    .service-links:hover, .service-rechts:hover { transform: rotate(0) translateY(0); }
+  }
+  @media (max-width: 767px) {
+    .services-rij {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 12px;
+      /* Randpadding zó dat een gecentreerde kaart links en rechts ~15% van de buren toont. */
+      padding: 4px 15vw 8px;
+      scrollbar-width: none;
+    }
+    .services-rij::-webkit-scrollbar { display: none; }
+    .service-card {
+      flex-shrink: 0;
+      width: 66vw;
+      scroll-snap-align: center;
+      padding: 22px;
+    }
+    /* Zelfde waaier als op desktop; extra verticale ruimte zodat de gedraaide
+       hoeken niet tegen de rand van de scrollstrook aanlopen. */
+    .services-rij { padding-top: 18px; padding-bottom: 22px; }
+    .service-links  { transform: rotate(-5deg); }
+    .service-rechts { transform: rotate(5deg); }
+    .service-midden { transform: translateY(-12px); }
+  }
+</style>
+</head>
+
+<body class="bg-bg-light text-fg-light font-sans antialiased">
+
+<!-- ================= HEADER / NAV ================= -->
+<header class="sticky top-0 z-50">
+  <div aria-hidden="true" class="gl-header-blur absolute inset-0 -z-10">
+    <span></span><span></span><span></span>
+  </div>
+  <div class="max-w-content mx-auto h-16 px-5 md:px-8 flex items-center justify-between relative">
+    <div class="flex items-center gap-8">
+      <a href="#" class="flex items-center" aria-label="Webjoy, home">
+        <img src="assets/logo/webjoy-logo.svg" alt="Webjoy" style="height:20px; width:auto;">
+      </a>
+      <nav class="hidden lg:flex items-center gap-6 header__links" aria-label="Primair">
+        <a href="#cases">Cases</a>
+        <a href="#diensten">Diensten</a>
+        <a href="#werkwijze">Werkwijze</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+
+    <div class="hidden md:flex items-center gap-5">
+      <a href="kwalificatie.html" class="btn-primary text-[14px] transition-spring">Doe de kwalificatie</a>
+    </div>
+
+    <button class="lg:hidden p-2 -mr-2" style="color:var(--fg-light)" aria-label="Open menu" id="mobileMenuBtn">
+      <svg class="ico" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12H22"/><path d="M2 5H22"/><path d="M2 19H22"/></svg>
+    </button>
+  </div>
+  <div id="mobileMenu" class="hidden lg:hidden relative bg-card-light px-5 py-4 space-y-3 text-sm border-t border-low" style="color:var(--fg-light)">
+    <a href="#cases" class="block">Cases</a>
+    <a href="#diensten" class="block">Diensten</a>
+    <a href="#werkwijze" class="block">Werkwijze</a>
+    <a href="#faq" class="block">FAQ</a>
+    <a href="#contact" class="block">Contact</a>
+    <div class="pt-2 border-t border-low flex flex-col gap-3">
+      <a href="kwalificatie.html" class="btn-primary text-center text-[13px]">Doe de kwalificatie</a>
+    </div>
+  </div>
+</header>
+
+<!-- ================= 1. HERO ================= -->
+<section class="relative overflow-hidden">
+  <div aria-hidden="true" class="gl-shape gl-float-1 gl-shape-1" style="top:8%; left:6%; width:64px; height:64px;">
+    <img src="assets/smileys-v2/smiley-v-3.svg" alt="" class="hero-pop-in w-full h-full object-contain" style="--d:.15s">
+  </div>
+  <div aria-hidden="true" class="gl-shape gl-float-2 gl-shape-2" style="top:14%; right:8%; width:48px; height:48px;">
+    <img src="assets/smileys-v2/smiley-v-7.svg" alt="" class="hero-pop-in w-full h-full object-contain" style="--d:.3s">
+  </div>
+  <div aria-hidden="true" class="gl-shape gl-float-3 gl-shape-3" style="top:2%; right:22%; width:34px; height:34px;">
+    <img src="assets/smileys-v2/smiley-v-1.svg" alt="" class="hero-pop-in w-full h-full object-contain" style="--d:.45s">
+  </div>
+  <div aria-hidden="true" class="gl-shape gl-float-2 gl-shape-4" style="top:5%; left:26%; width:22px; height:22px;">
+    <img src="assets/smileys-v2/smiley-v-5.svg" alt="" class="hero-pop-in w-full h-full object-contain" style="--d:.55s">
+  </div>
+
+  <div class="max-w-content mx-auto px-5 md:px-8 pt-36 md:pt-20 pb-10 text-center">
+    <h1 class="font-gothic font-medium text-[2rem] leading-[1.12] md:text-[3.25rem] md:leading-[1.08] max-w-4xl mx-auto tracking-tight">
+      Domineer je branche, trek betere leads aan &amp; verhoog je conversie
+    </h1>
+    <p class="hero-in text-secondary text-[15px] md:text-[17px] leading-relaxed max-w-2xl mx-auto mt-5" style="--d:.55s">
+      Wij bouwen onvergetelijke brands en converterende websites voor B2B agencies, consultants &amp; experts (die &euro;100K+ per jaar draaien)
+    </p>
+    <div class="hero-in mt-7 flex flex-wrap items-center justify-center gap-3" style="--d:.75s">
+      <a href="kwalificatie.html" class="btn-primary text-[14px] flex items-center gap-2 transition-spring">
+        Doe de kwalificatie
+        <svg class="ico" width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12H21H20.5"/><path d="M14 19L21 12L14 5"/></svg>
+      </a>
+    </div>
+    <div class="hero-in text-secondary text-[13px] mt-5 flex flex-col items-center gap-1.5" style="--d:.9s">
+      <img src="assets/social-proof-klanten.png" alt="Vijf tevreden klanten van Webjoy"
+           width="444" height="124" style="height:44px; width:auto;">
+      <span>4.9/5 gebaseerd op 30+ reviews van tevreden klanten</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HERO REVIEW-SLIDER =================
+     aria-hidden op de strook (niet op de sectie: de kop erboven is wél unieke inhoud)
+     omdat dezelfde quotes verderop in de testimonials-sectie volledig en statisch
+     staan; anders leest een schermlezer ze dubbel voor. -->
+<section class="hero-in" style="--d:1.05s">
+  <p class="font-hand text-center text-[24px] md:text-[28px] mb-6 px-5" style="color:var(--text-secondary)">Wij werken met de Nederlandse top:</p>
+  <div class="marquee-track" aria-hidden="true">
+    <div class="marquee-row marquee-row-4" id="heroReviews"></div>
+  </div>
+</section>
+
+<!-- ================= 2. LOGOS ================= -->
+<section class="max-w-content mx-auto px-5 md:px-8 py-14 md:py-16 text-center">
+  <p class="text-[13px] text-secondary mb-8">Vertrouwd door ambitieuze specialisten en scale-ups</p>
+  <ul class="logo-strip flex flex-wrap items-center justify-center gap-x-12 gap-y-8">
+    <li><img src="assets/logos-klanten/clarify.svg"     alt="Clarify"     data-naam="Clarify"></li>
+    <li><img src="assets/logos-klanten/pacprotect.png"  alt="Pacprotect"  data-naam="Pacprotect"></li>
+    <li><img src="assets/logos-klanten/urban-arrow.png" alt="Urban Arrow" data-naam="Urban Arrow"></li>
+    <li><img src="assets/logos-klanten/yourhome.png"    alt="Yourhome"    data-naam="Yourhome"></li>
+    <li><img src="assets/logos-klanten/koffiebazen.png" alt="Koffiebazen" data-naam="Koffiebazen"></li>
+  </ul>
+</section>
+
+<!-- ================= 2b. WAKE UP CALL ================= -->
+<section class="max-w-content mx-auto px-5 md:px-8 py-10 md:py-16 text-center">
+  <div class="max-w-2xl mx-auto">
+    <span class="inline-flex items-center gap-1.5 text-[12px] font-medium uppercase tracking-wide text-primary bg-primary/10 px-4 py-1.5 rounded-full mb-6">Wake up call 🚨</span>
+
+    <h2 class="font-gothic font-medium text-[1.75rem] md:text-[2.25rem] leading-tight mb-6">
+      Je aanbod is een dikke 10/10. Het is tijd dat je 'Online Presence' dat reflecteert.
+    </h2>
+
+    <p class="text-secondary text-[15px] leading-relaxed mb-4">
+      Als <span class="font-medium" style="color:var(--fg-light)">top van de markt</span> leveren jullie een <span class="font-medium" style="color:var(--fg-light)">premium dienst</span>.
+    </p>
+    <p class="text-secondary text-[15px] leading-relaxed mb-6">
+      De resultaten gaan <span class="font-medium" style="color:var(--fg-light)">door het dak</span> en klanten worden <span class="font-medium" style="color:var(--fg-light)">loyale fans</span>&hellip;
+    </p>
+
+    <div class="card p-7 md:p-8 mb-6" style="background:rgba(94,155,255,.06)">
+      <p class="text-[15px] leading-relaxed">
+        Maar na een fase van <span class="font-medium">hard groeien</span> is er één belangrijk ding <span class="font-medium">achtergebleven</span>:
+      </p>
+      <p class="text-[15px] leading-relaxed mt-2">
+        Jullie '<span class="font-medium">Online Uitstraling</span>'.
+      </p>
+    </div>
+
+    <p class="text-secondary text-[15px] leading-relaxed mb-4">
+      En dat is zonde, want een <span class="font-medium" style="color:var(--fg-light)">premium aanbod</span> verdient een merk die <span class="font-medium" style="color:var(--fg-light)">deze kwaliteit weerspiegelt</span>.
+    </p>
+    <p class="text-secondary text-[15px] leading-relaxed mb-4">
+      Niet alleen omdat het er "<span class="font-medium" style="color:var(--fg-light)">mooi uitziet</span>"&hellip;
+    </p>
+    <p class="text-secondary text-[15px] leading-relaxed">
+      &hellip;maar ook omdat het <span class="font-medium" style="color:var(--fg-light)">mooie resultaten</span> oplevert:
+    </p>
+  </div>
+</section>
+
+<!-- ================= 2c. USP-MARQUEE ================= -->
+<section class="py-8 md:py-12" aria-hidden="true">
+  <div class="marquee-track mb-4">
+    <div class="marquee-row marquee-row-1" id="marqueeRow1"></div>
+  </div>
+  <div class="marquee-track">
+    <div class="marquee-row marquee-row-2" id="marqueeRow2"></div>
+  </div>
+</section>
+
+<!-- ================= 2d. TOP-NOTCH DIENST ================= -->
+<section class="max-w-content mx-auto px-5 md:px-8 py-10 md:py-16 text-center">
+  <div class="max-w-2xl mx-auto">
+    <h2 class="font-gothic font-medium text-[1.75rem] md:text-[2.25rem] leading-tight mb-6">Dus heb je een top-notch dienst?</h2>
+
+    <p class="text-secondary text-[15px] leading-relaxed mb-4">
+      En is <span class="font-medium" style="color:var(--fg-light)">jullie merk</span> eigenlijk wel eens toe aan een <span class="font-medium" style="color:var(--fg-light)">flinke upgrade</span>?
+    </p>
+    <p class="text-secondary text-[15px] leading-relaxed mb-10">
+      Dan wil ik je graag <span class="font-medium" style="color:var(--fg-light)">uitnodigen</span> voor&hellip;
+    </p>
+
+    <div class="flex items-center justify-center gap-3 md:gap-4 mb-10">
+      <span class="font-gothic font-medium text-[2.75rem] md:text-[3.5rem] leading-none tracking-tight">De</span>
+      <img src="assets/smileys-v2/smiley-v-4.svg" alt="" aria-hidden="true" class="w-11 h-11 md:w-14 md:h-14 flex-shrink-0">
+      <span class="font-gothic font-medium text-[2.75rem] md:text-[3.5rem] leading-none tracking-tight">GLOW-up</span>
+    </div>
+
+    <p class="text-secondary text-[15px] leading-relaxed mb-4">
+      Een project waarbij we jullie <span class="font-medium" style="color:var(--fg-light)">hele online presence</span> een make-over geven.
+    </p>
+    <p class="text-secondary text-[15px] leading-relaxed mb-4">
+      Van social media tot marketing funnel&hellip;
+    </p>
+    <p class="text-secondary text-[15px] leading-relaxed mb-8">
+      &hellip;alle assets gaan voldoen aan <span class="font-medium" style="color:var(--fg-light)">2 eisen</span>:
+    </p>
+
+    <div class="grid sm:grid-cols-2 gap-4 text-left">
+      <div class="card p-5 flex items-center gap-3">
+        <span class="flex items-center justify-center rounded-xs" style="width:36px; height:36px; background:rgba(94,155,255,.1); color:var(--primary); flex-shrink:0;">✦</span>
+        <p class="text-[14px]">Het heeft een ware '<span class="font-medium">WOW-factor</span>'</p>
+      </div>
+      <div class="card p-5 flex items-center gap-3">
+        <span class="flex items-center justify-center rounded-xs" style="width:36px; height:36px; background:rgba(94,155,255,.1); color:var(--primary); flex-shrink:0;">✦</span>
+        <p class="text-[14px]">Het <span class="font-medium">converteert</span> als een malle</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 2e. NICHE DOMINATION INVITE ================= -->
+<section class="max-w-content mx-auto px-5 md:px-8 py-10 md:py-16">
+  <div class="card overflow-hidden relative" style="background:rgba(255,134,74,.07)">
+    <div aria-hidden="true" class="section-blob-wrap blob-invite">
+      <img src="assets/smileys-v2/smiley-v-9.svg" alt="" class="section-blob">
+    </div>
+    <div class="relative z-10 px-6 md:px-16 py-14 md:py-20 text-center">
+      <span class="inline-flex items-center text-[12px] font-medium uppercase tracking-wide text-primary bg-primary/10 px-4 py-1.5 rounded-full mb-8">Dit is jouw invite</span>
+
+      <h2 class="font-gothic font-medium text-[1.75rem] md:text-[2.75rem] leading-tight max-w-2xl mx-auto mb-6">
+        F*ck average. Het is tijd voor totale 'Niche Domination'.
+      </h2>
+
+      <p class="text-secondary text-[15px] leading-relaxed max-w-xl mx-auto mb-8">
+        In 90 dagen bouwen we een <span class="font-medium" style="color:var(--fg-light)">jaw-dropping</span> online presence die <span class="font-medium" style="color:var(--fg-light)">kwaliteit uitstraalt</span> en <span class="font-medium" style="color:var(--fg-light)">beter converteert</span>.
+      </p>
+
+      <p class="text-secondary text-[13px] mb-14">Hieronder lees je hoe we dat doen 👇</p>
+
+      <div class="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10">
+        <p class="font-hand text-[26px] md:rotate-[-6deg] order-2 md:order-1" style="color:var(--text-secondary)">Dus, neem je op?</p>
+
+        <div id="telefoonMockup" class="order-1 md:order-2 rounded-[32px] p-2" style="width:220px; border:2px solid var(--border-mid); background:var(--card-light); box-shadow:var(--shadow-flyout);">
+          <div class="rounded-[24px] overflow-hidden bg-bg-dark">
+            <div class="flex items-center gap-3 px-4 pt-6 pb-4">
+              <span class="avatar-initial" style="background:var(--shape-orange); width:44px; height:44px; font-size:14px;">ND</span>
+              <div class="text-left">
+                <p class="text-white/50 text-[10px] leading-tight">iPhone</p>
+                <p class="text-white font-medium text-[14px] leading-tight">Niche Domination</p>
+              </div>
+            </div>
+            <div class="flex items-center justify-between px-6 pb-6 pt-2">
+              <span class="flex items-center justify-center rounded-full" style="width:40px; height:40px; background:#e5484d;">
+                <svg class="ico" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" style="color:#fff"><path transform="rotate(135 12 12)" d="M7.44489 16.556C10.4019 19.443 14.2139 21.199 18.7889 21.818C19.7959 21.954 20.7539 21.321 21.0109 20.337L21.9999 16.558L15.6329 13.826L13.0749 16.347C11.9689 15.678 10.9399 14.888 10.0079 13.992C9.11189 13.06 8.32189 12.031 7.65289 10.925L10.1739 8.367L7.44189 2L3.66289 2.989C2.67989 3.246 2.04589 4.204 2.18189 5.211C2.80189 9.786 4.55689 13.599 7.44389 16.555L7.44489 16.556Z"/></svg>
+              </span>
+              <span class="flex items-center justify-center rounded-full" style="width:40px; height:40px; background:#30a46c;">
+                <svg class="ico" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" style="color:#fff"><path d="M7.44489 16.556C10.4019 19.443 14.2139 21.199 18.7889 21.818C19.7959 21.954 20.7539 21.321 21.0109 20.337L21.9999 16.558L15.6329 13.826L13.0749 16.347C11.9689 15.678 10.9399 14.888 10.0079 13.992C9.11189 13.06 8.32189 12.031 7.65289 10.925L10.1739 8.367L7.44189 2L3.66289 2.989C2.67989 3.246 2.04589 4.204 2.18189 5.211C2.80189 9.786 4.55689 13.599 7.44389 16.555L7.44489 16.556Z"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4. WEL EN NIET DE JUISTE KANT ================= -->
+<section class="relative overflow-hidden py-10 md:py-16">
+  <div aria-hidden="true" class="section-blob-wrap blob-fit">
+    <img src="assets/smileys-v2/smiley-v-2.svg" alt="" class="section-blob">
+  </div>
+  <div class="max-w-content mx-auto px-5 md:px-8 relative z-10">
+  <h2 class="font-gothic font-medium text-[1.75rem] md:text-[2.25rem] text-center mb-10">Is dit de juiste match?</h2>
+  <div class="grid md:grid-cols-2 gap-6">
+    <div class="card p-7">
+      <h3 class="font-gothic font-medium text-[16px] mb-4">Dit is voor jou als je&hellip;</h3>
+      <ul class="space-y-3 text-[14px]">
+        <li class="flex items-start gap-2"><span style="color:var(--shape-green)"><svg class="w-[15px] h-[15px] mt-[3px] shrink-0" viewBox="0 0 18 18" fill="none" aria-hidden="true"><polyline points="2.75 9.25 6.75 14.25 15.25 3.75" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg></span> al een bewezen dienst of product hebt, maar online ondergewaardeerd wordt</li>
+        <li class="flex items-start gap-2"><span style="color:var(--shape-green)"><svg class="w-[15px] h-[15px] mt-[3px] shrink-0" viewBox="0 0 18 18" fill="none" aria-hidden="true"><polyline points="2.75 9.25 6.75 14.25 15.25 3.75" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg></span> klaar bent om te investeren in kwaliteit boven snelheid</li>
+        <li class="flex items-start gap-2"><span style="color:var(--shape-green)"><svg class="w-[15px] h-[15px] mt-[3px] shrink-0" viewBox="0 0 18 18" fill="none" aria-hidden="true"><polyline points="2.75 9.25 6.75 14.25 15.25 3.75" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg></span> kwalitatieve leads wilt die al vertrouwen hebben vóórdat ze bellen</li>
+        <li class="flex items-start gap-2"><span style="color:var(--shape-green)"><svg class="w-[15px] h-[15px] mt-[3px] shrink-0" viewBox="0 0 18 18" fill="none" aria-hidden="true"><polyline points="2.75 9.25 6.75 14.25 15.25 3.75" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg></span> denkt in langetermijngroei, niet in losse flyers</li>
+      </ul>
+    </div>
+    <div class="card p-7">
+      <h3 class="font-gothic font-medium text-[16px] mb-4">Dit is (nog) niet voor jou als je&hellip;</h3>
+      <ul class="space-y-3 text-[14px] text-secondary">
+        <li class="flex items-start gap-2"><span style="color:#e5484d"><svg class="w-[15px] h-[15px] mt-[3px] shrink-0" viewBox="0 0 18 18" fill="none" aria-hidden="true"><line x1="14" y1="4" x2="4" y2="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><line x1="4" y1="4" x2="14" y2="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg></span> op zoek bent naar de goedkoopste optie</li>
+        <li class="flex items-start gap-2"><span style="color:#e5484d"><svg class="w-[15px] h-[15px] mt-[3px] shrink-0" viewBox="0 0 18 18" fill="none" aria-hidden="true"><line x1="14" y1="4" x2="4" y2="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><line x1="4" y1="4" x2="14" y2="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg></span> nog geen duidelijke doelgroep hebt bepaald</li>
+        <li class="flex items-start gap-2"><span style="color:#e5484d"><svg class="w-[15px] h-[15px] mt-[3px] shrink-0" viewBox="0 0 18 18" fill="none" aria-hidden="true"><line x1="14" y1="4" x2="4" y2="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><line x1="4" y1="4" x2="14" y2="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg></span> liever alles zelf blijft doen</li>
+        <li class="flex items-start gap-2"><span style="color:#e5484d"><svg class="w-[15px] h-[15px] mt-[3px] shrink-0" viewBox="0 0 18 18" fill="none" aria-hidden="true"><line x1="14" y1="4" x2="4" y2="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/><line x1="4" y1="4" x2="14" y2="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/></svg></span> geen tijd hebt voor een korte kick-off sessie</li>
+      </ul>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- ================= 4a. SERVICES ================= -->
+<section class="relative py-14 md:py-20">
+  <div class="max-w-content mx-auto px-5 md:px-8 text-center mb-12 md:mb-16">
+    <div class="max-w-2xl mx-auto">
+      <h2 class="font-gothic font-medium text-[1.75rem] md:text-[2.25rem] leading-tight mb-4">Er zijn verschillende manieren waarop we samen kunnen werken.</h2>
+      <p class="font-hand text-[24px] md:text-[28px]" style="color:var(--text-secondary)">Wat past bij jouw merk?</p>
+    </div>
+  </div>
+
+  <div class="max-w-content mx-auto md:px-8">
+    <div class="services-rij md:grid md:grid-cols-3 md:gap-8 md:items-end" id="servicesRij">
+
+      <article class="service-card service-links" style="background:radial-gradient(circle at 25% 15%, rgba(94,155,255,.22), transparent 60%), radial-gradient(circle at 80% 90%, rgba(94,155,255,.10), transparent 55%), var(--card-light)">        <h3 class="font-gothic font-medium italic text-[26px] leading-tight mb-4">Website</h3>
+        <p class="text-secondary text-[14px] leading-relaxed mb-3">Een website die niet alleen mooi oogt, maar jouw merk helder vertaalt naar een sterke online ervaring.</p>
+        <p class="text-secondary text-[14px] leading-relaxed">Van structuur en uitstraling tot gebruiksvriendelijkheid en detail: alles wordt afgestemd op jouw verhaal, jouw doelgroep en wat je met je website wilt bereiken.</p>
+        <p class="italic font-medium text-[15px] mt-auto pt-5" style="color:var(--primary)">vanaf &euro;500</p>
+      </article>
+
+      <article class="service-card service-midden" style="background:radial-gradient(circle at 25% 15%, rgba(255,189,249,.24), transparent 60%), radial-gradient(circle at 80% 90%, rgba(255,189,249,.12), transparent 55%), var(--card-light)">        <h3 class="font-gothic font-medium italic text-[26px] leading-tight mb-4">Branding + Website</h3>
+        <p class="text-secondary text-[14px] leading-relaxed mb-3">Voor wanneer je voelt dat het totaalplaatje opnieuw mag kloppen.</p>
+        <p class="text-secondary text-[14px] leading-relaxed mb-3">We bouwen aan een sterke merkidentiteit en vertalen die vervolgens door naar een website die visueel, inhoudelijk en strategisch één geheel vormt.</p>
+        <p class="text-secondary text-[14px] leading-relaxed">Zo ontstaat er een merk dat herkenbaar voelt en professioneel naar buiten komt.</p>
+        <p class="italic font-medium text-[15px] mt-auto pt-5" style="color:var(--primary)">vanaf &euro;900</p>
+      </article>
+
+      <article class="service-card service-rechts" style="background:radial-gradient(circle at 25% 15%, rgba(72,240,139,.22), transparent 60%), radial-gradient(circle at 80% 90%, rgba(72,240,139,.10), transparent 55%), var(--card-light)">        <h3 class="font-gothic font-medium italic text-[26px] leading-tight mb-4">Branding</h3>
+        <p class="text-secondary text-[14px] leading-relaxed mb-3">Een sterke visuele identiteit geeft je merk richting, herkenning en vertrouwen.</p>
+        <p class="text-secondary text-[14px] leading-relaxed mb-3">Samen creëren we een uitstraling die past bij wie je bent, waar je voor staat en hoe je gezien wilt worden.</p>
+        <p class="text-secondary text-[14px] leading-relaxed">Denk aan logo, kleur, typografie en andere visuele elementen die samen jouw merkidentiteit vormen.</p>
+        <p class="italic font-medium text-[15px] mt-auto pt-5" style="color:var(--primary)">vanaf &euro;500</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4b. PROJECT HIGHLIGHTS ================= -->
+<section id="cases" class="relative overflow-hidden py-10 md:py-16">
+  <div aria-hidden="true" class="section-blob-wrap blob-projects">
+    <img src="assets/smileys-v2/smiley-v-6.svg" alt="" class="section-blob">
+  </div>
+  <div class="max-w-content mx-auto px-5 md:px-8 relative z-10">
+  <h2 class="font-gothic font-medium text-[1.75rem] md:text-[2.25rem] leading-tight text-center max-w-2xl mx-auto mb-12">Highlight van recente projecten waar we trots op zijn</h2>
+
+  <div class="grid md:grid-cols-2 gap-6">
+
+    <!-- Koffiebazen -->
+    <div class="card overflow-hidden">
+      <div class="relative h-64 md:h-72 overflow-hidden" style="background:linear-gradient(160deg, rgba(255,134,74,.20), rgba(255,134,74,.05))">
+        <img src="assets/cases/koffiebazen.png" alt="Webshop van Koffiebazen" class="case-shot">
+        <div class="absolute top-5 right-5 flex gap-2 z-10">
+          <span class="usp-tag usp-tag-light">Webshop</span>
+          <span class="usp-tag usp-tag-light">E-commerce</span>
+        </div>
+      </div>
+      <div class="p-6">
+        <h3 class="font-gothic font-medium text-[20px] mb-1">Koffiebazen</h3>
+        <p class="text-secondary text-[13px]">Webshop &amp; e-commerce</p>
+      </div>
+    </div>
+
+    <!-- Yourhome -->
+    <div class="card overflow-hidden">
+      <div class="relative h-64 md:h-72 overflow-hidden" style="background:linear-gradient(160deg, rgba(252,201,52,.22), rgba(252,201,52,.05))">
+        <img src="assets/cases/yourhome.png" alt="Website en merkidentiteit van Yourhome makelaars" class="case-shot">
+        <div class="absolute top-5 right-5 flex gap-2 z-10">
+          <span class="usp-tag usp-tag-light">Database</span>
+          <span class="usp-tag usp-tag-light">Merkidentiteit</span>
+        </div>
+      </div>
+      <div class="p-6">
+        <h3 class="font-gothic font-medium text-[20px] mb-1">Yourhome</h3>
+        <p class="text-secondary text-[13px]">Database &amp; merkidentiteit</p>
+      </div>
+    </div>
+
+    <!-- Pacprotect -->
+    <div class="card overflow-hidden">
+      <div class="relative h-64 md:h-72 overflow-hidden" style="background:linear-gradient(160deg, rgba(50,50,50,.18), rgba(50,50,50,.04))">
+        <img src="assets/cases/pacprotect.png" alt="Webshop van Pacprotect" class="case-shot">
+        <div class="absolute top-5 right-5 flex gap-2 z-10">
+          <span class="usp-tag usp-tag-light">Webshop</span>
+          <span class="usp-tag usp-tag-light">E-commerce</span>
+        </div>
+      </div>
+      <div class="p-6">
+        <h3 class="font-gothic font-medium text-[20px] mb-1">Pacprotect</h3>
+        <p class="text-secondary text-[13px]">Webshop &amp; e-commerce</p>
+      </div>
+    </div>
+
+    <!-- Clarify -->
+    <div class="card overflow-hidden">
+      <div class="relative h-64 md:h-72 overflow-hidden" style="background:linear-gradient(160deg, rgba(72,240,139,.20), rgba(72,240,139,.05))">
+        <img src="assets/cases/clarify.png" alt="CSRD-rapportages en visualisaties voor Clarify" class="case-shot">
+        <div class="absolute top-5 right-5 flex gap-2 z-10">
+          <span class="usp-tag usp-tag-light">CSRD-rapportages</span>
+          <span class="usp-tag usp-tag-light">Visualisaties</span>
+        </div>
+      </div>
+      <div class="p-6">
+        <h3 class="font-gothic font-medium text-[20px] mb-1">Clarify</h3>
+        <p class="text-secondary text-[13px]">CSRD-rapportages &amp; visualisaties</p>
+      </div>
+    </div>
+
+  </div>
+  </div>
+</section>
+
+<!-- ================= 5. USP'S ================= -->
+<section id="diensten" class="relative overflow-hidden py-16 md:py-20">
+  <div aria-hidden="true" class="section-blob-wrap blob-usp">
+    <img src="assets/smileys-v2/smiley-v-4.svg" alt="" class="section-blob">
+  </div>
+  <div class="max-w-content mx-auto px-5 md:px-8 text-center mb-14 relative z-10">
+    <div class="max-w-2xl mx-auto">
+      <h2 class="font-gothic font-medium text-[1.75rem] md:text-[2.25rem] leading-tight mb-4">Waarom bedrijven voor ons kiezen</h2>
+      <p class="text-secondary text-[15px] leading-relaxed">Elk project begint met scherpe strategie. Ons team brengt dat tot leven in een website die opvalt, overtuigt en blijft groeien, met jou aan het roer.</p>
+    </div>
+  </div>
+
+  <div class="relative z-10">
+    <div id="uspTrack" class="phase-track flex gap-8 overflow-x-auto px-6 md:px-[max(1.5rem,calc((100vw-1300px)/2+1.5rem))] pb-8 pt-2 snap-x snap-mandatory"></div>
+    <div class="flex items-center justify-center gap-3 mt-2 relative z-10">
+      <button id="uspPrev" aria-label="Vorige usp" class="carousel-arrow">
+        <svg class="ico" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21L7 12L16 3"/></svg>
+      </button>
+      <button id="uspNext" aria-label="Volgende usp" class="carousel-arrow">
+        <svg class="ico" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 21L17 12L8 3"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6. 4-STAPPENPLAN ================= -->
+<section id="werkwijze" class="relative overflow-hidden py-16 md:py-20">
+  <div aria-hidden="true" class="section-blob-wrap blob-phases">
+    <img src="assets/smileys-v2/smiley-v-9.svg" alt="" class="section-blob">
+  </div>
+
+  <div class="max-w-content mx-auto px-5 md:px-8 text-center mb-14 relative z-10">
+    <div class="max-w-lg mx-auto">
+      <h2 class="font-gothic font-medium text-[1.75rem] md:text-[2.25rem] leading-tight mb-3">Ons bewezen 4-fasenplan</h2>
+      <p class="text-secondary text-[15px] leading-relaxed">Van eerste gesprek tot livegang, in vier duidelijke fases.</p>
+    </div>
+  </div>
+
+  <div class="relative z-10">
+    <div id="phasesTrack" class="phase-track flex gap-8 overflow-x-auto px-6 md:px-[max(1.5rem,calc((100vw-1300px)/2+1.5rem))] pb-8 pt-6 snap-x snap-mandatory"></div>
+    <div class="flex items-center justify-center gap-3 mt-2 relative z-10">
+      <button id="phasesPrev" aria-label="Vorige fase" class="carousel-arrow">
+        <svg class="ico" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21L7 12L16 3"/></svg>
+      </button>
+      <button id="phasesNext" aria-label="Volgende fase" class="carousel-arrow">
+        <svg class="ico" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 21L17 12L8 3"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 8. AFBEELDING + TEKST ================= -->
+<section class="relative overflow-hidden py-10 md:py-16">
+  <div aria-hidden="true" class="section-blob-wrap blob-image">
+    <img src="assets/smileys-v2/smiley-v-7.svg" alt="" class="section-blob">
+  </div>
+  <div class="max-w-content mx-auto px-5 md:px-8 relative z-10">
+  <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+    <div>
+      <h2 class="font-gothic font-medium text-[1.75rem] md:text-[2.25rem] leading-tight mb-4">Wil je dat klanten je vergelijken met de concurrent en toch voor jou kiezen?</h2>
+      <p class="text-secondary text-[15px] leading-relaxed mb-4 max-w-md">
+        Een sterke website doet het overtuigingswerk vóórdat het eerste gesprek plaatsvindt. Onze klanten zien vaker "ja" van leads die al overtuigd zijn.
+      </p>
+      <a href="kwalificatie.html" class="link-arrow inline-flex items-center gap-1.5 text-[14px] font-medium">
+        Doe de kwalificatie
+        <svg class="ico" width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12H21H20.5"/><path d="M14 19L21 12L14 5"/></svg>
+      </a>
+    </div>
+    <div class="card overflow-hidden bg-bg-dark">
+      <div class="flex items-center gap-1.5 px-5 py-3 border-b border-white/10 text-[11px] text-white/60 font-mono-token">gesprek met een ondernemer</div>
+      <div class="p-5 space-y-3 text-[12px]">
+        <div class="max-w-[75%] bg-white/10 text-fg-dark rounded-2xl px-3 py-2">Holy shit, wat is er met je branding &amp; marketing gebeurd?</div>
+        <div class="max-w-[75%] ml-auto bg-primary text-white rounded-2xl px-3 py-2">Ja tof he, m'n lead flow en closing rate zijn door het dak gegaan</div>
+        <div class="max-w-[75%] bg-white/10 text-fg-dark rounded-2xl px-3 py-2">En als ik dat ook wil?</div>
+        <div class="max-w-[75%] ml-auto bg-primary text-white rounded-2xl px-3 py-2">Dan moet je hier ff de kwalificatie invullen:</div>
+        <div class="pt-2 flex justify-end">
+          <a href="kwalificatie.html" class="btn-primary inline-flex items-center gap-2 text-[13px] transition-spring" style="background:#fff; color:var(--fg-light)">
+            Doe de kwalificatie
+            <svg class="ico" width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12H21H20.5"/><path d="M14 19L21 12L14 5"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- ================= 8b. FAQ ================= -->
+<section id="faq" class="relative overflow-hidden py-16 md:py-20">
+  <div aria-hidden="true" class="section-blob-wrap blob-faq">
+    <img src="assets/smileys-v2/smiley-v-6.svg" alt="" class="section-blob">
+  </div>
+  <div class="max-w-content mx-auto px-5 md:px-8 relative z-10">
+    <div class="grid md:grid-cols-[300px_1fr] gap-10 md:gap-16">
+      <div>
+        <span class="inline-flex items-center text-[12px] font-medium uppercase tracking-wide text-primary bg-primary/10 px-4 py-1.5 rounded-full mb-6">FAQ</span>
+        <h2 class="font-gothic font-medium text-[1.75rem] md:text-[2.25rem] leading-tight mb-6">Nog iets wat we niet besproken hebben?</h2>
+        <p class="text-secondary text-[15px] leading-relaxed mb-4">Hopelijk vind je hier antwoord op al je brandende vragen.</p>
+        <p class="text-secondary text-[15px] leading-relaxed">Zo niet, dan kun je me altijd even een bericht sturen 🤙</p>
+      </div>
+      <div class="relative">
+        <span aria-hidden="true" class="faq-watermark">FAQ</span>
+        <div id="faqList" class="space-y-4 relative z-10"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 8b2. WERK-SLIDER =================
+     Decoratieve strook: dezelfde infinite marquee als de USP-rijen. aria-hidden omdat
+     de projecten hierboven al met naam en omschrijving worden opgesomd, anders zou een
+     schermlezer alles dubbel voorlezen. -->
+<section class="py-6 md:py-10" aria-hidden="true">
+  <div class="marquee-track">
+    <div class="marquee-row marquee-row-3" id="workRow"></div>
+  </div>
+</section>
+
+<!-- ================= 8c. WIE ZIJN WIJ ================= -->
+<section class="max-w-content mx-auto px-5 md:px-8 py-10 md:py-16">
+  <div class="card overflow-hidden p-8 md:p-14" style="background:rgba(94,155,255,.06)">
+    <div class="grid md:grid-cols-2 gap-10 md:gap-14 items-end">
+      <div class="self-center">
+        <h2 class="font-gothic font-medium text-[1.75rem] md:text-[2.25rem] leading-tight mb-5">Ontmoet de eigenaar</h2>
+        <p class="font-hand text-[34px] md:text-[40px] leading-none mb-7" style="color:var(--fg-light)">Jesse de Groot</p>
+        <p class="text-secondary text-[15px] leading-relaxed mb-4">
+          Ik ben de <span class="font-medium" style="color:var(--fg-light)">designer en strateeg</span> achter Webjoy. Sinds 2018 bouw ik <span class="font-medium" style="color:var(--fg-light)">conversiegerichte</span> websites en brands voor ambitieuze ondernemers.
+        </p>
+        <p class="text-secondary text-[15px] leading-relaxed mb-4">
+          Werken we samen? Dan wordt jouw bedrijf ook een beetje mijn baby. Met mijn achtergrond in marketing weet ik wat een design <span class="font-medium" style="color:var(--fg-light)">&eacute;cht laat verkopen</span>, en hoe we dat afstemmen op jouw doelgroep.
+        </p>
+        <p class="text-secondary text-[15px] leading-relaxed mb-8">
+          (we maken het dus niet alleen <span class="font-medium" style="color:var(--fg-light)">mooi</span>, we zorgen dat het <span class="font-medium" style="color:var(--fg-light)">geld oplevert</span>)
+        </p>
+        <a href="kwalificatie.html" class="btn-primary inline-flex items-center gap-2 text-[14px] transition-spring">
+          Doe de kwalificatie
+          <svg class="ico" width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12H21H20.5"/><path d="M14 19L21 12L14 5"/></svg>
+        </a>
+      </div>
+      <img src="assets/team/jesse-founder.png" alt="Jesse, owner &amp; strateeg bij Webjoy"
+           class="w-full max-w-md mx-auto md:max-w-none -mb-8 md:-mb-14 md:scale-[1.08] origin-bottom" width="1215" height="1004">
+    </div>
+  </div>
+</section>
+
+<!-- ================= 9. CTA + FOOTER (gecombineerd) ================= -->
+<footer id="contact" class="relative overflow-hidden pt-20 md:pt-28">
+  <div class="max-w-content mx-auto px-5 md:px-8 text-center relative z-10">
+    <h2 class="font-gothic font-medium text-[2rem] md:text-[3rem] leading-tight max-w-2xl mx-auto mb-8">Klaar om je branche te domineren?</h2>
+    <div class="flex flex-wrap items-center justify-center gap-3 mb-8">
+      <a href="kwalificatie.html" class="btn-primary inline-flex items-center gap-2 text-[14px] transition-spring">Doe de kwalificatie</a>
+    </div>
+    <div class="flex items-center justify-center gap-3 mb-16">
+      <a href="#" aria-label="Instagram" class="social-circle">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17" cy="7" r="1" fill="currentColor"/></svg>
+      </a>
+      <a href="#" aria-label="LinkedIn" class="social-circle font-gothic font-medium text-[13px]">in</a>
+    </div>
+  </div>
+
+  <!-- Decoratieve vormcluster, exacte vormen uit labs.google -->
+  <div aria-hidden="true" class="flex justify-center relative z-10 shape-cluster-viewport">
+    <div class="shape-cluster relative flex-shrink-0" style="width:1600px; height:540px;">
+      <!-- onderste rij: echte smiley-afbeeldingen, met ruimte ertussen zodat gezichten niet verdwijnen -->
+      <img src="assets/smileys-v2/smiley-v-5.svg" alt="" class="absolute bottom-0 left-0 gl-float-1" style="width:380px; height:380px;">
+      <img src="assets/smileys-v2/smiley-v-3.svg" alt="" class="absolute bottom-0 gl-float-2" style="left:408px; width:380px; height:380px;">
+      <img src="assets/smileys-v2/smiley-v-8.svg" alt="" class="absolute bottom-0 gl-float-3" style="left:816px; width:380px; height:380px;">
+
+      <!-- bovenste rij: overlapt slechts licht, echte smiley-afbeeldingen -->
+      <img src="assets/smileys-v2/smiley-v-2.svg" alt="" class="absolute gl-float-2" style="left:-50px; top:-50px; width:300px; height:300px;">
+      <img src="assets/smileys-v2/smiley-v-6.svg" alt="" class="absolute gl-float-1" style="left:360px; top:-30px; width:300px; height:300px;">
+      <img src="assets/smileys-v2/smiley-v-9.svg" alt="" class="absolute gl-float-3" style="left:920px; top:-110px; width:370px; height:370px;">
+      <img src="assets/smileys-v2/smiley-v-4.svg" alt="" class="absolute gl-float-2" style="left:1260px; top:30px; width:330px; height:330px;">
+    </div>
+  </div>
+
+  <div class="max-w-content mx-auto px-5 md:px-8 relative z-10">
+    <div class="flex flex-wrap items-center justify-between gap-4 py-6 text-[13px]" style="border-top:1px solid var(--border-low)">
+      <span class="text-secondary">Andere onderdelen van Webjoy</span>
+      <nav class="flex flex-wrap gap-6" aria-label="Footer secundair">
+        <a href="#cases" class="hover:text-black transition-spring text-secondary">Cases</a>
+        <a href="#diensten" class="hover:text-black transition-spring text-secondary">Diensten</a>
+        <a href="#werkwijze" class="hover:text-black transition-spring text-secondary">Werkwijze</a>
+        <a href="#contact" class="hover:text-black transition-spring text-secondary">Contact</a>
+      </nav>
+    </div>
+
+    <!-- Oversized wordmark (echte Webjoy-logo, geen tekstimitatie) -->
+    <img src="assets/logo/webjoy-logo.svg" alt="Webjoy" class="footer-wordmark mt-6">
+
+    <!-- Onderste socket-balk -->
+    <ul class="flex items-center gap-6 flex-wrap list-none py-5 mt-4 text-[10px]" style="border-top:1px solid var(--border-low); color:var(--fg-light)">
+      <li class="flex items-center gap-1.5 font-medium">
+        <img src="assets/logo/webjoy-logo.svg" alt="Webjoy" style="height:12px; width:auto;">
+      </li>
+      <li><a href="#" class="hover:underline">Over ons</a></li>
+      <li><a href="#" class="hover:underline">Diensten</a></li>
+      <li><a href="#" class="hover:underline">Privacybeleid</a></li>
+      <li><a href="#" class="hover:underline">Algemene voorwaarden</a></li>
+      <li><a href="#contact" class="hover:underline">Contact</a></li>
+      <li><button type="button" class="hover:underline">Cookie-instellingen</button></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+  const mobileBtn = document.getElementById('mobileMenuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  mobileBtn?.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+  const marqueeIcons = {
+    briefcase: '<path d="M8 6V2H16V6"/><path d="M10 13H4C2.89543 13 2 12.1046 2 11V6H22V11C22 12.1046 21.1046 13 20 13H14"/><path d="M2 17V21H22V17"/><path d="M14 12H10V15C10 16.1046 10.8954 17 12 17C13.1046 17 14 16.1046 14 15V12Z"/>',
+    trending: '<path d="M1.5 15.5L7 10L13 16L22 7L21.6312 7.36884"/><path d="M15 7H22V14"/>',
+    star: '<path d="M12 3L14.234 10H21L15.615 14.125L17.849 21L12 16.751L6.151 21L8.385 14.125L3 10H9.766L12 3Z"/>',
+    trophy: '<path d="M18 3H22V6C22 7.65685 20.6569 9 19 9H18"/><path d="M6 3H2V6C2 7.65685 3.34315 9 5 9H6"/><path d="M12 14V18"/><path d="M6 3V8C6 11.3137 8.68629 14 12 14C15.3137 14 18 11.3137 18 8V3H6Z"/><path d="M16 22H8V21C8 19.3431 9.34315 18 11 18H13C14.6569 18 16 19.3431 16 21V22Z"/>',
+    target: '<path d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2"/><path d="M18 12C18 15.3137 15.3137 18 12 18C8.68629 18 6 15.3137 6 12C6 8.68629 8.68629 6 12 6"/><path d="M12 11.9999L16.6234 7.37646L16.5083 7.49156"/><path d="M19.4999 4.5L18.5 2L15.8999 4.5L16.4999 7.5L19.4999 8.1L22 5.5L19.4999 4.5Z"/>',
+  };
+  const marqueeIcon = (key) => `<svg class="ico" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">${marqueeIcons[key]}</svg>`;
+  const marqueePill = (icon, label) => `<span class="marquee-pill">${marqueeIcon(icon)}${label}</span>`;
+
+  const marqueeRow1 = [
+    marqueePill('briefcase', 'Close Grotere Deals'),
+    marqueePill('trending', 'Hogere Conversie'),
+    marqueePill('star', 'Trek Talent Aan'),
+    marqueePill('trophy', 'Domineer Je Niche'),
+    marqueePill('target', 'Betere Leads'),
+  ];
+  const marqueeRow2 = [
+    marqueePill('target', 'Betere Leads'),
+    marqueePill('trophy', 'Domineer Je Niche'),
+    marqueePill('briefcase', 'Close Grotere Deals'),
+    marqueePill('star', 'Trek Talent Aan'),
+    marqueePill('trending', 'Hogere Conversie'),
+  ];
+  // Rij 2x herhalen zodat de infinite loop (translateX -50% naar 0%) naadloos aansluit
+  document.getElementById('marqueeRow1').innerHTML = marqueeRow1.concat(marqueeRow1).join('');
+  document.getElementById('marqueeRow2').innerHTML = marqueeRow2.concat(marqueeRow2).join('');
+
+  /* Werk-slider onder de FAQ: dezelfde opzet (inhoud 2x, translateX(-50%) -> 0%). */
+  /* Vierkante werkbeelden. Ontbrekende bestanden vallen weg i.p.v. een lege kaart te tonen,
+     zodat de strook blijft kloppen terwijl er nieuwe beelden bijkomen. */
+  const workShots = [
+    'assets/werk/koffiebazen.png',
+    'assets/werk/code-sensei.png',
+    'assets/werk/clarify.png',
+    'assets/werk/pacprotect.png',
+    'assets/werk/urban-arrow.png',
+    'assets/werk/duurzaam-beleggen.png',
+  ];
+  const workCard = (src) => `<div class="work-card"><img src="${src}" alt=""></div>`;
+  /* Eerst controleren wélke bestanden bestaan, pas daarna de rij opbouwen. Zou ik kaarten
+     achteraf verwijderen, dan raken de twee helften uit balans en verspringt de lus. */
+  Promise.all(workShots.map(src => new Promise(res => {
+    const probe = new Image();
+    probe.onload = () => res(src);
+    probe.onerror = () => res(null);
+    probe.src = src;
+  }))).then(found => {
+    const beschikbaar = found.filter(Boolean);
+    if (!beschikbaar.length) return;
+    document.getElementById('workRow').innerHTML =
+      beschikbaar.concat(beschikbaar).map(workCard).join('');
+  });
+
+  const phases = [
+    {
+      num: '1', title: 'Ontdekking & strategie',
+      text: 'We duiken in je merk, doelgroep en concurrenten en leggen de positionering vast.',
+      tint: 'rgba(94,155,255,.14)',
+      visual: `
+        <div class="h-44 relative overflow-hidden" style="background:linear-gradient(160deg, rgba(94,155,255,.20), rgba(94,155,255,.04))">
+          <span class="phase-tag absolute" style="top:16px; left:16px; background:#fff;">Doelgroep</span>
+          <span class="phase-tag absolute" style="top:52px; left:70px; background:#fff;">Merkwaarden</span>
+          <span class="phase-tag absolute" style="top:96px; left:24px; background:#fff;">Concurrentie-scan</span>
+          <span class="phase-tag absolute" style="top:132px; left:100px; background:#fff;">Kernboodschap</span>
+        </div>`,
+    },
+    {
+      num: '2', title: 'Design & concept',
+      text: 'We ontwerpen een visuele richting en structuur die overtuigt en bij je merk past.',
+      tint: 'rgba(255,189,249,.14)',
+      visual: `
+        <div class="h-44 flex items-center gap-4 px-6" style="background:linear-gradient(160deg, rgba(255,189,249,.22), rgba(255,189,249,.04))">
+          <div class="grid grid-cols-2 gap-2">
+            <span class="block w-8 h-8 rounded-full" style="background:var(--shape-blue)"></span>
+            <span class="block w-8 h-8 rounded-full" style="background:var(--shape-pink)"></span>
+            <span class="block w-8 h-8 rounded-full" style="background:var(--shape-yellow)"></span>
+            <span class="block w-8 h-8 rounded-full" style="background:var(--shape-green)"></span>
+          </div>
+          <span class="font-gothic font-medium text-[48px] leading-none">Aa</span>
+        </div>`,
+    },
+    {
+      num: '3', title: 'Bouw & copywriting',
+      text: 'We bouwen de website en schrijven conversiegerichte teksten voor elke pagina.',
+      tint: 'rgba(72,240,139,.14)',
+      visual: `
+        <div class="h-44 flex flex-col bg-card-light">
+          <div class="flex items-center gap-1.5 px-4 py-2 border-b border-low">
+            <span class="macos-dot bg-[#ff5f57]"></span><span class="macos-dot bg-[#febc2e]"></span><span class="macos-dot bg-[#28c840]"></span>
+            <span class="ml-1 text-[10px] text-secondary font-mono-token">jouwbedrijf.nl</span>
+          </div>
+          <div class="flex-1 p-4 flex flex-col gap-2 justify-center">
+            <span class="h-2.5 w-2/3 rounded-full bg-[#F3EFEA] border border-mid"></span>
+            <span class="h-2.5 w-full rounded-full bg-[#F3EFEA] border border-mid"></span>
+            <span class="h-2.5 w-5/6 rounded-full bg-[#F3EFEA] border border-mid"></span>
+          </div>
+        </div>`,
+    },
+    {
+      num: '4', title: 'Lancering & optimalisatie',
+      text: 'We zetten live, testen, en optimaliseren op basis van echte data.',
+      tint: 'rgba(252,201,52,.14)',
+      visual: `
+        <div class="h-44 relative flex items-end gap-2.5 px-6 pb-5" style="background:linear-gradient(160deg, rgba(252,201,52,.22), rgba(252,201,52,.04))">
+          <span class="phase-tag absolute" style="top:14px; right:14px; background:#fff; color:#1A1A1A;">+128%</span>
+          <span class="block w-6 rounded-t-md" style="height:28%; background:var(--shape-yellow)"></span>
+          <span class="block w-6 rounded-t-md" style="height:46%; background:var(--shape-yellow)"></span>
+          <span class="block w-6 rounded-t-md" style="height:38%; background:var(--shape-yellow)"></span>
+          <span class="block w-6 rounded-t-md" style="height:70%; background:var(--shape-green)"></span>
+          <span class="block w-6 rounded-t-md" style="height:92%; background:var(--shape-green)"></span>
+        </div>`,
+    },
+  ];
+
+  const rotations = ['-4deg', '2deg', '-2deg', '3deg'];
+  const offsets = ['0px', '20px', '-12px', '16px'];
+
+  document.getElementById('phasesTrack').innerHTML = phases.map((p, i) => `
+    <div class="phase-card shrink-0 snap-center" style="transform: rotate(${rotations[i % 4]}) translateY(${offsets[i % 4]});">
+      <div class="card overflow-hidden w-[260px] sm:w-[290px]" style="box-shadow:var(--shadow-flyout)">
+        ${p.visual}
+        <div class="p-5">
+          <span class="phase-tag">Fase ${p.num}</span>
+          <h3 class="font-gothic font-medium text-[20px] leading-snug mt-3 mb-2">${p.title}</h3>
+          <p class="text-secondary text-[13px] leading-relaxed mb-4">${p.text}</p>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  const phasesTrack = document.getElementById('phasesTrack');
+  const scrollByCard = (dir) => {
+    const card = phasesTrack.querySelector('.phase-card');
+    const step = card ? card.getBoundingClientRect().width + 32 : 300;
+    phasesTrack.scrollBy({ left: dir * step, behavior: 'smooth' });
+  };
+  document.getElementById('phasesPrev')?.addEventListener('click', () => scrollByCard(-1));
+  document.getElementById('phasesNext')?.addEventListener('click', () => scrollByCard(1));
+
+  const usps = [
+    {
+      num: '01', title: 'Strategie eerst',
+      tagLink: 'Positionering', tagPlain: 'Research',
+      glow: 'radial-gradient(circle at 25% 15%, rgba(94,155,255,.22), transparent 60%), radial-gradient(circle at 80% 90%, rgba(94,155,255,.10), transparent 55%), var(--card-light)',
+      visual: `
+        <div class="flex-1 flex flex-col justify-center px-6">
+          <p class="font-gothic font-medium text-[30px] leading-tight mb-4" style="color:var(--shape-blue)">Hallo,<br>Webjoy</p>
+          <div class="rounded-2xl bg-black/5 px-4 py-3 flex items-center gap-2 text-secondary text-[13px]">
+            <span>✦</span> Waar wil jij mee opvallen?
+          </div>
+        </div>`,
+      text: 'Elk project begint met een positioneringsanalyse, geen kant-en-klare templates.',
+    },
+    {
+      num: '02', title: 'Snelheid zonder ruis',
+      tagLink: '', tagPlain: 'Sprints',
+      glow: 'radial-gradient(circle at 25% 15%, rgba(72,240,139,.22), transparent 60%), radial-gradient(circle at 80% 90%, rgba(72,240,139,.10), transparent 55%), var(--card-light)',
+      visual: `
+        <div class="flex-1 flex flex-col justify-center gap-3 px-6">
+          <div class="flex items-center gap-2 text-[13px]"><span style="color:var(--shape-green)">✓</span> Strategie &amp; concept</div>
+          <div class="flex items-center gap-2 text-[13px]"><span style="color:var(--shape-green)">✓</span> Bouw &amp; copywriting</div>
+          <div class="flex items-center gap-2 text-secondary text-[13px]"><span class="inline-block w-3 h-3 rounded-full border border-mid"></span> Lancering &amp; optimalisatie</div>
+          <div class="h-1.5 rounded-full bg-black/5 mt-2 overflow-hidden"><div class="h-full rounded-full" style="width:70%; background:var(--shape-green)"></div></div>
+        </div>`,
+      text: 'Van kick-off tot livegang in gemiddeld 8 tot 12 weken.',
+    },
+    {
+      num: '03', title: 'Conversiegericht design',
+      tagLink: 'A/B-testen', tagPlain: 'Conversie',
+      glow: 'radial-gradient(circle at 25% 15%, rgba(255,189,249,.22), transparent 60%), radial-gradient(circle at 80% 90%, rgba(255,189,249,.10), transparent 55%), var(--card-light)',
+      visual: `
+        <div class="flex-1 flex flex-col justify-end gap-2 px-6 pb-2">
+          <span class="usp-tag self-start mb-3">+128% aanvragen</span>
+          <div class="flex items-end gap-2.5 h-24">
+            <span class="block w-6 rounded-t-md" style="height:35%; background:var(--border-mid)"></span>
+            <span class="block w-6 rounded-t-md" style="height:55%; background:var(--border-mid)"></span>
+            <span class="block w-6 rounded-t-md" style="height:45%; background:var(--border-mid)"></span>
+            <span class="block w-6 rounded-t-md" style="height:80%; background:var(--shape-pink)"></span>
+            <span class="block w-6 rounded-t-md" style="height:100%; background:var(--shape-pink)"></span>
+          </div>
+        </div>`,
+      text: 'Elke pagina is gebouwd om te overtuigen, niet alleen om mooi te zijn.',
+    },
+    {
+      num: '04', title: 'Eén aanspreekpunt',
+      tagLink: 'Direct contact', tagPlain: 'Vast team',
+      glow: 'radial-gradient(circle at 25% 15%, rgba(252,201,52,.22), transparent 60%), radial-gradient(circle at 80% 90%, rgba(252,201,52,.10), transparent 55%), var(--card-light)',
+      visual: `
+        <div class="flex-1 flex flex-col justify-center gap-3 px-6">
+          <div class="flex items-center gap-3">
+            <span class="avatar-initial" style="background:var(--shape-yellow)">JS</span>
+            <div>
+              <p class="text-[13px] font-medium">Jouw contactpersoon</p>
+              <p class="text-secondary text-[11px]">reageert doorgaans binnen een uur</p>
+            </div>
+          </div>
+          <div class="rounded-2xl bg-black/5 px-4 py-2.5 text-secondary text-[13px] max-w-[85%]">Hoi! Ik heb de eerste concepten net geüpload, benieuwd wat je ervan vindt.</div>
+        </div>`,
+      text: 'Geen wisselende freelancers: één vast team dat jouw proces kent.',
+    },
+  ];
+
+  document.getElementById('uspTrack').innerHTML = usps.map(u => `
+    <div class="usp-card shrink-0 snap-center" style="background:${u.glow}; box-shadow:var(--shadow-flyout)">
+      <div class="flex items-center gap-2 p-5">
+        ${u.tagLink ? `<span class="usp-tag">${u.tagLink} <svg class="ico" width="10" height="10" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12H21H20.5"/><path d="M14 19L21 12L14 5"/></svg></span>` : ''}
+        <span class="usp-tag">${u.tagPlain}</span>
+      </div>
+      ${u.visual}
+      <div class="p-6 pt-4">
+        <p class="font-mono-token text-[11px] text-secondary mb-1">${u.num}</p>
+        <h3 class="font-gothic font-medium text-[26px] leading-tight mb-2">${u.title}</h3>
+        <p class="text-secondary text-[13px] leading-relaxed mb-5">${u.text}</p>
+        <a href="#contact" class="link-arrow inline-flex items-center gap-1.5 text-[13px] font-medium">
+          Meer info
+          <svg class="ico" width="11" height="11" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12H21H20.5"/><path d="M14 19L21 12L14 5"/></svg>
+        </a>
+      </div>
+    </div>
+  `).join('');
+
+  const uspTrack = document.getElementById('uspTrack');
+  const scrollByUsp = (dir) => {
+    const card = uspTrack.querySelector('.usp-card');
+    const step = card ? card.getBoundingClientRect().width + 32 : 300;
+    uspTrack.scrollBy({ left: dir * step, behavior: 'smooth' });
+  };
+  document.getElementById('uspPrev')?.addEventListener('click', () => scrollByUsp(-1));
+  document.getElementById('uspNext')?.addEventListener('click', () => scrollByUsp(1));
+
+  const testimonials = [
+    { name: 'Lody Bunsschoten', title: 'CEO, Yourhome', quote: "Jesse is een uitstekende keuze als feedback provider voor onze website redesign. Zijn professionaliteit, openheid en toewijding om zijn beloftes na te komen maken hem een ideale contactpersoon. Met Jesse's waardevolle input kunnen we met vertrouwen een website creëren die de verwachtingen van onze gebruikers overtreft." },
+    { name: 'Ronald Klein', title: 'Partner, Koffiebazen', quote: 'Met diepgaande expertise in webdesign heeft Jesse alles onder de knie. Hij is iemand waarop je volledig kunt vertrouwen om elk project tot een succesvol resultaat te brengen.' },
+    { name: 'Wiekert Jager', title: 'Accountmanager, de Producent', quote: "Jesse's vermogen om gebruikersgericht te denken maakt hem een onmisbare schakel in onze digitale projecten. Hij combineert strategisch inzicht met creativiteit, wat resulteert in oplossingen die écht werken voor onze inwoners." },
+  ];
+  const palette = ['#FCC934', '#5E9BFF', '#48F08B', '#FFBDF9', '#DDD3C7', '#9AA0A6'];
+
+  /* ---- Hero-reviewslider: zelfde quotes als de testimonials-sectie ----
+     Per review een portretfoto in assets/reviews/. Bestaat die nog niet, dan valt de
+     kaart terug op de initialen-avatar. We controleren dat vooraf en bouwen de rij
+     daarna pas op: kaarten achteraf aanpassen zou de twee helften van de lus
+     uit balans brengen en de marquee laten verspringen. */
+  const initialen = (naam) => naam.split(' ').map(n => n[0]).join('').slice(0,2);
+  const reviewFotos = {
+    'Lody Bunsschoten': 'assets/reviews/lody.jpg',
+    'Ronald Klein':     'assets/reviews/ronald.jpg',
+    'Wiekert Jager':    'assets/reviews/wiekert.jpg',
+  };
+
+  Promise.all(testimonials.map((t, i) => new Promise(res => {
+    const src = reviewFotos[t.name];
+    if (!src) return res({ ...t, i, foto: null });
+    const probe = new Image();
+    probe.onload  = () => res({ ...t, i, foto: src });
+    probe.onerror = () => res({ ...t, i, foto: null });
+    probe.src = src;
+  }))).then(items => {
+    const ster = '<svg class="ico" width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3L14.234 10H21L15.615 14.125L17.849 21L12 16.751L6.151 21L8.385 14.125L3 10H9.766L12 3Z"/></svg>';
+    const kaart = (t) => `
+      <article class="review-card">
+        ${t.foto ? `<img src="${t.foto}" alt="" class="review-foto">` : ''}
+        <div class="review-inhoud">
+          <div class="review-sterren">${ster.repeat(5)}</div>
+          <p class="review-naam">${t.name}</p>
+          <p class="review-rol">${t.title}</p>
+          <blockquote>&ldquo;${t.quote}&rdquo;</blockquote>
+        </div>
+      </article>`;
+    /* Drie kaarten is te weinig om een breed scherm te vullen; twee sets naast elkaar
+       vormen samen de lus, dus verdubbelen we de basisset eerst. */
+    const basis = items.concat(items);
+    document.getElementById('heroReviews').innerHTML =
+      basis.concat(basis).map(kaart).join('');
+  });
+  const faqs = [
+    { q: 'Even concreet, wat doen jullie precies?', a: [
+      'Het is een uniek concept, maar kort:',
+      'Wij combineren ultra-premium, high-end design met converterende marketing assets.',
+      'Nee, we runnen geen ads, maar we bouwen wel alles dat nodig is om jouw marketing machine beter te laten presteren.',
+      'Of het nou gaat om landing pages, ad visuals, pitch decks of visual frameworks...',
+      '...wij zijn jouw creatieve partner.',
+    ] },
+    { q: 'Wat is de investering precies?', a: [
+      'Wij werken niet met een one-size-fits-all aanbod.',
+      'Daarom heb ik geen vast antwoord op deze vraag.',
+      'Jouw behoefte bepaalt de scope, dus wil je een op maat gemaakte proposal?',
+      'Doe dan de kwalificatie via 1 van de buttons op deze pagina, en dan spreek ik je snel 🤝',
+    ] },
+    { q: 'Hoe weet ik of dit voor mij is?', a: [
+      'Wij zijn de laatste partij die je gaan overtuigen om met ons te werken.',
+      'Sterker nog, we wijzen regelmatig bedrijven af, omdat het geen match is.',
+      'We werken namelijk alleen met bedrijven die:',
+      '• Een consistente lead flow hebben',
+      '• Een bewezen aanbod hebben (waar hun klanten extreem blij mee zijn)',
+      '• Die het gevoel hebben dat een premium brand hun conversie, omzet en winst gaat verhogen',
+      'Is dat het geval?',
+      'Dan is \'De GLOW-up\' misschien wel iets voor jullie',
+    ] },
+    { q: 'Welke garantie kun je me geven?', a: [
+      'Resultaat staat bij ons op nummer 1.',
+      'Verdien je binnen 3 maanden na de launch van ons project niet je investering terug?',
+      'Dan werken we door tot dat wel zo is.',
+      '(Al leveren lanceringen regelmatig €20-60K extra cash op in de eerste maand)',
+    ] },
+    { q: 'Heb ik een groot bereik nodig?', a: [
+      'Nee, je hebt geen LinkedIn of Instagram following van 5000+ volgers nodig.',
+      'Wel is het zo dat we alleen werken met bedrijven die hun \'Conversie Code\' al hebben gekraakt.',
+      'Oftewel: Je weet hoe je onbekenden converteert naar leads, en leads converteert naar klanten.',
+      'Is dat het geval?',
+      'Dan kunnen wij je helpen om jullie brand (en resultaten) naar het volgende niveau te brengen.',
+    ] },
+    { q: 'Hoeveel tijd gaat het mij kosten?', a: [
+      'Onze projecten zijn volledig op behoefte basis, daarom kan ik je geen concreet antwoord geven.',
+      'Wel is het zo dat wij zoveel mogelijk Done-For-You diensten leveren.',
+      'Jij geeft ons de nodige input → Wij bouwen jouw visie → Jij geeft feedback → Wij zorgen dat je tevreden bent.',
+      'Zo maken we er samen een succesvol project van 🤝',
+    ] },
+    { q: 'En als ik na het project wil doorgaan?', a: [
+      'We starten onze partnerships vaak met 1 groot, transformatief project.',
+      '(Vandaar de naam \'De GLOW-up\')',
+      'Als jouw brand en de key marketing assets staan als een huis, kunnen we verder op subscription of project basis.',
+      'Wij staan voor langdurige samenwerkingen, vanuit die synergie ontstaan de mooiste resultaten.',
+    ] },
+    { q: 'Waarin bouwen jullie landing pages?', a: [
+      'Wij zijn groot fan van Framer.',
+      'Dit is een no-code tool, en daarom is het ideaal voor bedrijven die snel willen schakelen.',
+      'Door deze tool kunnen onze klanten (en hun marketing teams) namelijk zelf hun websites en pagina\'s editen',
+      '(zonder afhankelijk te zijn van dure developers)',
+      'Als je er meer info over wil, stuur ik je met liefde een video over deze no-code builder',
+    ] },
+    { q: 'Leveren jullie ook media buying?', a: [
+      'Nee, we doen zelf geen media buying (ad management).',
+      'Mocht je hier wel behoefte aan hebben, dan verwijs ik je met liefde door naar 1 van onze partners.',
+      'We hebben een super tof netwerk vol met experts voor iedere dienst waar je behoefte aan kan hebben',
+    ] },
+  ];
+  document.getElementById('faqList').innerHTML = faqs.map((f, i) => `
+    <div class="faq-item card">
+      <button class="faq-question" aria-expanded="false" aria-controls="faqAnswer${i}" data-faq="${i}">
+        <span class="font-medium text-[15px]">${f.q}</span>
+        <span class="faq-icon" aria-hidden="true">
+          <svg class="ico" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12H3"/><path d="M12 3V21"/></svg>
+        </span>
+      </button>
+      <div class="faq-answer" id="faqAnswer${i}">${f.a.map(p => `<p>${p}</p>`).join('')}</div>
+    </div>
+  `).join('');
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const answer = item.querySelector('.faq-answer');
+      const isOpen = item.classList.toggle('open');
+      btn.setAttribute('aria-expanded', String(isOpen));
+      answer.style.maxHeight = isOpen ? answer.scrollHeight + 'px' : '0px';
+    });
+  });
+  window.addEventListener('resize', () => {
+    document.querySelectorAll('.faq-item.open .faq-answer').forEach(a => { a.style.maxHeight = a.scrollHeight + 'px'; });
+  });
+
+  /* ---- Spring-in tekst-animatie bij inscrollen (per woord, zie .reveal-word in <style>) ----
+     Split elke koptekst in woorden zonder de bestaande markup (bold spans, emoji, etc.) te breken,
+     en trigger de reveal pas zodra de kop het scherm binnenkomt (IntersectionObserver, éénmalig). */
+  const wrapWordsInReveal = (root) => {
+    let wordIndex = 0;
+    const walk = (node) => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        if (!node.textContent.trim()) return;
+        const frag = document.createDocumentFragment();
+        node.textContent.split(/(\s+)/).forEach(part => {
+          if (part === '') return;
+          if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+          const span = document.createElement('span');
+          span.className = 'reveal-word';
+          span.style.setProperty('--reveal-delay', (0.05 + wordIndex * 0.1) + 's');
+          span.textContent = part;
+          wordIndex++;
+          frag.appendChild(span);
+        });
+        node.replaceWith(frag);
+      } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName !== 'SVG') {
+        Array.from(node.childNodes).forEach(walk);
+      }
+    };
+    Array.from(root.childNodes).forEach(walk);
+  };
+
+  const revealTargets = document.querySelectorAll('h1, h2, h3');
+  revealTargets.forEach(wrapWordsInReveal);
+
+  /* Ontbrekend klantlogo: toon de bedrijfsnaam als tekst i.p.v. een gebroken-afbeelding-icoon.
+     Zo blijft de strook kloppen zolang niet alle logobestanden aanwezig zijn. */
+  document.querySelectorAll('.logo-strip img').forEach(img => {
+    const fallback = () => {
+      const span = document.createElement('span');
+      span.className = 'logo-fallback';
+      span.textContent = img.dataset.naam;
+      img.replaceWith(span);
+    };
+    img.addEventListener('error', fallback);
+    if (img.complete && img.naturalWidth === 0) fallback();
+  });
+
+  /* Ontbrekende case-screenshot: verberg de <img> zodat de gradient-achtergrond van de kaart
+     zichtbaar blijft, in plaats van het gebroken-afbeelding-icoon van de browser. */
+  document.querySelectorAll('.case-shot').forEach(img => {
+    const hide = () => { img.style.display = 'none'; };
+    img.addEventListener('error', hide);
+    if (img.complete && img.naturalWidth === 0) hide();
+  });
+
+  /* ---- Telefoon-mockup laten trillen zodra hij in beeld komt ----
+     Eenmalig: na het aflopen halen we de klasse weer weg en stoppen we met observeren,
+     zodat hij niet bij elke scrollbeweging opnieuw begint te rinkelen. */
+  const telefoon = document.getElementById('telefoonMockup');
+  if (telefoon && 'IntersectionObserver' in window) {
+    const belObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        belObserver.unobserve(entry.target);
+        entry.target.classList.add('telefoon-belt');
+        entry.target.addEventListener('animationend', () => {
+          entry.target.classList.remove('telefoon-belt');
+        }, { once: true });
+      });
+    }, { threshold: 0.6 });
+    belObserver.observe(telefoon);
+  }
+
+  /* ---- Services-slider (mobiel): open met de middelste kaart gecentreerd ---- */
+  const servicesRij = document.getElementById('servicesRij');
+  if (servicesRij && window.matchMedia('(max-width: 767px)').matches) {
+    const midden = servicesRij.children[1];
+    servicesRij.scrollLeft = midden.offsetLeft - (servicesRij.clientWidth - midden.clientWidth) / 2;
+  }
+
+  const revealNow = (el, observer) => {
+    el.querySelectorAll('.reveal-word').forEach(w => w.classList.add('is-visible'));
+    observer?.unobserve(el);
+  };
+
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        revealNow(entry.target, revealObserver);
+      });
+    }, { threshold: 0.2, rootMargin: '0px 0px -10% 0px' });
+    revealTargets.forEach(el => revealObserver.observe(el));
+
+    /* Vangnet: bij een instant scroll-jump (browser scroll-restore, terug/vooruit-navigatie)
+       kan een kop soms zonder tussenframe voorbij de viewport schieten, waardoor de observer
+       'm nooit als intersecting ziet en de tekst onbedoeld permanent verborgen blijft. We wachten
+       hiervoor NIET op het 'load'-event (dat hangt op trage/geblokkeerde fonts of CDN's en kan
+       zelfs uitblijven). rAF dekt de normale foreground-tab-flow; setTimeout is de fallback voor
+       achtergrond-tabs of embeds waar rAF gethrottled wordt of uitblijft. Samen controleren ze,
+       zodra er een frame is geweest, of er koppen al boven de viewport staan en tonen die alsnog. */
+    const catchUpPassedHeadings = () => {
+      revealTargets.forEach(el => {
+        if (el.getBoundingClientRect().bottom <= 0) revealNow(el, revealObserver);
+      });
+    };
+    requestAnimationFrame(() => requestAnimationFrame(catchUpPassedHeadings));
+    setTimeout(catchUpPassedHeadings, 250);
+  } else {
+    document.querySelectorAll('.reveal-word').forEach(w => w.classList.add('is-visible'));
+  }
+</script>
+
+</body>
+</html>
