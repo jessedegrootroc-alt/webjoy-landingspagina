@@ -510,6 +510,8 @@
   }
   .carousel-arrow:hover { background: #fbfaf8; }
   .carousel-arrow:active { transform: scale(.94); }
+  .carousel-arrow:disabled { opacity: .3; cursor: default; }
+  .carousel-arrow:disabled:hover { background: var(--card-light); }
 
   .social-circle {
     width: 44px; height: 44px;
@@ -919,6 +921,17 @@
         <p class="italic font-medium text-[15px] mt-auto pt-5" style="color:var(--primary)">vanaf &euro;500</p>
       </article>
 
+    </div>
+
+    <!-- Alleen op mobiel: daar is de rij een snap-slider. Op desktop staan de drie
+         kaarten naast elkaar en valt er niets te scrollen. -->
+    <div class="md:hidden flex items-center justify-center gap-3 mt-2">
+      <button id="servicesPrev" aria-label="Vorige service" class="carousel-arrow">
+        <svg class="ico" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21L7 12L16 3"/></svg>
+      </button>
+      <button id="servicesNext" aria-label="Volgende service" class="carousel-arrow">
+        <svg class="ico" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 21L17 12L8 3"/></svg>
+      </button>
     </div>
   </div>
 </section>
@@ -1629,6 +1642,36 @@
   if (servicesRij && window.matchMedia('(max-width: 767px)').matches) {
     const midden = servicesRij.children[1];
     servicesRij.scrollLeft = midden.offsetLeft - (servicesRij.clientWidth - midden.clientWidth) / 2;
+  }
+
+  /* Pijlen naast de slider. Ze schuiven precies één kaart op, en gaan uit zodra
+     je aan een uiteinde staat: met drie kaarten gebeurt dat meteen. */
+  const servicesVorige = document.getElementById('servicesPrev');
+  const servicesVolgende = document.getElementById('servicesNext');
+  if (servicesRij && servicesVorige && servicesVolgende) {
+    const kaartStap = () => {
+      const kaart = servicesRij.querySelector('.service-card');
+      const gat = parseFloat(getComputedStyle(servicesRij).columnGap) || 12;
+      return kaart ? kaart.getBoundingClientRect().width + gat : 300;
+    };
+    const ververs = () => {
+      /* 1px speling: browsers ronden scrollLeft af, waardoor het uiteinde er net niet
+         bereikt uitziet en de pijl actief zou blijven. */
+      const max = servicesRij.scrollWidth - servicesRij.clientWidth;
+      servicesVorige.disabled = servicesRij.scrollLeft <= 1;
+      servicesVolgende.disabled = servicesRij.scrollLeft >= max - 1;
+    };
+    const schuif = (richting) => {
+      servicesRij.scrollBy({ left: richting * kaartStap(), behavior: 'smooth' });
+      /* Naast de scroll-listener: die vuurt niet in elke omgeving, en zonder deze
+         controle achteraf zouden de pijlen aan de uiteinden actief blijven staan. */
+      setTimeout(ververs, 500);
+    };
+    servicesVorige.addEventListener('click', () => schuif(-1));
+    servicesVolgende.addEventListener('click', () => schuif(1));
+    servicesRij.addEventListener('scroll', ververs, { passive: true });
+    window.addEventListener('resize', ververs);
+    ververs();
   }
 
   const revealNow = (el, observer) => {
