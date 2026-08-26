@@ -476,13 +476,6 @@
   .faq-answer { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
   .faq-answer p { padding: 0 24px 22px; margin: 0; color: var(--text-secondary); font-size: 14px; line-height: 1.65; max-width: 34rem; }
 
-  /* ---- Oversized footer wordmark (echte logo, geen tekst) ---- */
-  .footer-wordmark {
-    display: block;
-    width: clamp(14rem, 58vw, 44rem);
-    height: auto;
-  }
-
   /* ---- 4-fasenplan carousel ---- */
   .blob {
     position: absolute;
@@ -1183,21 +1176,8 @@
   </div>
 
   <div class="max-w-content mx-auto px-5 md:px-8 relative z-10">
-    <div class="flex flex-wrap items-center justify-between gap-4 py-6 text-[13px]" style="border-top:1px solid var(--border-low)">
-      <span class="text-secondary">Andere onderdelen van Webjoy</span>
-      <nav class="flex flex-wrap gap-6" aria-label="Footer secundair">
-        <a href="#cases" class="hover:text-black transition-spring text-secondary">Cases</a>
-        <a href="#diensten" class="hover:text-black transition-spring text-secondary">Diensten</a>
-        <a href="#werkwijze" class="hover:text-black transition-spring text-secondary">Werkwijze</a>
-        <a href="#contact" class="hover:text-black transition-spring text-secondary">Contact</a>
-      </nav>
-    </div>
-
-    <!-- Oversized wordmark (echte Webjoy-logo, geen tekstimitatie) -->
-    <img src="assets/logo/webjoy-logo.svg" alt="Webjoy" class="footer-wordmark mt-6">
-
     <!-- Onderste socket-balk -->
-    <ul class="flex items-center gap-6 flex-wrap list-none py-5 mt-4 text-[10px]" style="border-top:1px solid var(--border-low); color:var(--fg-light)">
+    <ul class="flex items-center gap-6 flex-wrap list-none py-5 text-[10px]" style="border-top:1px solid var(--border-low); color:var(--fg-light)">
       <li class="flex items-center gap-1.5 font-medium">
         <img src="assets/logo/webjoy-logo.svg" alt="Webjoy" style="height:12px; width:auto;">
       </li>
