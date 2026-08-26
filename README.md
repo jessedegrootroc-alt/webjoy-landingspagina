@@ -1,10 +1,16 @@
 # Webjoy landingspagina
 
-De complete Webjoy-onepager als statische site (HTML + Tailwind CDN + vanilla JS),
-gestructureerd voor Lovable's Vite-omgeving:
+Statische site (HTML + Tailwind CDN + vanilla JS). Geen build-stap nodig.
 
 - `index.html` — homepage
-- `public/kwalificatie.html` — kwalificatie-funnel
-- `public/assets/` — alle afbeeldingen
+- `kwalificatie.html` — kwalificatie-funnel
+- `assets/` — alle afbeeldingen
 
-Zie `LOVABLE_PROMPT.md` voor het overzetten naar Lovable.
+## Lokaal bekijken
+Open `index.html` in de browser, of draai een lokale server:
+
+    npx serve -l 5500 .
+
+## Publiceren
+De site is statisch en werkt op elke statische host (GitHub Pages, Netlify,
+Vercel, Cloudflare Pages) zonder configuratie: wijs de host naar de hoofdmap.
