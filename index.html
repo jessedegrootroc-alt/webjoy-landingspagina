@@ -530,7 +530,7 @@
   .smiley-fysica {
     position: relative;
     width: 100%;
-    height: clamp(170px, 21vw, 320px);
+    height: clamp(240px, 42vw, 650px);
     overflow: hidden;
     touch-action: pan-y;
   }
@@ -1764,9 +1764,22 @@
 
         /* Aantal en formaat meeschalen met de breedte, anders staat de bak op
            mobiel propvol en op een breed scherm te leeg. */
-        const aantal = Math.max(10, Math.min(18, Math.round(breedte / 75)));
-        const basis  = Math.max(64, Math.min(170, breedte / 9));
+        const basis  = Math.max(128, Math.min(340, breedte / 4.5));
         const schaal = [1, .82, .66];
+
+        /* Het aantal volgt uit de oppervlakte: we vullen de bak tot ongeveer de
+           helft. Vulden we verder, dan stapelen de smileys hoger dan de bak en
+           snijdt overflow:hidden de bovenste doormidden. */
+        const ruimte = breedte * hoogte * 0.5;
+        let gevuld = 0;
+        let aantal = 0;
+        while (aantal < 16) {
+          const straal = (basis * schaal[aantal % schaal.length]) / 2;
+          const erbij = gevuld + Math.PI * straal * straal;
+          if (aantal >= 6 && erbij > ruimte) break;
+          gevuld = erbij;
+          aantal++;
+        }
 
         lichamen = [];
         elementen = [];
@@ -1847,8 +1860,8 @@
       teken();
 
       /* Buiten beeld laten we de motor stilstaan: scheelt rekenwerk en batterij. */
-      new IntersectionObserver(([e]) => { inBeeld = e.isIntersecting; })
-        .observe(smileyVeld);
+      new IntersectionObserver(([e]) => { inBeeld = e.isIntersecting; },
+        { rootMargin: '600px 0px' }).observe(smileyVeld);
 
       /* Alleen opnieuw opbouwen bij een echte breedtewijziging. Op mobiel
          verandert de hoogte al bij het in- en uitschuiven van de adresbalk. */
