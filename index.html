@@ -527,11 +527,21 @@
      De smileys vallen naar binnen zodra de footer in beeld komt en zijn met de
      muis op te pakken. touch-action houdt verticaal scrollen op mobiel intact,
      want de fysica pakt daar alleen horizontale gebaren af. */
-  .smiley-fysica {
+  /* De ruimte houdt de plek in de layout vrij waar de stapel komt te liggen.
+     Het speelveld zelf ligt daar absoluut overheen en loopt naar boven door tot
+     onder de kop, zodat een smiley die je omhoog gooit achter de tekst en de
+     knop langs kan. Geen z-index: de rest van de footer staat op z-10 en komt
+     er dus vanzelf overheen. */
+  .smiley-fysica-ruimte {
     position: relative;
-    width: 100%;
     /* Voorlopige hoogte; het script stelt hem bij op de echte stapel. */
     height: clamp(240px, 28vw, 480px);
+  }
+  .smiley-fysica {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
     touch-action: pan-y;
   }
   .smiley-fysica-item {
@@ -548,6 +558,7 @@
   /* Vangnet: zonder JS, zonder matter.js of bij 'reduce' gewoon een rij smileys,
      zodat er nooit een leeg gat onder in de footer valt. */
   .smiley-fysica.is-statisch {
+    position: static;
     display: flex;
     align-items: flex-end;
     justify-content: center;
@@ -1196,8 +1207,8 @@
   </div>
 
   <!-- Smileys met zwaartekracht: de bakken worden door site-script opgebouwd -->
-  <div aria-hidden="true" class="relative z-10 mb-5">
-    <div id="smileyFysica" class="smiley-fysica" data-smileys="5,3,8,2,6,9,4,1,7"></div>
+  <div aria-hidden="true" class="smiley-fysica-ruimte mb-5">
+    <div id="smileyFysica" class="smiley-fysica" data-smileys="5,3,4,8,2,6,9,1,7"></div>
   </div>
 
   <div class="max-w-content mx-auto px-5 md:px-8 relative z-10">
@@ -1754,6 +1765,9 @@
       const { Engine, Bodies, Composite, Mouse, MouseConstraint } = Matter;
       let engine, lichamen = [], elementen = [], lus = 0, inBeeld = true;
 
+      const ruimte = smileyVeld.parentElement;
+      const footer = smileyVeld.closest('footer');
+
       const bouw = () => {
         const breedte = smileyVeld.clientWidth;
         if (!breedte) return;
@@ -1770,19 +1784,30 @@
         /* Aantal: ruim anderhalf keer wat er in een rij past, zodat de vloer vol
            ligt met hier en daar eentje erbovenop. */
         const perRij = Math.max(1, Math.floor(breedte / (basis * 1.05)));
-        const aantal = Math.max(4, Math.min(16, Math.round(perRij * 1.5)));
+        const aantal = Math.max(7, Math.min(18, Math.round(perRij * 1.5) + 3));
 
-        /* De hoogte van de bak volgt uit hoeveel rijen de smileys nodig hebben.
-           Een vaste hoogte gaf op brede schermen een half lege bak, en op smalle
-           schermen een stapel die tegen het plafond drukte. */
-        let totaal = 0;
-        for (let i = 0; i < aantal; i++) totaal += maatVan(i);
-        /* De factor 1.15 omdat cirkels naast elkaar iets in elkaars ruimte
-           zakken: de som van de diameters mag de breedte een stuk overschrijden
-           voordat er echt een tweede rij ontstaat. */
-        const rijen  = Math.max(1, Math.ceil(totaal / (breedte * 1.15)));
-        const hoogte = Math.round(basis * (0.45 + rijen * 0.95));
+        /* Hoeveel plek de gevallen stapel in de layout inneemt. Losjes gegooide
+           cirkels vullen ongeveer 64% van het vlak waar ze in liggen; rekenen
+           met rijen gaf een veel te hoge bak, omdat de bovenste smileys in de
+           kuiltjes tussen de onderste zakken. */
+        let oppervlak = 0;
+        for (let i = 0; i < aantal; i++) {
+          const straal = maatVan(i) / 2;
+          oppervlak += Math.PI * straal * straal;
+        }
+        const stapel = Math.round(oppervlak / (breedte * 0.64) + basis * 0.12);
+        ruimte.style.height = stapel + 'px';
+
+        /* Het speelveld loopt door tot net onder de bovenrand van de footer, zodat
+           een omhoog gegooide smiley achter de kop en de knop kan verdwijnen. Het
+           blijft binnen de footer: die heeft overflow:hidden, en daarbuiten zou
+           er alsnog een rechte rand door een smiley lopen. */
+        const speelruimte = Math.max(0, Math.round(
+          ruimte.getBoundingClientRect().top - footer.getBoundingClientRect().top - 8));
+        const hoogte = stapel + speelruimte;
         smileyVeld.style.height = hoogte + 'px';
+        const speelruimteOffset = Math.round(
+          smileyVeld.getBoundingClientRect().top - footer.getBoundingClientRect().top);
 
         lichamen = [];
         elementen = [];
@@ -1795,7 +1820,7 @@
           const rij   = Math.floor(i / perRij);
           const x = Math.min(breedte - maat / 2, Math.max(maat / 2,
             ((kolom + 0.5) / perRij) * breedte + speling));
-          const y = Math.min(hoogte - maat / 2, maat / 2 + rij * basis * 1.05);
+          const y = hoogte - stapel + Math.min(stapel - maat / 2, maat / 2 + rij * basis * 1.05);
           lichamen.push(Bodies.circle(x, y, maat / 2, {
             angle: (Math.random() - 0.5) * 0.8,
             friction: 0.1,
@@ -1826,7 +1851,13 @@
           Bodies.rectangle(breedte + dik / 2, hoogte / 2, dik, hoogte + dik * 2, { isStatic: true }),
         ]);
 
-        const muis = Mouse.create(smileyVeld);
+        /* De muis hangt aan de footer, niet aan het speelveld. Het bovenste stuk
+           van het veld ligt achter het tekstblok, en dat blok vangt de
+           muisbewegingen af: sleep je een smiley omhoog, dan stopt hij op de
+           rand van het blok. Via de footer komen alle bewegingen wel binnen; de
+           offset rekent ze terug naar de coordinaten van het speelveld. */
+        const muis = Mouse.create(footer);
+        Mouse.setOffset(muis, { x: 0, y: -speelruimteOffset });
         const sleep = MouseConstraint.create(engine, {
           mouse: muis,
           constraint: { stiffness: 0.9, angularStiffness: 0, render: { visible: false } },
@@ -1842,7 +1873,7 @@
         muis.element.removeEventListener('touchmove', muis.mousemove);
         muis.element.removeEventListener('touchend', muis.mouseup);
 
-        smileyVeld.addEventListener('mouseleave', () => {
+        footer.addEventListener('mouseleave', () => {
           sleep.mouse.mouseup(new Event('mouseup'));
         });
       };
