@@ -10,6 +10,7 @@
 <link rel="icon" href="assets/favicon/favicon-32.png" sizes="32x32" type="image/png" />
 <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png" />
 <meta name="theme-color" content="#F3EFEA" />
+<link rel="stylesheet" href="cookiebalk.css" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,9 +49,23 @@
     <h1 class="font-gothic font-medium text-[2rem] md:text-[2.75rem] leading-tight mb-4">Cookies</h1>
     <p class="text-secondary text-[14px] mb-10">Laatst bijgewerkt: <span class="font-mono-token">nog invullen</span></p>
 
-    <h2>Deze site gebruikt geen cookies</h2>
-    <p>Op dit moment plaatst deze website geen cookies en slaat hij niets op in je browser. Er valt dus ook niets in of uit te schakelen.</p>
-    <h2>Wat er wel gebeurt</h2>
+    <h2>Wat deze site plaatst</h2>
+    <p>Op dit moment plaatst deze website geen analytische of marketingcookies. Er draait geen statistiekentool en er staat geen advertentiepixel op de pagina.</p>
+    <p>Het enige dat wordt opgeslagen is je eigen keuze in de cookiemelding. Die bewaar ik in de lokale opslag van je browser onder de naam <span class="invulveld">webjoy-cookies-v1</span>, zodat je de vraag niet bij elk bezoek opnieuw krijgt. Dat is geen cookie: het gaat niet mee naar de server en is alleen op jouw apparaat te lezen.</p>
+
+    <h2>De drie categorie&euml;n</h2>
+    <h3>Functioneel</h3>
+    <p>Nodig om de site te laten werken, waaronder het onthouden van je keuze in de cookiemelding. Hiervoor is geen toestemming vereist en deze staat daarom altijd aan.</p>
+    <h3>Analytisch</h3>
+    <p>Bedoeld om te zien welke pagina&rsquo;s bezocht worden en waar bezoekers afhaken, zodat de site verbeterd kan worden. Wordt pas geladen nadat je daar toestemming voor hebt gegeven.</p>
+    <h3>Marketing</h3>
+    <p>Bedoeld voor advertenties en het meten van het effect daarvan. Op dit moment niet in gebruik.</p>
+
+    <h2>Je keuze wijzigen</h2>
+    <p>Je kunt je keuze op elk moment aanpassen of intrekken.</p>
+    <p><button type="button" class="cookie-knop cookie-knop--donker" data-cookie-instellingen style="max-width:260px">Cookie-instellingen openen</button></p>
+
+    <h2>Wat er verder gebeurt</h2>
     <p>De pagina laadt lettertypen en scripts van externe adressen. Die zetten geen cookies, maar ontvangen wel het IP-adres van je bezoeker:</p>
     <ul>
       <li>Google Fonts (fonts.googleapis.com en fonts.gstatic.com)</li>
@@ -58,12 +73,6 @@
       <li>cdn.jsdelivr.net</li>
     </ul>
     <p>Meer daarover staat in het <a href="privacybeleid.html">privacybeleid</a>.</p>
-    <h2>Als dat verandert</h2>
-    <p>Zodra er statistieken, advertentiepixels of embeds bijkomen, komt hier een overzicht van de cookies en een keuzemogelijkheid.</p>
-    <div class="invulblok">
-      <p>Deze pagina bijwerken zodra je iets als Google Analytics, een Meta Pixel of een YouTube-embed toevoegt.</p>
-    </div>
-
   </div>
 </main>
 
@@ -80,6 +89,53 @@
     <li><a href="cookies.html">Cookie-instellingen</a></li>
   </ul>
 </footer>
+
+
+<!-- ================= COOKIEMELDING ================= -->
+<aside id="cookiebalk" class="cookiebalk" hidden aria-label="Cookiemelding">
+  <h2>Cookie-instellingen</h2>
+  <p>Deze site plaatst alleen wat nodig is om hem te laten werken. Zet je analytische cookies aan, dan help je me te zien wat werkt en wat niet. Lees het <a href="cookies.html">cookiebeleid</a>.</p>
+
+  <div id="cookieKeuzes" class="cookie-keuzes" hidden>
+    <div class="cookie-optie">
+      <label class="cookie-schakelaar">
+        <input type="checkbox" checked disabled aria-label="Functionele cookies, altijd aan">
+        <span aria-hidden="true"></span>
+      </label>
+      <div>
+        <span class="cookie-optie-naam">Functioneel</span>
+        <p>Nodig om de site te laten werken. Staat altijd aan.</p>
+      </div>
+    </div>
+    <div class="cookie-optie">
+      <label class="cookie-schakelaar">
+        <input type="checkbox" id="cookieAnalytisch" aria-label="Analytische cookies">
+        <span aria-hidden="true"></span>
+      </label>
+      <div>
+        <span class="cookie-optie-naam">Analytisch</span>
+        <p>Laat me zien welke pagina&rsquo;s bezocht worden, zodat ik de site kan verbeteren.</p>
+      </div>
+    </div>
+    <div class="cookie-optie">
+      <label class="cookie-schakelaar">
+        <input type="checkbox" id="cookieMarketing" aria-label="Marketingcookies">
+        <span aria-hidden="true"></span>
+      </label>
+      <div>
+        <span class="cookie-optie-naam">Marketing</span>
+        <p>Voor advertenties en het meten daarvan. Nu niet in gebruik.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cookie-knoppen">
+    <button type="button" class="cookie-knop" data-cookie="weigeren">Weigeren</button>
+    <button type="button" class="cookie-knop" data-cookie="aanpassen">Aanpassen</button>
+    <button type="button" class="cookie-knop cookie-knop--donker" data-cookie="toestaan">Toestaan</button>
+  </div>
+</aside>
+<script src="cookiebalk.js"></script>
 
 </body>
 </html>
