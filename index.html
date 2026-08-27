@@ -258,40 +258,31 @@
   .marquee-row-3 { animation: marquee-right 80s linear infinite; }
   .marquee-row-4 { animation: marquee-right 90s linear infinite; }
 
-  /* ---- Reviewkaart in de hero-slider: portretfoto vult de kaart, tekst op een
-     donker verloop onderaan. De kaarten rekken mee met de langste quote (flex
-     stretch), zodat de rij één hoogte houdt zonder tekst af te kappen. ---- */
+  /* ---- Reviewkaart in de hero-slider: alleen tekst, geen portret. De kaarten
+     rekken mee met de langste quote (flex stretch), zodat de rij één hoogte
+     houdt zonder tekst af te kappen. ---- */
   .review-card {
     flex-shrink: 0;
     width: 340px;
     margin-right: 20px;
-    position: relative;
     overflow: hidden;
     border-radius: var(--gl-radius-card);
     border: 1px solid var(--border-low);
-    /* Zichtbaar zolang een portretfoto nog ontbreekt. */
-    background: linear-gradient(160deg, #FBF9F6, var(--border-low));
+    background: var(--card-light, #FFFFFF);
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    min-height: 440px;
+    min-height: 230px;
   }
-  .review-foto { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  /* Licht verloop i.p.v. zwart: wit vlak dat naar boven uitvloeit over de foto. */
-  .review-inhoud {
-    position: relative;
-    padding: 190px 24px 24px;
-    background: linear-gradient(to top, rgba(255,255,255,.96) 0%, rgba(255,255,255,.85) 38%, transparent 100%);
-  }
+  .review-inhoud { padding: 24px; }
   .review-sterren { display: flex; gap: 3px; margin-bottom: 10px; color: var(--primary); }
-  /* De set levert een ster als contour; gevuld leest hij beter op een foto. */
+  /* De set levert een ster als contour; gevuld leest hij beter als waardering. */
   .review-sterren .ico { fill: currentColor; stroke: none; }
   .review-naam  { color: var(--fg-light); font-weight: 500; font-size: 16px; line-height: 1.25; margin-bottom: 6px; }
   .review-rol   { color: var(--text-secondary); font-size: 12px; line-height: 1.3; margin-bottom: 10px; }
   .review-card blockquote { margin: 0; color: var(--text-secondary); font-size: 13.5px; line-height: 1.55; }
   @media (max-width: 767px) {
-    .review-card { width: 265px; margin-right: 14px; border-radius: 1.6rem; min-height: 400px; }
-    .review-inhoud { padding: 150px 20px 20px; }
+    .review-card { width: 265px; margin-right: 14px; border-radius: 1.6rem; min-height: 210px; }
+    .review-inhoud { padding: 20px; }
     /* Smallere kaarten = kortere rij, dus korter draaien om dezelfde ~20px/s te houden. */
     .marquee-row-4 { animation-duration: 70s; }
   }
@@ -1473,30 +1464,11 @@
   ];
   const palette = ['#FCC934', '#5E9BFF', '#48F08B', '#FFBDF9', '#DDD3C7', '#9AA0A6'];
 
-  /* ---- Hero-reviewslider: zelfde quotes als de testimonials-sectie ----
-     Per review een portretfoto in assets/reviews/. Bestaat die nog niet, dan valt de
-     kaart terug op de initialen-avatar. We controleren dat vooraf en bouwen de rij
-     daarna pas op: kaarten achteraf aanpassen zou de twee helften van de lus
-     uit balans brengen en de marquee laten verspringen. */
-  const initialen = (naam) => naam.split(' ').map(n => n[0]).join('').slice(0,2);
-  const reviewFotos = {
-    'Lody Bunsschoten': 'assets/reviews/lody.jpg',
-    'Ronald Klein':     'assets/reviews/ronald.jpg',
-    'Wiekert Jager':    'assets/reviews/wiekert.jpg',
-  };
-
-  Promise.all(testimonials.map((t, i) => new Promise(res => {
-    const src = reviewFotos[t.name];
-    if (!src) return res({ ...t, i, foto: null });
-    const probe = new Image();
-    probe.onload  = () => res({ ...t, i, foto: src });
-    probe.onerror = () => res({ ...t, i, foto: null });
-    probe.src = src;
-  }))).then(items => {
+  /* ---- Hero-reviewslider: zelfde quotes als de testimonials-sectie ---- */
+  {
     const ster = '<svg class="ico" width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3L14.234 10H21L15.615 14.125L17.849 21L12 16.751L6.151 21L8.385 14.125L3 10H9.766L12 3Z"/></svg>';
     const kaart = (t) => `
       <article class="review-card">
-        ${t.foto ? `<img src="${t.foto}" alt="" class="review-foto">` : ''}
         <div class="review-inhoud">
           <div class="review-sterren">${ster.repeat(5)}</div>
           <p class="review-naam">${t.name}</p>
@@ -1506,10 +1478,10 @@
       </article>`;
     /* Drie kaarten is te weinig om een breed scherm te vullen; twee sets naast elkaar
        vormen samen de lus, dus verdubbelen we de basisset eerst. */
-    const basis = items.concat(items);
+    const basis = testimonials.concat(testimonials);
     document.getElementById('heroReviews').innerHTML =
       basis.concat(basis).map(kaart).join('');
-  });
+  }
   const faqs = [
     { q: 'Even concreet, wat doen jullie precies?', a: [
       'Het is een uniek concept, maar kort:',
