@@ -274,7 +274,26 @@
     min-height: 230px;
   }
   .review-inhoud { padding: 24px; }
-  .review-sterren { display: flex; gap: 3px; margin-bottom: 10px; color: var(--primary); }
+  .review-sterren { display: flex; gap: 3px; margin-bottom: 12px; color: var(--primary); }
+  /* Avatar met initialen, zoals Google die toont zonder profielfoto. De kleuren
+     komen uit de eigen palet-tinten en zijn licht, dus de letters staan er in de
+     donkere tekstkleur op in plaats van in wit. */
+  .review-persoon { display: flex; align-items: center; gap: 11px; margin-bottom: 12px; }
+  .review-avatar {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: .02em;
+    color: var(--fg-light);
+  }
+  .review-persoon .review-naam,
+  .review-persoon .review-rol { margin-bottom: 0; }
   /* De set levert een ster als contour; gevuld leest hij beter als waardering. */
   .review-sterren .ico { fill: currentColor; stroke: none; }
   .review-naam  { color: var(--fg-light); font-weight: 500; font-size: 16px; line-height: 1.25; margin-bottom: 6px; }
@@ -1467,20 +1486,30 @@
   /* ---- Hero-reviewslider: zelfde quotes als de testimonials-sectie ---- */
   {
     const ster = '<svg class="ico" width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3L14.234 10H21L15.615 14.125L17.849 21L12 16.751L6.151 21L8.385 14.125L3 10H9.766L12 3Z"/></svg>';
-    const kaart = (t) => `
+    /* Voor- en achternaamletter, zoals Google doet als er geen profielfoto is. */
+    const initialen = (naam) => naam.trim().split(/\s+/).map(d => d[0]).join('').slice(0, 2).toUpperCase();
+    const avatarKleuren = ['#FFE7A3', '#CFE0FF', '#CCEEE5', '#FFD9F7', '#E3DCD2'];
+    const kaart = (t, i) => `
       <article class="review-card">
         <div class="review-inhoud">
           <div class="review-sterren">${ster.repeat(5)}</div>
-          <p class="review-naam">${t.name}</p>
-          <p class="review-rol">${t.title}</p>
+          <div class="review-persoon">
+            <span class="review-avatar" aria-hidden="true"
+                  style="background:${avatarKleuren[i % avatarKleuren.length]}">${initialen(t.name)}</span>
+            <div>
+              <p class="review-naam">${t.name}</p>
+              <p class="review-rol">${t.title}</p>
+            </div>
+          </div>
           <blockquote>&ldquo;${t.quote}&rdquo;</blockquote>
         </div>
       </article>`;
     /* Drie kaarten is te weinig om een breed scherm te vullen; twee sets naast elkaar
        vormen samen de lus, dus verdubbelen we de basisset eerst. */
-    const basis = testimonials.concat(testimonials);
+    const genummerd = testimonials.map((t, i) => ({ ...t, kleurNr: i }));
+    const basis = genummerd.concat(genummerd);
     document.getElementById('heroReviews').innerHTML =
-      basis.concat(basis).map(kaart).join('');
+      basis.concat(basis).map(t => kaart(t, t.kleurNr)).join('');
   }
   const faqs = [
     { q: 'Even concreet, wat doen jullie precies?', a: [
