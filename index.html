@@ -256,7 +256,7 @@
   .marquee-row-1 { animation: marquee-right 52s linear infinite; }
   .marquee-row-2 { animation: marquee-left  60s linear infinite; }
   .marquee-row-3 { animation: marquee-right 80s linear infinite; }
-  .marquee-row-4 { animation: marquee-right 90s linear infinite; }
+  .marquee-row-4 { animation: marquee-right 195s linear infinite; }
 
   /* ---- Reviewkaart in de hero-slider: alleen tekst, geen portret. De kaarten
      rekken mee met de langste quote (flex stretch), zodat de rij één hoogte
@@ -274,7 +274,14 @@
     min-height: 230px;
   }
   .review-inhoud { padding: 24px; }
-  .review-sterren { display: flex; gap: 3px; margin-bottom: 12px; color: var(--primary); }
+  .review-sterren { display: flex; align-items: center; gap: 3px; margin-bottom: 12px; color: var(--primary); }
+  /* Halve ster: een lege ster met daarover een tot de helft afgeknipte volle.
+     De binnenste ster houdt zijn eigen breedte, de wikkel knipt hem af, anders
+     zou hij uitgerekt worden in plaats van gehalveerd. */
+  .review-ster-half { position: relative; display: inline-flex; width: 13px; height: 13px; }
+  .review-ster-half > .ico { color: var(--border-mid, #DDD3C7); }
+  .review-ster-vulling { position: absolute; inset: 0; width: 50%; overflow: hidden; display: flex; }
+  .review-ster-vulling .ico { flex-shrink: 0; }
   /* Avatar met initialen, zoals Google die toont zonder profielfoto. De kleuren
      komen uit de eigen palet-tinten en zijn licht, dus de letters staan er in de
      donkere tekstkleur op in plaats van in wit. */
@@ -303,7 +310,7 @@
     .review-card { width: 265px; margin-right: 14px; border-radius: 1.6rem; min-height: 210px; }
     .review-inhoud { padding: 20px; }
     /* Smallere kaarten = kortere rij, dus korter draaien om dezelfde ~20px/s te houden. */
-    .marquee-row-4 { animation-duration: 70s; }
+    .marquee-row-4 { animation-duration: 150s; }
   }
   /* Tussenruimte staat als margin-right ÓP het item, niet als flex-gap op de rij.
      Bij een gap telt de rij 2N items + (2N-1) gaps, waardoor translateX(-50%) een halve
@@ -1477,22 +1484,34 @@
   document.getElementById('uspNext')?.addEventListener('click', () => scrollByUsp(1));
 
   const testimonials = [
-    { name: 'Lody Bunsschoten', title: 'CEO, Yourhome', quote: "Jesse is een uitstekende keuze als feedback provider voor onze website redesign. Zijn professionaliteit, openheid en toewijding om zijn beloftes na te komen maken hem een ideale contactpersoon. Met Jesse's waardevolle input kunnen we met vertrouwen een website creëren die de verwachtingen van onze gebruikers overtreft." },
-    { name: 'Ronald Klein', title: 'Partner, Koffiebazen', quote: 'Met diepgaande expertise in webdesign heeft Jesse alles onder de knie. Hij is iemand waarop je volledig kunt vertrouwen om elk project tot een succesvol resultaat te brengen.' },
-    { name: 'Wiekert Jager', title: 'Accountmanager, de Producent', quote: "Jesse's vermogen om gebruikersgericht te denken maakt hem een onmisbare schakel in onze digitale projecten. Hij combineert strategisch inzicht met creativiteit, wat resulteert in oplossingen die écht werken voor onze inwoners." },
+    { name: "Lody Bunsschoten", title: "CEO, Yourhome", sterren: 5, quote: "Jesse is een uitstekende keuze als feedback provider voor onze website redesign. Zijn professionaliteit, openheid en toewijding om zijn beloftes na te komen maken hem een ideale contactpersoon. Met Jesse's waardevolle input kunnen we met vertrouwen een website creëren die de verwachtingen van onze gebruikers overtreft." },
+    { name: "Ronald Klein", title: "Partner, Koffiebazen", sterren: 4.5, quote: "Met diepgaande expertise in webdesign heeft Jesse alles onder de knie. Hij is iemand waarop je volledig kunt vertrouwen om elk project tot een succesvol resultaat te brengen." },
+    { name: "Daan de Vries", title: "CEO, Koffiebazen", sterren: 5, quote: "Jesse heeft een uitstekend ontwerp voor ons gemaakt dat perfect aansluit bij de visie van Koffiebazen. Zijn creativiteit en oog voor detail maken echt het verschil." },
+    { name: "Wiekert Jager", title: "Accountmanager, de Producent", sterren: 4.5, quote: "Jesse's vermogen om gebruikersgericht te denken maakt hem een onmisbare schakel in onze digitale projecten. Hij combineert strategisch inzicht met creativiteit, wat resulteert in oplossingen die écht werken voor onze inwoners." },
+    { name: "Tobias Jansen", title: "Projectmanager Digitale Dienstverlening, Gemeente Amsterdam", sterren: 5, quote: "De samenwerking met Jesse was verfrissend. Zijn aanpak is gestructureerd, zijn communicatie helder en zijn ontwerpkeuzes onderbouwd. Dankzij zijn inzet kunnen wij nu een gebruiksvriendelijkere en toegankelijkere website aanbieden." },
+    { name: "Annemarie van Oorschot", title: "Directeur, Groene Groeiers", sterren: 4.5, quote: "Jesse heeft ons enorm geholpen met het vertalen van onze duurzame missie naar een krachtig online platform. Zijn ontwerpen ademen onze visie en zijn gevoel voor detail is indrukwekkend." },
+    { name: "Rebecca de Graaff", title: "Communicatiespecialist, Groene Groeiers", sterren: 5, quote: "Wat Jesse uniek maakt is zijn vermogen om complexe informatie te vertalen naar eenvoudige en aantrekkelijke interfaces. Hij denkt niet alleen mee, hij denkt vooruit. Een absolute aanrader!" },
+    { name: "Michiel de Wijn", title: "CEO, MIAX", sterren: 4.5, quote: "Jesse is kritisch op het eigen werk met als doel dit te verbeteren en zoekt actief naar feedback. Is in staat om ethische gevolgen van het ontwerp te verantwoorden. Evalueert de vorderingen continu met gebruikers, andere stakeholders, experts en collega's." },
+    { name: "Sammy Speulman", title: "Unity Developer, Therapieland", sterren: 5, quote: "Als stageleider van Jesse bij de ontwikkeling van de Blikopener-app, ben ik onder de indruk van zijn vakkundigheid en technisch inzicht in user experience en interface design. Jesse heeft effectieve virtuele realiteitstoepassingen voor angsttherapie ontworpen." },
+    { name: "Jan Dorenbos", title: "CEO, Garage Dorenbos B.V.", sterren: 4.5, quote: "Jesse heeft ons geholpen bij het rebranden van onze website bij Garage Dorenbos en was een uitstekende partner in dit proces. Zijn aandacht voor detail en vermogen om onze visie tot leven te brengen, maakte hem tot een waardevolle toevoeging aan ons team." },
+    { name: "Miquel Gouwerok", title: "Eigenaar, SuperSchoon", sterren: 5, quote: "Jesse heeft een design afgeleverd dat precies past bij de uitstraling die we als schoonmaakbedrijf willen hebben: fris, professioneel en betrouwbaar. Hij denkt echt mee vanuit het merk." },
+    { name: "Martin de Groot", title: "Commercieel Directeur, Madegro", sterren: 4.5, quote: "De samenwerking met Jesse verliep soepel en professioneel. Hij weet hoe je een ontwerp maakt dat zowel visueel sterk is als functioneel goed werkt. Onze nieuwe site straalt vakmanschap uit." },
+    { name: "Roberto Lungo", title: "Partner, De Producent", sterren: 5, quote: "Jesse weet wat belangrijk is in de wereld van branding en online zichtbaarheid. Hij heeft onze ideeën perfect weten te vertalen naar een sterk visueel ontwerp." },
   ];
   const palette = ['#FCC934', '#5E9BFF', '#48F08B', '#FFBDF9', '#DDD3C7', '#9AA0A6'];
 
   /* ---- Hero-reviewslider: zelfde quotes als de testimonials-sectie ---- */
   {
     const ster = '<svg class="ico" width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3L14.234 10H21L15.615 14.125L17.849 21L12 16.751L6.151 21L8.385 14.125L3 10H9.766L12 3Z"/></svg>';
+    const halveSter = `<span class="review-ster-half">${ster}<span class="review-ster-vulling">${ster}</span></span>`;
+    const sterrenRij = (score) => ster.repeat(Math.floor(score)) + (score % 1 ? halveSter : '');
     /* Voor- en achternaamletter, zoals Google doet als er geen profielfoto is. */
     const initialen = (naam) => naam.trim().split(/\s+/).map(d => d[0]).join('').slice(0, 2).toUpperCase();
     const avatarKleuren = ['#FFE7A3', '#CFE0FF', '#CCEEE5', '#FFD9F7', '#E3DCD2'];
     const kaart = (t, i) => `
       <article class="review-card">
         <div class="review-inhoud">
-          <div class="review-sterren">${ster.repeat(5)}</div>
+          <div class="review-sterren" aria-label="${t.sterren} van de 5 sterren">${sterrenRij(t.sterren)}</div>
           <div class="review-persoon">
             <span class="review-avatar" aria-hidden="true"
                   style="background:${avatarKleuren[i % avatarKleuren.length]}">${initialen(t.name)}</span>
@@ -1506,10 +1525,12 @@
       </article>`;
     /* Drie kaarten is te weinig om een breed scherm te vullen; twee sets naast elkaar
        vormen samen de lus, dus verdubbelen we de basisset eerst. */
+    /* De marquee schuift precies de helft op, dus de rij moet uit twee gelijke
+       helften bestaan. Dertien kaarten vullen elk scherm ruim, dus één
+       verdubbeling is genoeg; meer zou alleen extra DOM opleveren. */
     const genummerd = testimonials.map((t, i) => ({ ...t, kleurNr: i }));
-    const basis = genummerd.concat(genummerd);
     document.getElementById('heroReviews').innerHTML =
-      basis.concat(basis).map(t => kaart(t, t.kleurNr)).join('');
+      genummerd.concat(genummerd).map(t => kaart(t, t.kleurNr)).join('');
   }
   const faqs = [
     { q: 'Even concreet, wat doen jullie precies?', a: [
