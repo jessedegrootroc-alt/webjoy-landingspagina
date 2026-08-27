@@ -256,7 +256,7 @@
   .marquee-row-1 { animation: marquee-right 52s linear infinite; }
   .marquee-row-2 { animation: marquee-left  60s linear infinite; }
   .marquee-row-3 { animation: marquee-right 80s linear infinite; }
-  .marquee-row-4 { animation: marquee-right 195s linear infinite; }
+  .marquee-row-4 { animation: marquee-right 150s linear infinite; }
 
   /* ---- Reviewkaart in de hero-slider: alleen tekst, geen portret. De kaarten
      rekken mee met de langste quote (flex stretch), zodat de rij één hoogte
@@ -310,7 +310,7 @@
     .review-card { width: 265px; margin-right: 14px; border-radius: 1.6rem; min-height: 210px; }
     .review-inhoud { padding: 20px; }
     /* Smallere kaarten = kortere rij, dus korter draaien om dezelfde ~20px/s te houden. */
-    .marquee-row-4 { animation-duration: 150s; }
+    .marquee-row-4 { animation-duration: 116s; }
   }
   /* Tussenruimte staat als margin-right ÓP het item, niet als flex-gap op de rij.
      Bij een gap telt de rij 2N items + (2N-1) gaps, waardoor translateX(-50%) een halve
@@ -1484,19 +1484,16 @@
   document.getElementById('uspNext')?.addEventListener('click', () => scrollByUsp(1));
 
   const testimonials = [
-    { name: "Lody Bunsschoten", title: "CEO, Yourhome", sterren: 5, quote: "Jesse is een uitstekende keuze als feedback provider voor onze website redesign. Zijn professionaliteit, openheid en toewijding om zijn beloftes na te komen maken hem een ideale contactpersoon. Met Jesse's waardevolle input kunnen we met vertrouwen een website creëren die de verwachtingen van onze gebruikers overtreft." },
-    { name: "Ronald Klein", title: "Partner, Koffiebazen", sterren: 4.5, quote: "Met diepgaande expertise in webdesign heeft Jesse alles onder de knie. Hij is iemand waarop je volledig kunt vertrouwen om elk project tot een succesvol resultaat te brengen." },
-    { name: "Daan de Vries", title: "CEO, Koffiebazen", sterren: 5, quote: "Jesse heeft een uitstekend ontwerp voor ons gemaakt dat perfect aansluit bij de visie van Koffiebazen. Zijn creativiteit en oog voor detail maken echt het verschil." },
-    { name: "Wiekert Jager", title: "Accountmanager, de Producent", sterren: 4.5, quote: "Jesse's vermogen om gebruikersgericht te denken maakt hem een onmisbare schakel in onze digitale projecten. Hij combineert strategisch inzicht met creativiteit, wat resulteert in oplossingen die écht werken voor onze inwoners." },
     { name: "Tobias Jansen", title: "Projectmanager Digitale Dienstverlening, Gemeente Amsterdam", sterren: 5, quote: "De samenwerking met Jesse was verfrissend. Zijn aanpak is gestructureerd, zijn communicatie helder en zijn ontwerpkeuzes onderbouwd. Dankzij zijn inzet kunnen wij nu een gebruiksvriendelijkere en toegankelijkere website aanbieden." },
-    { name: "Annemarie van Oorschot", title: "Directeur, Groene Groeiers", sterren: 4.5, quote: "Jesse heeft ons enorm geholpen met het vertalen van onze duurzame missie naar een krachtig online platform. Zijn ontwerpen ademen onze visie en zijn gevoel voor detail is indrukwekkend." },
-    { name: "Rebecca de Graaff", title: "Communicatiespecialist, Groene Groeiers", sterren: 5, quote: "Wat Jesse uniek maakt is zijn vermogen om complexe informatie te vertalen naar eenvoudige en aantrekkelijke interfaces. Hij denkt niet alleen mee, hij denkt vooruit. Een absolute aanrader!" },
-    { name: "Michiel de Wijn", title: "CEO, MIAX", sterren: 4.5, quote: "Jesse is kritisch op het eigen werk met als doel dit te verbeteren en zoekt actief naar feedback. Is in staat om ethische gevolgen van het ontwerp te verantwoorden. Evalueert de vorderingen continu met gebruikers, andere stakeholders, experts en collega's." },
-    { name: "Sammy Speulman", title: "Unity Developer, Therapieland", sterren: 5, quote: "Als stageleider van Jesse bij de ontwikkeling van de Blikopener-app, ben ik onder de indruk van zijn vakkundigheid en technisch inzicht in user experience en interface design. Jesse heeft effectieve virtuele realiteitstoepassingen voor angsttherapie ontworpen." },
-    { name: "Jan Dorenbos", title: "CEO, Garage Dorenbos B.V.", sterren: 4.5, quote: "Jesse heeft ons geholpen bij het rebranden van onze website bij Garage Dorenbos en was een uitstekende partner in dit proces. Zijn aandacht voor detail en vermogen om onze visie tot leven te brengen, maakte hem tot een waardevolle toevoeging aan ons team." },
-    { name: "Miquel Gouwerok", title: "Eigenaar, SuperSchoon", sterren: 5, quote: "Jesse heeft een design afgeleverd dat precies past bij de uitstraling die we als schoonmaakbedrijf willen hebben: fris, professioneel en betrouwbaar. Hij denkt echt mee vanuit het merk." },
-    { name: "Martin de Groot", title: "Commercieel Directeur, Madegro", sterren: 4.5, quote: "De samenwerking met Jesse verliep soepel en professioneel. Hij weet hoe je een ontwerp maakt dat zowel visueel sterk is als functioneel goed werkt. Onze nieuwe site straalt vakmanschap uit." },
-    { name: "Roberto Lungo", title: "Partner, De Producent", sterren: 5, quote: "Jesse weet wat belangrijk is in de wereld van branding en online zichtbaarheid. Hij heeft onze ideeën perfect weten te vertalen naar een sterk visueel ontwerp." },
+    { name: "Wiekert Jager", title: "Accountmanager, de Producent", sterren: 4.5, quote: "Jesse's vermogen om gebruikersgericht te denken maakt hem een onmisbare schakel in onze digitale projecten. Hij combineert strategisch inzicht met creativiteit, wat resulteert in oplossingen die écht werken voor onze inwoners." },
+    { name: "Annemarie van Oorschot", title: "Directeur, Groene Groeiers", sterren: 5, quote: "Jesse heeft ons enorm geholpen met het vertalen van onze duurzame missie naar een krachtig online platform. Zijn ontwerpen ademen onze visie en zijn gevoel voor detail is indrukwekkend." },
+    { name: "Miquel Gouwerok", title: "Eigenaar, SuperSchoon", sterren: 4.5, quote: "Jesse heeft een design afgeleverd dat precies past bij de uitstraling die we als schoonmaakbedrijf willen hebben: fris, professioneel en betrouwbaar. Hij denkt echt mee vanuit het merk." },
+    { name: "Ronald Klein", title: "Partner, Koffiebazen", sterren: 5, quote: "Met diepgaande expertise in webdesign heeft Jesse alles onder de knie. Hij is iemand waarop je volledig kunt vertrouwen om elk project tot een succesvol resultaat te brengen." },
+    { name: "Rebecca de Graaff", title: "Communicatiespecialist, Groene Groeiers", sterren: 4.5, quote: "Wat Jesse uniek maakt is zijn vermogen om complexe informatie te vertalen naar eenvoudige en aantrekkelijke interfaces. Hij denkt niet alleen mee, hij denkt vooruit." },
+    { name: "Jan Dorenbos", title: "CEO, Garage Dorenbos B.V.", sterren: 5, quote: "Jesse heeft ons geholpen bij het rebranden van onze website bij Garage Dorenbos. Zijn aandacht voor detail en vermogen om onze visie tot leven te brengen, maakte hem tot een waardevolle toevoeging aan ons team." },
+    { name: "Roberto Lungo", title: "Partner, De Producent", sterren: 4.5, quote: "Jesse weet wat belangrijk is in de wereld van branding en online zichtbaarheid. Hij heeft onze ideeën perfect weten te vertalen naar een sterk visueel ontwerp." },
+    { name: "Martin de Groot", title: "Commercieel Directeur, Madegro", sterren: 5, quote: "Hij weet hoe je een ontwerp maakt dat zowel visueel sterk is als functioneel goed werkt. Onze nieuwe site straalt vakmanschap uit." },
+    { name: "Lody Bunsschoten", title: "CEO, Yourhome", sterren: 4.5, quote: "Met Jesse's waardevolle input kunnen we met vertrouwen een website creëren die de verwachtingen van onze gebruikers overtreft." },
   ];
   const palette = ['#FCC934', '#5E9BFF', '#48F08B', '#FFBDF9', '#DDD3C7', '#9AA0A6'];
 
