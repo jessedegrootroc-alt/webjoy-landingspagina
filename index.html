@@ -523,18 +523,43 @@
   }
   .social-circle:hover { background: rgba(50,50,50,.05); }
 
-  /* transform: scale() keeps reserving its untransformed box in the document flow, so we
-     compensate with a negative margin-bottom (based on the unused space at each scale) to
-     keep a consistent ~20px gap below the cluster without clipping any smiley. */
-  .shape-cluster { transform: scale(1); transform-origin: top center; transition: none; }
-  .shape-cluster-viewport { overflow: visible; margin-bottom: 20px; }
-  @media (max-width: 900px) {
-    .shape-cluster { transform: scale(.78); }
-    .shape-cluster-viewport { margin-bottom: -99px; }
+  /* ---- Footer: smileys met zwaartekracht ----
+     De smileys vallen naar binnen zodra de footer in beeld komt en zijn met de
+     muis op te pakken. touch-action houdt verticaal scrollen op mobiel intact,
+     want de fysica pakt daar alleen horizontale gebaren af. */
+  .smiley-fysica {
+    position: relative;
+    width: 100%;
+    height: clamp(200px, 26vw, 380px);
+    overflow: hidden;
+    touch-action: pan-y;
   }
-  @media (max-width: 640px) {
-    .shape-cluster { transform: scale(.46); margin: 0 -170px; }
-    .shape-cluster-viewport { margin-bottom: -272px; }
+  .smiley-fysica-item {
+    position: absolute;
+    top: 0; left: 0;
+    visibility: hidden;
+    user-select: none;
+    -webkit-user-drag: none;
+    will-change: transform;
+  }
+  .smiley-fysica:not(.is-statisch) .smiley-fysica-item { cursor: grab; }
+  .smiley-fysica:not(.is-statisch) .smiley-fysica-item:active { cursor: grabbing; }
+
+  /* Vangnet: zonder JS, zonder matter.js of bij 'reduce' gewoon een rij smileys,
+     zodat er nooit een leeg gat onder in de footer valt. */
+  .smiley-fysica.is-statisch {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: clamp(6px, 1.6vw, 24px);
+    height: auto;
+    overflow: visible;
+  }
+  .smiley-fysica.is-statisch .smiley-fysica-item {
+    position: static;
+    visibility: visible;
+    width: clamp(64px, 11vw, 140px);
+    height: auto;
   }
 
   .phase-tag {
@@ -1170,20 +1195,9 @@
     </div>
   </div>
 
-  <!-- Decoratieve vormcluster, exacte vormen uit labs.google -->
-  <div aria-hidden="true" class="flex justify-center relative z-10 shape-cluster-viewport">
-    <div class="shape-cluster relative flex-shrink-0" style="width:1600px; height:540px;">
-      <!-- onderste rij: echte smiley-afbeeldingen, met ruimte ertussen zodat gezichten niet verdwijnen -->
-      <img src="assets/smileys-v2/smiley-v-5.svg" alt="" class="absolute bottom-0 left-0 gl-float-1" style="width:380px; height:380px;">
-      <img src="assets/smileys-v2/smiley-v-3.svg" alt="" class="absolute bottom-0 gl-float-2" style="left:408px; width:380px; height:380px;">
-      <img src="assets/smileys-v2/smiley-v-8.svg" alt="" class="absolute bottom-0 gl-float-3" style="left:816px; width:380px; height:380px;">
-
-      <!-- bovenste rij: overlapt slechts licht, echte smiley-afbeeldingen -->
-      <img src="assets/smileys-v2/smiley-v-2.svg" alt="" class="absolute gl-float-2" style="left:-50px; top:-50px; width:300px; height:300px;">
-      <img src="assets/smileys-v2/smiley-v-6.svg" alt="" class="absolute gl-float-1" style="left:360px; top:-30px; width:300px; height:300px;">
-      <img src="assets/smileys-v2/smiley-v-9.svg" alt="" class="absolute gl-float-3" style="left:920px; top:-110px; width:370px; height:370px;">
-      <img src="assets/smileys-v2/smiley-v-4.svg" alt="" class="absolute gl-float-2" style="left:1260px; top:30px; width:330px; height:330px;">
-    </div>
+  <!-- Smileys met zwaartekracht: de bakken worden door site-script opgebouwd -->
+  <div aria-hidden="true" class="relative z-10 mb-5">
+    <div id="smileyFysica" class="smiley-fysica" data-smileys="5,3,8,2,6,9,4,1,7"></div>
   </div>
 
   <div class="max-w-content mx-auto px-5 md:px-8 relative z-10">
@@ -1704,6 +1718,166 @@
     setTimeout(catchUpPassedHeadings, 250);
   } else {
     document.querySelectorAll('.reveal-word').forEach(w => w.classList.add('is-visible'));
+  }
+
+  /* ---- Footer: smileys met zwaartekracht (matter.js) ----
+     De cluster onderin was decoratief; nu vallen de smileys naar binnen zodra de
+     footer in beeld komt en kun je ze met de muis oppakken en weggooien.
+     matter.js wordt pas opgehaald als je in de buurt van de footer komt, zodat
+     bezoekers die nooit zo ver scrollen die ~90KB ook nooit downloaden. */
+  const smileyVeld = document.getElementById('smileyFysica');
+  if (smileyVeld) {
+    const MATTER_CDN = 'https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js';
+    const bronnen = smileyVeld.dataset.smileys
+      .split(',')
+      .map(n => `assets/smileys-v2/smiley-v-${n.trim()}.svg`);
+
+    /* Vangnet: bij 'reduce' of als het script niet laadt tonen we een gewone rij
+       smileys. Beter een statische footer dan een leeg gat. */
+    const smileysStatisch = () => {
+      smileyVeld.classList.add('is-statisch');
+      smileyVeld.innerHTML = bronnen
+        .map(src => `<img src="${src}" alt="" class="smiley-fysica-item">`)
+        .join('');
+    };
+
+    const laadMatter = () => new Promise((klaar, mislukt) => {
+      if (window.Matter) return klaar(window.Matter);
+      const script = document.createElement('script');
+      script.src = MATTER_CDN;
+      script.onload = () => window.Matter ? klaar(window.Matter) : mislukt();
+      script.onerror = mislukt;
+      document.head.appendChild(script);
+    });
+
+    const startFysica = (Matter) => {
+      const { Engine, Bodies, Composite, Mouse, MouseConstraint } = Matter;
+      let engine, lichamen = [], elementen = [], lus = 0, inBeeld = true;
+
+      const bouw = () => {
+        const breedte = smileyVeld.clientWidth;
+        const hoogte  = smileyVeld.clientHeight;
+        if (!breedte || !hoogte) return;
+
+        smileyVeld.innerHTML = '';
+        engine = Engine.create({ gravity: { x: 0, y: 1 } });
+
+        /* Aantal en formaat meeschalen met de breedte, anders staat de bak op
+           mobiel propvol en op een breed scherm te leeg. */
+        const aantal = Math.max(5, Math.min(bronnen.length, Math.round(breedte / 150)));
+        const basis  = Math.max(70, Math.min(190, breedte / 6));
+        const schaal = [1, .82, .66];
+
+        lichamen = [];
+        elementen = [];
+        for (let i = 0; i < aantal; i++) {
+          const maat = Math.round(basis * schaal[i % schaal.length]);
+          /* Een beetje spreiding in startpunt en hoek, anders vallen ze in een
+             te nette rij en ziet de stapel er machinaal uit. */
+          const speling = (Math.random() - 0.5) * (breedte / aantal) * 0.5;
+          const x = ((i + 0.5) / aantal) * breedte + speling;
+          const y = -maat / 2 - i * (maat * 0.8);
+          lichamen.push(Bodies.circle(x, y, maat / 2, {
+            angle: (Math.random() - 0.5) * 0.8,
+            friction: 0.1,
+            frictionAir: 0.02,
+            restitution: 0.35,
+          }));
+
+          const el = document.createElement('img');
+          el.src = bronnen[i % bronnen.length];
+          el.alt = '';
+          el.className = 'smiley-fysica-item';
+          el.width = maat;
+          el.height = maat;
+          el.draggable = false;
+          smileyVeld.appendChild(el);
+          elementen.push(el);
+        }
+        Composite.add(engine.world, lichamen);
+
+        /* Muren pas hier, want het plafond moet boven het hoogste startpunt
+           liggen. Stond het lager, dan bleven de laatste smileys erop hangen
+           in plaats van naar binnen te vallen. */
+        const dik = 200;
+        const plafond = Math.min(...lichamen.map(b => b.position.y)) - basis - dik;
+        Composite.add(engine.world, [
+          Bodies.rectangle(breedte / 2, hoogte + dik / 2, breedte + dik * 2, dik, { isStatic: true }),
+          Bodies.rectangle(-dik / 2, plafond / 2, dik, hoogte * 2 - plafond * 2, { isStatic: true }),
+          Bodies.rectangle(breedte + dik / 2, plafond / 2, dik, hoogte * 2 - plafond * 2, { isStatic: true }),
+          Bodies.rectangle(breedte / 2, plafond - dik / 2, breedte + dik * 2, dik, { isStatic: true }),
+        ]);
+
+        const muis = Mouse.create(smileyVeld);
+        const sleep = MouseConstraint.create(engine, {
+          mouse: muis,
+          constraint: { stiffness: 0.9, angularStiffness: 0, render: { visible: false } },
+        });
+        Composite.add(engine.world, sleep);
+
+        /* Matter luistert standaard mee op scroll- en touchgebaren en blokkeert
+           die. Die listeners halen we weg: de pagina moet gewoon scrollbaar
+           blijven, ook met je vinger over de smileys. */
+        ['wheel', 'mousewheel', 'DOMMouseScroll'].forEach(t =>
+          muis.element.removeEventListener(t, muis.mousewheel));
+        muis.element.removeEventListener('touchstart', muis.mousedown);
+        muis.element.removeEventListener('touchmove', muis.mousemove);
+        muis.element.removeEventListener('touchend', muis.mouseup);
+
+        smileyVeld.addEventListener('mouseleave', () => {
+          sleep.mouse.mouseup(new Event('mouseup'));
+        });
+      };
+
+      const teken = () => {
+        lus = requestAnimationFrame(teken);
+        if (!inBeeld) return;
+        Engine.update(engine, 1000 / 60);
+        for (let i = 0; i < lichamen.length; i++) {
+          const el = elementen[i];
+          if (!el) continue;
+          const { position: p, angle } = lichamen[i];
+          el.style.visibility = 'visible';
+          el.style.transform =
+            `translate(${p.x}px, ${p.y}px) translate(-50%, -50%) rotate(${angle}rad)`;
+        }
+      };
+
+      bouw();
+      teken();
+
+      /* Buiten beeld laten we de motor stilstaan: scheelt rekenwerk en batterij. */
+      new IntersectionObserver(([e]) => { inBeeld = e.isIntersecting; })
+        .observe(smileyVeld);
+
+      /* Alleen opnieuw opbouwen bij een echte breedtewijziging. Op mobiel
+         verandert de hoogte al bij het in- en uitschuiven van de adresbalk. */
+      let laatsteBreedte = smileyVeld.clientWidth;
+      let wachtOp;
+      window.addEventListener('resize', () => {
+        if (smileyVeld.clientWidth === laatsteBreedte) return;
+        laatsteBreedte = smileyVeld.clientWidth;
+        clearTimeout(wachtOp);
+        wachtOp = setTimeout(() => {
+          cancelAnimationFrame(lus);
+          Composite.clear(engine.world, false);
+          Engine.clear(engine);
+          bouw();
+          teken();
+        }, 250);
+      });
+    };
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      smileysStatisch();
+    } else {
+      const wachtOpFooter = new IntersectionObserver(([e], obs) => {
+        if (!e.isIntersecting) return;
+        obs.disconnect();
+        laadMatter().then(startFysica).catch(smileysStatisch);
+      }, { rootMargin: '300px 0px' });
+      wachtOpFooter.observe(smileyVeld);
+    }
   }
 </script>
 
