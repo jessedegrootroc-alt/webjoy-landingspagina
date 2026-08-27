@@ -1777,9 +1777,8 @@
 
         /* Formaat schaalt mee met de breedte, met drie maten door elkaar zodat
            de stapel niet uniform oogt. */
-        const basis  = Math.max(128, Math.min(340, breedte / 4.5));
         const schaal = [1, .82, .66];
-        const maatVan = (i) => Math.round(basis * schaal[i % schaal.length]);
+        let basis = Math.max(128, Math.min(340, breedte / 4.5));
 
         /* Aantal: ruim anderhalf keer wat er in een rij past, zodat de vloer vol
            ligt met hier en daar eentje erbovenop. */
@@ -1790,12 +1789,23 @@
            cirkels vullen ongeveer 64% van het vlak waar ze in liggen; rekenen
            met rijen gaf een veel te hoge bak, omdat de bovenste smileys in de
            kuiltjes tussen de onderste zakken. */
-        let oppervlak = 0;
-        for (let i = 0; i < aantal; i++) {
-          const straal = maatVan(i) / 2;
-          oppervlak += Math.PI * straal * straal;
-        }
-        const stapel = Math.round(oppervlak / (breedte * 0.64) + basis * 0.12);
+        const stapelBij = (maat) => {
+          let oppervlak = 0;
+          for (let i = 0; i < aantal; i++) {
+            const straal = (maat * schaal[i % schaal.length]) / 2;
+            oppervlak += Math.PI * straal * straal;
+          }
+          return oppervlak / (breedte * 0.64) + maat * 0.12;
+        };
+
+        /* De stapel mag hooguit 500px van de pagina innemen. Past hij niet, dan
+           gaan de smileys een maatje kleiner in plaats van dat we er een paar
+           weglaten: liever alle negen wat kleiner dan een halve set. */
+        const MAX_STAPEL = 500;
+        while (basis > 96 && stapelBij(basis) > MAX_STAPEL) basis -= 4;
+
+        const maatVan = (i) => Math.round(basis * schaal[i % schaal.length]);
+        const stapel = Math.min(MAX_STAPEL, Math.round(stapelBij(basis)));
         ruimte.style.height = stapel + 'px';
 
         /* Het speelveld loopt door tot net onder de bovenrand van de footer, zodat
