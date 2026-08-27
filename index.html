@@ -530,8 +530,8 @@
   .smiley-fysica {
     position: relative;
     width: 100%;
-    height: clamp(240px, 42vw, 650px);
-    overflow: hidden;
+    /* Voorlopige hoogte; het script stelt hem bij op de echte stapel. */
+    height: clamp(240px, 28vw, 480px);
     touch-action: pan-y;
   }
   .smiley-fysica-item {
@@ -1756,40 +1756,46 @@
 
       const bouw = () => {
         const breedte = smileyVeld.clientWidth;
-        const hoogte  = smileyVeld.clientHeight;
-        if (!breedte || !hoogte) return;
+        if (!breedte) return;
 
         smileyVeld.innerHTML = '';
         engine = Engine.create({ gravity: { x: 0, y: 1 } });
 
-        /* Aantal en formaat meeschalen met de breedte, anders staat de bak op
-           mobiel propvol en op een breed scherm te leeg. */
+        /* Formaat schaalt mee met de breedte, met drie maten door elkaar zodat
+           de stapel niet uniform oogt. */
         const basis  = Math.max(128, Math.min(340, breedte / 4.5));
         const schaal = [1, .82, .66];
+        const maatVan = (i) => Math.round(basis * schaal[i % schaal.length]);
 
-        /* Het aantal volgt uit de oppervlakte: we vullen de bak tot ongeveer de
-           helft. Vulden we verder, dan stapelen de smileys hoger dan de bak en
-           snijdt overflow:hidden de bovenste doormidden. */
-        const ruimte = breedte * hoogte * 0.5;
-        let gevuld = 0;
-        let aantal = 0;
-        while (aantal < 16) {
-          const straal = (basis * schaal[aantal % schaal.length]) / 2;
-          const erbij = gevuld + Math.PI * straal * straal;
-          if (aantal >= 6 && erbij > ruimte) break;
-          gevuld = erbij;
-          aantal++;
-        }
+        /* Aantal: ruim anderhalf keer wat er in een rij past, zodat de vloer vol
+           ligt met hier en daar eentje erbovenop. */
+        const perRij = Math.max(1, Math.floor(breedte / (basis * 1.05)));
+        const aantal = Math.max(4, Math.min(16, Math.round(perRij * 1.5)));
+
+        /* De hoogte van de bak volgt uit hoeveel rijen de smileys nodig hebben.
+           Een vaste hoogte gaf op brede schermen een half lege bak, en op smalle
+           schermen een stapel die tegen het plafond drukte. */
+        let totaal = 0;
+        for (let i = 0; i < aantal; i++) totaal += maatVan(i);
+        /* De factor 1.15 omdat cirkels naast elkaar iets in elkaars ruimte
+           zakken: de som van de diameters mag de breedte een stuk overschrijden
+           voordat er echt een tweede rij ontstaat. */
+        const rijen  = Math.max(1, Math.ceil(totaal / (breedte * 1.15)));
+        const hoogte = Math.round(basis * (0.45 + rijen * 0.95));
+        smileyVeld.style.height = hoogte + 'px';
 
         lichamen = [];
         elementen = [];
         for (let i = 0; i < aantal; i++) {
-          const maat = Math.round(basis * schaal[i % schaal.length]);
+          const maat = maatVan(i);
           /* Een beetje spreiding in startpunt en hoek, anders vallen ze in een
              te nette rij en ziet de stapel er machinaal uit. */
-          const speling = (Math.random() - 0.5) * (breedte / aantal) * 0.5;
-          const x = ((i + 0.5) / aantal) * breedte + speling;
-          const y = -maat / 2 - i * (maat * 0.8);
+          const speling = (Math.random() - 0.5) * (breedte / perRij) * 0.4;
+          const kolom = i % perRij;
+          const rij   = Math.floor(i / perRij);
+          const x = Math.min(breedte - maat / 2, Math.max(maat / 2,
+            ((kolom + 0.5) / perRij) * breedte + speling));
+          const y = Math.min(hoogte - maat / 2, maat / 2 + rij * basis * 1.05);
           lichamen.push(Bodies.circle(x, y, maat / 2, {
             angle: (Math.random() - 0.5) * 0.8,
             friction: 0.1,
@@ -1809,16 +1815,15 @@
         }
         Composite.add(engine.world, lichamen);
 
-        /* Muren pas hier, want het plafond moet boven het hoogste startpunt
-           liggen. Stond het lager, dan bleven de laatste smileys erop hangen
-           in plaats van naar binnen te vallen. */
+        /* Muren precies op de vier randen van de bak, plafond inbegrepen. Zo kan
+           geen enkele smiley ooit buiten de bak komen en dus ook nooit worden
+           afgesneden, ook niet als je er een hard tegenaan gooit. */
         const dik = 200;
-        const plafond = Math.min(...lichamen.map(b => b.position.y)) - basis - dik;
         Composite.add(engine.world, [
           Bodies.rectangle(breedte / 2, hoogte + dik / 2, breedte + dik * 2, dik, { isStatic: true }),
-          Bodies.rectangle(-dik / 2, plafond / 2, dik, hoogte * 2 - plafond * 2, { isStatic: true }),
-          Bodies.rectangle(breedte + dik / 2, plafond / 2, dik, hoogte * 2 - plafond * 2, { isStatic: true }),
-          Bodies.rectangle(breedte / 2, plafond - dik / 2, breedte + dik * 2, dik, { isStatic: true }),
+          Bodies.rectangle(breedte / 2, -dik / 2, breedte + dik * 2, dik, { isStatic: true }),
+          Bodies.rectangle(-dik / 2, hoogte / 2, dik, hoogte + dik * 2, { isStatic: true }),
+          Bodies.rectangle(breedte + dik / 2, hoogte / 2, dik, hoogte + dik * 2, { isStatic: true }),
         ]);
 
         const muis = Mouse.create(smileyVeld);
