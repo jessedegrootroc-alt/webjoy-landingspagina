@@ -1,0 +1,81 @@
+/* Gedeelde opmaak voor de tekstpagina's (privacybeleid, voorwaarden, cookies).
+   Dezelfde tokens als de homepage, zodat ze aanvoelen als onderdeel van de site. */
+:root {
+  --primary: #5E9BFF;
+  --bg-light: #F3EFEA;
+  --bg-dark: #1A1A1A;
+  --fg-light: #323232;
+  --card-light: #FFFFFF;
+  --border-low: #E8DFD5;
+  --border-mid: #DDD3C7;
+  --text-secondary: rgba(50, 50, 50, .8);
+  --gl-radius-card: 2.4rem;
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--bg-light); color: var(--fg-light); }
+.text-secondary { color: var(--text-secondary); }
+.font-gothic { font-family: 'Google Sans Flex', 'Google Sans', Helvetica, Arial, sans-serif; }
+.font-mono-token { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ---- Leesbare tekstkolom ---- */
+.tekst { max-width: 46rem; }
+.tekst h2 {
+  font-family: 'Google Sans Flex', 'Google Sans', Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  font-size: 1.35rem;
+  line-height: 1.25;
+  margin: 2.75rem 0 .85rem;
+}
+.tekst h2:first-child { margin-top: 0; }
+.tekst h3 {
+  font-family: 'Google Sans Flex', 'Google Sans', Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  font-size: 1.05rem;
+  margin: 1.75rem 0 .5rem;
+}
+.tekst p,
+.tekst li { color: var(--text-secondary); font-size: 15px; line-height: 1.7; }
+@media (min-width: 768px) {
+  .tekst h2 { font-size: 1.6rem; }
+  .tekst p, .tekst li { font-size: 17px; }
+}
+.tekst p { margin-bottom: 1rem; }
+.tekst ul { list-style: disc; padding-left: 1.35rem; margin-bottom: 1rem; }
+.tekst li { margin-bottom: .4rem; }
+.tekst a { color: var(--primary); text-decoration: underline; text-underline-offset: 3px; }
+
+/* Duidelijk zichtbaar dat hier nog tekst moet komen. Verwijder .invulblok zodra
+   de definitieve tekst erin staat. */
+.invulblok {
+  border: 1px dashed var(--border-mid);
+  border-radius: 1rem;
+  background: rgba(94, 155, 255, .05);
+  padding: 1rem 1.15rem;
+  margin-bottom: 1rem;
+}
+.invulblok p { margin: 0; font-size: 14px; }
+.invulblok p + p { margin-top: .5rem; }
+.invulblok::before {
+  content: 'Nog aan te leveren';
+  display: inline-block;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: .5rem;
+}
+
+.socketbalk {
+  border-top: 1px solid var(--border-low);
+  color: var(--fg-light);
+  font-size: 10px;
+}
+.socketbalk a:hover { text-decoration: underline; }
