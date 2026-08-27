@@ -79,3 +79,23 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
   font-size: 10px;
 }
 .socketbalk a:hover { text-decoration: underline; }
+
+/* ---- Genummerde artikelleden ---- */
+.tekst ol { list-style: decimal; padding-left: 1.4rem; margin-bottom: 1rem; }
+.tekst ol > li { color: var(--text-secondary); font-size: 15px; line-height: 1.7; margin-bottom: .7rem; }
+@media (min-width: 768px) { .tekst ol > li { font-size: 17px; } }
+.tekst ol ul { margin: .5rem 0 .25rem; }
+.tekst ol ul li { margin-bottom: .25rem; }
+.tekst .definities li { list-style: none; }
+.tekst .definities { padding-left: 0; }
+.tekst .definities strong { color: var(--fg-light); font-weight: 500; }
+
+/* Nog in te vullen bedrijfsgegevens in de lopende tekst */
+.invulveld {
+  background: rgba(94, 155, 255, .14);
+  border-radius: .3rem;
+  padding: 0 .25em;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: .85em;
+  color: var(--fg-light);
+}
