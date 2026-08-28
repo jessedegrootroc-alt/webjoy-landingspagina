@@ -798,6 +798,10 @@
     transition: transform .55s cubic-bezier(.16, 1, .3, 1);
   }
   .menu-beeld-laag img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  /* de uitsnede van Jesse is bijna vierkant: vanaf de bovenkant bijsnijden,
+     zo blijft het hoofd heel en valt alleen de onderkant van het overhemd weg */
+  .menu-beeld-laag--portret { background: var(--bg-light); }
+  .menu-beeld-laag--portret img { object-position: 50% 0%; }
   /* op smalle schermen en zonder muis heeft het beeld geen functie */
   @media (max-width: 899px), (hover: none) { .menu-beeld { display: none; } }
   @keyframes menu-regel {
@@ -979,7 +983,7 @@
     <div class="menu-beeld-laag"><img src="assets/menu/diensten.webp" alt="" width="760" height="543" decoding="async"></div>
     <div class="menu-beeld-laag"><img src="assets/menu/werkwijze.webp" alt="" width="760" height="543" decoding="async"></div>
     <div class="menu-beeld-laag"><img src="assets/menu/faq.webp" alt="" width="760" height="543" decoding="async"></div>
-    <div class="menu-beeld-laag"><img src="assets/menu/over-mij.webp" alt="" width="760" height="543" decoding="async"></div>
+    <div class="menu-beeld-laag menu-beeld-laag--portret"><img src="assets/team/jesse-founder.webp" alt="" width="1100" height="908" decoding="async"></div>
     <div class="menu-beeld-laag"><img src="assets/menu/contact.webp" alt="" width="760" height="543" decoding="async"></div>
   </div>
   <div class="max-w-content mx-auto h-16 px-5 md:px-8 flex items-center justify-between relative">
