@@ -747,6 +747,9 @@
 
   .menu-groot { display: flex; flex-direction: column; }
   .menu-groot a {
+    display: block;
+    overflow: hidden;
+    padding: .06em 0;
     font-family: 'Google Sans Flex', 'Google Sans', Helvetica, Arial, sans-serif;
     font-weight: 500;
     font-size: clamp(2.4rem, 7.5vw, 5.5rem);
@@ -754,11 +757,43 @@
     letter-spacing: -.02em;
     color: var(--fg-light);
     text-decoration: none;
-    transition: color .25s ease, transform .35s cubic-bezier(.16, 1, .3, 1);
+    transition: color .2s ease;
     animation: menu-regel .5s cubic-bezier(.16, 1, .3, 1) both;
     animation-delay: calc(var(--i) * .05s + .05s);
   }
-  .menu-groot a:hover { color: var(--primary); transform: translateX(10px); }
+  /* de regel die je aanwijst blijft vol, de rest dooft */
+  .menu-groot:hover a { color: rgba(50, 50, 50, .26); }
+  .menu-groot a:hover { color: var(--fg-light); }
+
+  /* tekstrol: het woord schuift omhoog terwijl een kopie van onderen binnenkomt */
+  .menu-groot .rol { display: block; position: relative; transition: transform .55s cubic-bezier(.16, 1, .3, 1); }
+  .menu-groot .rol > span { display: block; white-space: pre; }
+  .menu-groot .rol > span + span { position: absolute; top: 100%; left: 0; width: 100%; }
+  .menu-groot a:hover .rol { transform: translateY(-100%); }
+
+  /* beeld dat achter de cursor aan komt */
+  .menu-beeld {
+    position: absolute;
+    top: 0; left: 0;
+    width: 360px; height: 260px;
+    border-radius: 16px;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 2;
+    transition: opacity .35s cubic-bezier(.16, 1, .3, 1);
+    box-shadow: var(--shadow-flyout);
+  }
+  .menu-beeld-laag {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    transform: translateY(100%);
+    transition: transform .55s cubic-bezier(.16, 1, .3, 1);
+  }
+  .menu-beeld-laag img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  /* op smalle schermen en zonder muis heeft het beeld geen functie */
+  @media (max-width: 899px), (hover: none) { .menu-beeld { display: none; } }
   @keyframes menu-regel {
     from { opacity: 0; transform: translateY(18px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -933,6 +968,14 @@
 
 <!-- ================= SCHERMVULLEND MENU ================= -->
 <div id="menuOverlay" class="menu-overlay" hidden role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="menu-beeld" id="menuBeeld" aria-hidden="true">
+    <div class="menu-beeld-laag"><img src="assets/cases/koffiebazen.webp" alt="" width="760" height="543" decoding="async"></div>
+    <div class="menu-beeld-laag"><img src="assets/menu/diensten.webp" alt="" width="760" height="543" decoding="async"></div>
+    <div class="menu-beeld-laag"><img src="assets/menu/werkwijze.webp" alt="" width="760" height="543" decoding="async"></div>
+    <div class="menu-beeld-laag"><img src="assets/menu/faq.webp" alt="" width="760" height="543" decoding="async"></div>
+    <div class="menu-beeld-laag"><img src="assets/menu/over-mij.webp" alt="" width="760" height="543" decoding="async"></div>
+    <div class="menu-beeld-laag"><img src="assets/menu/contact.webp" alt="" width="760" height="543" decoding="async"></div>
+  </div>
   <div class="max-w-content mx-auto h-16 px-5 md:px-8 flex items-center justify-between relative">
     <a href="#" class="flex items-center" aria-label="Webjoy, home" data-menu-sluit>
       <img src="assets/logo/webjoy-logo.svg" alt="Webjoy" style="height:26px; width:auto;">
@@ -951,12 +994,12 @@
 
   <div class="menu-inhoud max-w-content mx-auto px-5 md:px-8">
     <nav class="menu-groot" aria-label="Hoofdmenu">
-      <a href="#cases" data-menu-sluit style="--i:0">Cases</a>
-      <a href="#diensten" data-menu-sluit style="--i:1">Diensten</a>
-      <a href="#werkwijze" data-menu-sluit style="--i:2">Werkwijze</a>
-      <a href="#faq" data-menu-sluit style="--i:3">FAQ</a>
-      <a href="#over-mij" data-menu-sluit style="--i:4">Over mij</a>
-      <a href="#contact" data-menu-sluit style="--i:5">Contact</a>
+      <a href="#cases" data-menu-sluit style="--i:0" aria-label="Cases"><span class="rol" aria-hidden="true"><span>Cases</span><span>Cases</span></span></a>
+      <a href="#diensten" data-menu-sluit style="--i:1" aria-label="Diensten"><span class="rol" aria-hidden="true"><span>Diensten</span><span>Diensten</span></span></a>
+      <a href="#werkwijze" data-menu-sluit style="--i:2" aria-label="Werkwijze"><span class="rol" aria-hidden="true"><span>Werkwijze</span><span>Werkwijze</span></span></a>
+      <a href="#faq" data-menu-sluit style="--i:3" aria-label="FAQ"><span class="rol" aria-hidden="true"><span>FAQ</span><span>FAQ</span></span></a>
+      <a href="#over-mij" data-menu-sluit style="--i:4" aria-label="Over mij"><span class="rol" aria-hidden="true"><span>Over mij</span><span>Over mij</span></span></a>
+      <a href="#contact" data-menu-sluit style="--i:5" aria-label="Contact"><span class="rol" aria-hidden="true"><span>Contact</span><span>Contact</span></span></a>
     </nav>
 
     <div class="menu-klein">
@@ -1583,6 +1626,73 @@
       if (e.key === 'Escape' && !menuOverlay.hidden) zetMenu(false);
     });
   }
+
+  /* Beeld dat achter de cursor aan komt zodra je een menuregel aanwijst.
+     De laag van de aangewezen regel schuift naar het midden, lagen erboven
+     verdwijnen omhoog en lagen eronder omlaag -- zo lijkt het een stapel. */
+  (() => {
+    const overlay = document.getElementById('menuOverlay');
+    const beeld = document.getElementById('menuBeeld');
+    if (!overlay || !beeld) return;
+    if (!window.matchMedia('(hover: hover)').matches) return;
+
+    const lagen = [...beeld.querySelectorAll('.menu-beeld-laag')];
+    const links = [...overlay.querySelectorAll('.menu-groot a')];
+    if (lagen.length !== links.length) return;
+
+    const kalm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let actief = null;
+    let doelX = 0, doelY = 0, x = 0, y = 0, vx = 0, vy = 0;
+    let loopt = false, vorige = 0, geplaatst = false;
+
+    const OFFSET_X = 200, OFFSET_Y = 0, RAND = 12;
+
+    const teken = () => {
+      beeld.style.transform = 'translate(' + x + 'px, ' + y + 'px) translate(-50%, -50%)';
+    };
+
+    /* veer met stijfheid 60, demping 28 en massa 0.5 -- zacht, loopt iets na */
+    const stap = (nu) => {
+      const dt = Math.min((nu - vorige) / 1000, 1 / 30);
+      vorige = nu;
+      const ax = (-60 * (x - doelX) - 28 * vx) / 0.5;
+      const ay = (-60 * (y - doelY) - 28 * vy) / 0.5;
+      vx += ax * dt; x += vx * dt;
+      vy += ay * dt; y += vy * dt;
+      teken();
+      if (Math.abs(x - doelX) > .3 || Math.abs(vx) > .3 ||
+          Math.abs(y - doelY) > .3 || Math.abs(vy) > .3) {
+        requestAnimationFrame(stap);
+      } else {
+        x = doelX; y = doelY; vx = vy = 0; teken();
+        loopt = false;
+      }
+    };
+
+    overlay.addEventListener('mousemove', (e) => {
+      const vak = overlay.getBoundingClientRect();
+      const halfB = beeld.offsetWidth / 2, halfH = beeld.offsetHeight / 2;
+      const min = (a, b) => a < b ? a : b, max = (a, b) => a > b ? a : b;
+      doelX = min(max(e.clientX - vak.left + OFFSET_X, halfB + RAND), vak.width - halfB - RAND);
+      doelY = min(max(e.clientY - vak.top + OFFSET_Y, halfH + RAND), vak.height - halfH - RAND);
+      if (!geplaatst || kalm) { x = doelX; y = doelY; vx = vy = 0; geplaatst = true; teken(); return; }
+      if (!loopt) { loopt = true; vorige = performance.now(); requestAnimationFrame(stap); }
+    });
+
+    const zet = (i) => {
+      if (actief === i) return;
+      actief = i;
+      lagen.forEach((laag, k) => {
+        const p = actief === null ? 100 : k < actief ? -100 : k > actief ? 100 : 0;
+        laag.style.transform = 'translateY(' + p + '%)';
+      });
+      beeld.style.opacity = actief === null ? '0' : '1';
+    };
+
+    links.forEach((a, i) => a.addEventListener('mouseenter', () => zet(i)));
+    overlay.querySelector('.menu-groot').addEventListener('mouseleave', () => zet(null));
+    overlay.addEventListener('mouseleave', () => zet(null));
+  })();
 
   const marqueeIcons = {
     briefcase: '<path d="M8 6V2H16V6"/><path d="M10 13H4C2.89543 13 2 12.1046 2 11V6H22V11C22 12.1046 21.1046 13 20 13H14"/><path d="M2 17V21H22V17"/><path d="M14 12H10V15C10 16.1046 10.8954 17 12 17C13.1046 17 14 16.1046 14 15V12Z"/>',
