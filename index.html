@@ -142,12 +142,14 @@
   @property --gloedhoek-b { syntax: '<angle>'; initial-value: 83deg; inherits: false; }
 
   .btn-gloed {
-    --gloed-1: 255, 134, 74;
-    --gloed-2: 255, 176, 137;
-    --gloed-spreid: 6px;
+    /* glow #DDDDDD, size 5, blur 4 -- de tweede tint is die kleur 35% naar wit */
+    --gloed-1: 221, 221, 221;
+    --gloed-2: 233, 233, 233;
+    --gloed-spreid: 5px;
     position: relative;
     isolation: isolate;
-    box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 20%, transparent);
+    /* border: 1px solid #DDDDDD6E, als inset-schaduw zodat de knop niet groeit */
+    box-shadow: inset 0 0 0 1px rgba(221, 221, 221, .43);
   }
   .btn-gloed::before,
   .btn-gloed::after {
