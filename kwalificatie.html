@@ -177,6 +177,11 @@
 
   /* Zachte vormen op de achtergrond, in dezelfde sfeer als de homepage */
   .bg-blob { position: absolute; border-radius: 999rem; filter: blur(60px); opacity: .5; pointer-events: none; }
+  /* De vlekken steken bewust buiten beeld. body positioneren maakt hem het
+     kader waarbinnen ze vallen, en clip snijdt af zonder een scrollvlak te
+     maken (hidden als terugval voor oudere browsers). Zo kun je op mobiel
+     niet meer naar rechts schuiven. */
+  body { position: relative; overflow-x: hidden; overflow-x: clip; }
 </style>
 </head>
 
