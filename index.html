@@ -726,23 +726,29 @@
   .menu-overlay[hidden] { display: none; }
   @keyframes menu-vlak { from { opacity: 0; } to { opacity: 1; } }
 
+  /* Twee kolommen op elk formaat: de kleine links links, de grote rechts. */
   .menu-inhoud {
     display: grid;
-    gap: 48px;
-    padding: 40px 0 64px;
-    min-height: calc(100vh - 4rem);
+    grid-template-columns: minmax(96px, .85fr) 2fr;
+    align-items: start;
     align-content: center;
+    gap: 20px;
+    padding: 32px 0 48px;
+    min-height: calc(100vh - 4rem);
+  }
+  .menu-groot { order: 2; }
+  .menu-klein { order: 1; }
+  @media (min-width: 600px) {
+    .menu-inhoud { grid-template-columns: 1fr 1.9fr; gap: 40px; padding: 40px 0 64px; }
   }
   @media (min-width: 900px) {
-    .menu-inhoud {
-      grid-template-columns: 1fr 1.6fr;
-      align-items: start;
-      gap: 64px;
-      padding: 40px 0 64px;
-    }
-    /* De kleine links links, de grote rechts, net als in het voorbeeld. */
-    .menu-groot { order: 2; }
-    .menu-klein { order: 1; }
+    .menu-inhoud { grid-template-columns: 1fr 1.6fr; gap: 64px; }
+  }
+  /* op de smalste schermen moet de linkerkolom in 96px passen */
+  @media (max-width: 599px) {
+    .menu-klein a { font-size: 13px; }
+    .menu-klein ul { margin-bottom: 20px; }
+    .menu-klein li { margin-bottom: 8px; }
   }
 
   .menu-groot { display: flex; flex-direction: column; }
@@ -752,7 +758,7 @@
     padding: .06em 0;
     font-family: 'Google Sans Flex', 'Google Sans', Helvetica, Arial, sans-serif;
     font-weight: 500;
-    font-size: clamp(2.4rem, 7.5vw, 5.5rem);
+    font-size: clamp(1.75rem, 8vw, 5.5rem);
     line-height: 1.06;
     letter-spacing: -.02em;
     color: var(--fg-light);
