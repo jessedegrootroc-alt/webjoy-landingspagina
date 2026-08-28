@@ -439,9 +439,14 @@
     position: relative;
     background: #fff;
     border-radius: 38px 38px 0 0;
-    padding: 0 9px 26px;
+    padding: 0 9px 62px;
     overflow: hidden;
   }
+  /* De telefoon loopt 36px verder door dan de snijlijn van de kaart. Bij het
+     trillen draait hij om zijn midden en komt een onderhoek zo'n 14px omhoog;
+     zonder die overlengte zie je daar de sectie onder de telefoon doorschijnen. */
+  .telefoon-uitloop { margin-bottom: -92px; }
+  @media (min-width: 768px) { .telefoon-uitloop { margin-bottom: -116px; } }
   .telefoon-notch {
     position: absolute;
     top: 0; left: 50%;
@@ -1235,7 +1240,7 @@
       <div class="flex flex-col md:flex-row items-center md:items-end justify-center gap-6 md:gap-10">
         <p class="font-hand text-[26px] md:rotate-[-6deg] md:mb-16" style="color:var(--text-secondary)">Dus, neem je op?</p>
 
-        <div id="telefoonMockup" class="-mb-14 md:-mb-20" style="width:min(312px, 100%);">
+        <div id="telefoonMockup" class="telefoon-uitloop" style="width:min(312px, 100%);">
           <div class="telefoon-body">
             <div class="telefoon-scherm">
               <div class="telefoon-notch"></div>
