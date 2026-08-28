@@ -4,7 +4,7 @@
    Beheer > Gegevensstromen > je website. Hij begint met G- en ziet eruit als
    G-ABC1234XYZ. Zolang dit leeg is, gebeurt er niets: er wordt geen script
    geladen en er komt geen cookie op de site.                                */
-const META_ID = '';
+const META_ID = 'G-7F8MDVDWBM';
 
 /* Analytics laadt pas nadat de bezoeker analytische cookies heeft aangezet in
    de cookiemelding. Dat is niet alleen netjes, het is ook wat het privacy-
@@ -17,6 +17,10 @@ const META_ID = '';
   const laad = () => {
     if (geladen) return;
     geladen = true;
+
+    /* Stond de uitschakelvlag nog aan van een eerdere weigering, dan moet die
+       eerst uit; anders laadt gtag wel maar stuurt hij niets door. */
+    window['ga-disable-' + META_ID] = false;
 
     window.dataLayer = window.dataLayer || [];
     window.gtag = function () { window.dataLayer.push(arguments); };
@@ -47,7 +51,9 @@ const META_ID = '';
   const verwerk = (keuze) => (keuze && keuze.analytisch) ? laad() : zetUit();
 
   /* De cookiemelding zet de keuze klaar en meldt elke wijziging. Allebei
-     afhandelen, want welke van de twee eerst is hangt af van de laadvolgorde. */
-  if (window.webjoyToestemming) verwerk(window.webjoyToestemming);
+     afhandelen, want welke van de twee eerst is hangt af van de laadvolgorde.
+     Nog geen keuze telt als geen toestemming: dan wordt er niets geladen en
+     worden eventuele resten van een eerdere keuze opgeruimd. */
+  verwerk(window.webjoyToestemming);
   document.addEventListener('webjoy:toestemming', (e) => verwerk(e.detail));
 })();
