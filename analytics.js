@@ -4,7 +4,7 @@
    Beheer > Gegevensstromen > je website. Hij begint met G- en ziet eruit als
    G-ABC1234XYZ. Zolang dit leeg is, gebeurt er niets: er wordt geen script
    geladen en er komt geen cookie op de site.                                */
-const META_ID = 'G-7F8MDVDWBM';
+const META_ID = 'G-DHF7Z631FX';
 
 /* Analytics laadt pas nadat de bezoeker analytische cookies heeft aangezet in
    de cookiemelding. Dat is niet alleen netjes, het is ook wat het privacy-
