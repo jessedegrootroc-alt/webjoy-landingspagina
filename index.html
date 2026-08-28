@@ -135,6 +135,73 @@
   }
   .btn-primary:hover { background: #000; }
 
+  /* CTA-gloed: conic-gradient ring achter de knop, draait 180 graden bij hover.
+     Geport van het Originkit Neon Glow-principe: geen roterend element maar een
+     geanimeerde gradient-hoek, zodat er geen extra markup nodig is. */
+  @property --gloedhoek-a { syntax: '<angle>'; initial-value: 60deg; inherits: false; }
+  @property --gloedhoek-b { syntax: '<angle>'; initial-value: 83deg; inherits: false; }
+
+  .btn-gloed {
+    --gloed-1: 255, 134, 74;
+    --gloed-2: 255, 176, 137;
+    --gloed-spreid: 6px;
+    position: relative;
+    isolation: isolate;
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 20%, transparent);
+  }
+  .btn-gloed::before,
+  .btn-gloed::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    box-sizing: border-box;
+    /* houd alleen de band buiten de knop over: hele vlak MIN het content-vlak.
+       De padding bepaalt hoe breed die band is. */
+    -webkit-mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+    -webkit-mask-clip: border-box, content-box;
+    -webkit-mask-composite: xor;
+    mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+    mask-clip: border-box, content-box;
+    mask-composite: exclude;
+  }
+  /* buitenste ring: breed en zacht */
+  .btn-gloed::before {
+    inset: calc(-1 * var(--gloed-spreid));
+    padding: var(--gloed-spreid);
+    filter: blur(4px);
+    background: conic-gradient(from var(--gloedhoek-a),
+      rgba(var(--gloed-1), 0) 0%,
+      rgba(var(--gloed-1), 1) 5%,
+      rgba(var(--gloed-1), 0) 38%,
+      rgba(var(--gloed-2), 0) 50%,
+      rgba(var(--gloed-2), 1) 60%,
+      rgba(var(--gloed-2), 0) 87%,
+      rgba(var(--gloed-1), 0) 100%);
+    transition: --gloedhoek-a 2s ease-in-out;
+  }
+  /* binnenste ring: strakker, ligt dichter tegen de rand aan */
+  .btn-gloed::after {
+    inset: calc(-1 * var(--gloed-spreid) * .43);
+    padding: calc(var(--gloed-spreid) * .43);
+    filter: blur(3px);
+    background: conic-gradient(from var(--gloedhoek-b),
+      rgba(var(--gloed-1), 0) 0%,
+      rgba(var(--gloed-1), 1) 4%,
+      rgba(var(--gloed-1), 0) 8%,
+      rgba(var(--gloed-2), 0) 50%,
+      rgba(var(--gloed-2), 1) 54%,
+      rgba(var(--gloed-2), 0) 58%,
+      rgba(var(--gloed-1), 0) 100%);
+    transition: --gloedhoek-b 2s ease-in-out;
+  }
+  .btn-gloed:hover::before  { --gloedhoek-a: -120deg; }
+  .btn-gloed:hover::after   { --gloedhoek-b:  -97deg; }
+  /* toetsenbord-focus draait een hele slag extra, in dubbele tijd */
+  .btn-gloed:focus-visible::before { --gloedhoek-a: 420deg; transition-duration: 4s; }
+  .btn-gloed:focus-visible::after  { --gloedhoek-b: 443deg; transition-duration: 4s; }
+
   .btn-ghost {
     background: transparent;
     color: var(--fg-light);
@@ -902,7 +969,7 @@
         <li><a href="voorwaarden.html">Algemene voorwaarden</a></li>
         <li><a href="cookies.html">Cookie-instellingen</a></li>
       </ul>
-      <a href="kwalificatie.html" class="btn-primary text-[14px] mt-6 inline-flex">Doe de kwalificatie</a>
+      <a href="kwalificatie.html" class="btn-primary btn-gloed text-[14px] mt-6 inline-flex">Doe de kwalificatie</a>
     </div>
   </div>
 </div>
@@ -930,7 +997,7 @@
       Je bedrijf is gegroeid, je uitstraling nog niet. The Glow-Up brengt die twee weer op hetzelfde niveau. Voor B2B agencies, consultants en experts die &euro;100K+ per jaar draaien.
     </p>
     <div class="hero-in mt-7 flex flex-wrap items-center justify-center gap-3" style="--d:.75s">
-      <a href="kwalificatie.html" class="btn-primary text-[14px] flex items-center gap-2 transition-spring">
+      <a href="kwalificatie.html" class="btn-primary btn-gloed text-[14px] flex items-center gap-2 transition-spring">
         Doe de kwalificatie
         <svg class="ico" width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12H21H20.5"/><path d="M14 19L21 12L14 5"/></svg>
       </a>
@@ -1327,7 +1394,7 @@
         <div class="max-w-[75%] bg-white/10 text-fg-dark rounded-2xl px-3 py-2">En als ik dat ook wil?</div>
         <div class="max-w-[75%] ml-auto bg-primary text-white rounded-2xl px-3 py-2">Dan moet je hier ff de kwalificatie invullen:</div>
         <div class="pt-2 flex justify-end">
-          <a href="kwalificatie.html" class="btn-primary inline-flex items-center gap-2 text-[13px] transition-spring" style="background:#fff; color:var(--fg-light)">
+          <a href="kwalificatie.html" class="btn-primary btn-gloed inline-flex items-center gap-2 text-[13px] transition-spring" style="background:#fff; color:var(--fg-light)">
             Doe de kwalificatie
             <svg class="ico" width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12H21H20.5"/><path d="M14 19L21 12L14 5"/></svg>
           </a>
@@ -1385,7 +1452,7 @@
         <p class="text-secondary text-[15px] leading-relaxed mb-8">
           (ik maak het dus niet alleen <span class="font-medium" style="color:var(--fg-light)">mooi</span>, ik zorg dat het <span class="font-medium" style="color:var(--fg-light)">geld oplevert</span>)
         </p>
-        <a href="kwalificatie.html" class="btn-primary inline-flex items-center gap-2 text-[14px] transition-spring">
+        <a href="kwalificatie.html" class="btn-primary btn-gloed inline-flex items-center gap-2 text-[14px] transition-spring">
           Doe de kwalificatie
           <svg class="ico" width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12H21H20.5"/><path d="M14 19L21 12L14 5"/></svg>
         </a>
@@ -1401,7 +1468,7 @@
   <div class="max-w-content mx-auto px-5 md:px-8 text-center relative z-10">
     <h2 class="font-gothic font-medium text-[2rem] md:text-[3rem] leading-tight max-w-2xl mx-auto mb-8">Klaar voor je Glow-Up?</h2>
     <div class="flex flex-wrap items-center justify-center gap-3 mb-8">
-      <a href="kwalificatie.html" class="btn-primary inline-flex items-center gap-2 text-[14px] transition-spring">Doe de kwalificatie</a>
+      <a href="kwalificatie.html" class="btn-primary btn-gloed inline-flex items-center gap-2 text-[14px] transition-spring">Doe de kwalificatie</a>
     </div>
     <div class="flex items-center justify-center gap-3 mb-4">
       <a href="https://www.instagram.com/jessedegroot__/" aria-label="Instagram"
