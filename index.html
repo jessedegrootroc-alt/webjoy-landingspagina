@@ -425,6 +425,75 @@
     100%     { transform: rotate(0deg); }
   }
   .telefoon-belt { animation: telefoon-trilling .95s ease-in-out 2 both; }
+
+  /* Alleen de bovenkant van een telefoon; de rest loopt door tot buiten de
+     sectie en wordt afgesneden door de overflow van de kaart. */
+  .telefoon-body {
+    position: relative;
+    background: #1A1A1A;
+    border-radius: 46px 46px 0 0;
+    padding: 9px 9px 0;
+    box-shadow: var(--shadow-flyout);
+  }
+  .telefoon-scherm {
+    position: relative;
+    background: #fff;
+    border-radius: 38px 38px 0 0;
+    padding: 0 9px 26px;
+    overflow: hidden;
+  }
+  .telefoon-notch {
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 47%;
+    height: 21px;
+    background: #1A1A1A;
+    border-radius: 0 0 14px 14px;
+  }
+  .telefoon-statusbalk {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 8px 16px;
+    color: #1A1A1A;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: -.01em;
+  }
+  .telefoon-statusbalk .rechts { display: flex; align-items: center; gap: 4px; }
+  .telefoon-melding {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 10px;
+    border-radius: 20px;
+    background: rgba(78, 78, 84, .82);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    text-align: left;
+  }
+  .telefoon-melding .naam {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.15;
+    white-space: nowrap;
+  }
+  .telefoon-melding .soort {
+    color: rgba(255, 255, 255, .65);
+    font-size: 11px;
+    line-height: 1.3;
+  }
+  .telefoon-knop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 999rem;
+  }
   @media (prefers-reduced-motion: reduce) {
     .telefoon-belt { animation: none; }
   }
@@ -1163,25 +1232,35 @@
 
       <p class="text-secondary text-[13px] mb-14">Hieronder lees je hoe ik dat doe 👇</p>
 
-      <div class="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10">
-        <p class="font-hand text-[26px] md:rotate-[-6deg] order-2 md:order-1" style="color:var(--text-secondary)">Dus, neem je op?</p>
+      <div class="flex flex-col md:flex-row items-center md:items-end justify-center gap-6 md:gap-10">
+        <p class="font-hand text-[26px] md:rotate-[-6deg] md:mb-16" style="color:var(--text-secondary)">Dus, neem je op?</p>
 
-        <div id="telefoonMockup" class="order-1 md:order-2 rounded-[32px] p-2" style="width:220px; border:2px solid var(--border-mid); background:var(--card-light); box-shadow:var(--shadow-flyout);">
-          <div class="rounded-[24px] overflow-hidden bg-bg-dark">
-            <div class="flex items-center gap-3 px-4 pt-6 pb-4">
-              <span class="avatar-initial" style="background:var(--shape-orange); width:44px; height:44px; font-size:14px;">JG</span>
-              <div class="text-left">
-                <p class="text-white/50 text-[10px] leading-tight">iPhone</p>
-                <p class="text-white font-medium text-[14px] leading-tight">The Glow-Up</p>
+        <div id="telefoonMockup" class="-mb-14 md:-mb-20" style="width:min(312px, 100%);">
+          <div class="telefoon-body">
+            <div class="telefoon-scherm">
+              <div class="telefoon-notch"></div>
+              <div class="telefoon-statusbalk">
+                <span>9:41</span>
+                <span class="rechts" aria-hidden="true">
+                  <!-- bereik, wifi en batterij -->
+                  <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><rect x="0" y="7.5" width="2.6" height="3.5" rx=".7"/><rect x="4.2" y="5.4" width="2.6" height="5.6" rx=".7"/><rect x="8.4" y="3" width="2.6" height="8" rx=".7"/><rect x="12.6" y=".5" width="2.6" height="10.5" rx=".7"/></svg>
+                  <svg width="15" height="11" viewBox="0 0 15 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 3.6a9.5 9.5 0 0 1 13 0"/><path d="M3.4 6.2a6 6 0 0 1 8.2 0"/><path d="M5.9 8.7a2.5 2.5 0 0 1 3.2 0"/></svg>
+                  <svg width="24" height="11" viewBox="0 0 24 11" fill="none"><rect x=".8" y=".8" width="19" height="9.4" rx="3" stroke="currentColor" stroke-width="1.1" opacity=".4"/><rect x="2.4" y="2.4" width="15.8" height="6.2" rx="1.8" fill="currentColor"/><path d="M21.4 4v3a2 2 0 0 0 0-3Z" fill="currentColor" opacity=".4"/></svg>
+                </span>
               </div>
-            </div>
-            <div class="flex items-center justify-between px-6 pb-6 pt-2">
-              <span class="flex items-center justify-center rounded-full" style="width:40px; height:40px; background:#e5484d;">
-                <svg class="ico" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" style="color:#fff"><path transform="rotate(135 12 12)" d="M7.44489 16.556C10.4019 19.443 14.2139 21.199 18.7889 21.818C19.7959 21.954 20.7539 21.321 21.0109 20.337L21.9999 16.558L15.6329 13.826L13.0749 16.347C11.9689 15.678 10.9399 14.888 10.0079 13.992C9.11189 13.06 8.32189 12.031 7.65289 10.925L10.1739 8.367L7.44189 2L3.66289 2.989C2.67989 3.246 2.04589 4.204 2.18189 5.211C2.80189 9.786 4.55689 13.599 7.44389 16.555L7.44489 16.556Z"/></svg>
-              </span>
-              <span class="flex items-center justify-center rounded-full" style="width:40px; height:40px; background:#30a46c;">
-                <svg class="ico" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" style="color:#fff"><path d="M7.44489 16.556C10.4019 19.443 14.2139 21.199 18.7889 21.818C19.7959 21.954 20.7539 21.321 21.0109 20.337L21.9999 16.558L15.6329 13.826L13.0749 16.347C11.9689 15.678 10.9399 14.888 10.0079 13.992C9.11189 13.06 8.32189 12.031 7.65289 10.925L10.1739 8.367L7.44189 2L3.66289 2.989C2.67989 3.246 2.04589 4.204 2.18189 5.211C2.80189 9.786 4.55689 13.599 7.44389 16.555L7.44489 16.556Z"/></svg>
-              </span>
+              <div class="telefoon-melding">
+                <span class="avatar-initial" style="background:var(--shape-orange); width:40px; height:40px; font-size:13px; flex-shrink:0;">JG</span>
+                <div class="flex-1 min-w-0">
+                  <p class="naam">The Glow-Up</p>
+                  <p class="soort">mobiel</p>
+                </div>
+                <span class="telefoon-knop" style="background:#FF3B30;">
+                  <svg class="ico" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" style="color:#fff; stroke:none; fill:#fff"><path transform="rotate(135 12 12)" d="M7.44489 16.556C10.4019 19.443 14.2139 21.199 18.7889 21.818C19.7959 21.954 20.7539 21.321 21.0109 20.337L21.9999 16.558L15.6329 13.826L13.0749 16.347C11.9689 15.678 10.9399 14.888 10.0079 13.992C9.11189 13.06 8.32189 12.031 7.65289 10.925L10.1739 8.367L7.44189 2L3.66289 2.989C2.67989 3.246 2.04589 4.204 2.18189 5.211C2.80189 9.786 4.55689 13.599 7.44389 16.555L7.44489 16.556Z"/></svg>
+                </span>
+                <span class="telefoon-knop" style="background:#34C759;">
+                  <svg class="ico" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" style="color:#fff; stroke:none; fill:#fff"><path d="M7.44489 16.556C10.4019 19.443 14.2139 21.199 18.7889 21.818C19.7959 21.954 20.7539 21.321 21.0109 20.337L21.9999 16.558L15.6329 13.826L13.0749 16.347C11.9689 15.678 10.9399 14.888 10.0079 13.992C9.11189 13.06 8.32189 12.031 7.65289 10.925L10.1739 8.367L7.44189 2L3.66289 2.989C2.67989 3.246 2.04589 4.204 2.18189 5.211C2.80189 9.786 4.55689 13.599 7.44389 16.555L7.44489 16.556Z"/></svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
