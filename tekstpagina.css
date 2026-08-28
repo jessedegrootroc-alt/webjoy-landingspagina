@@ -1,3 +1,5 @@
+:root { color-scheme: light; }
+
 /* Gedeelde opmaak voor de tekstpagina's (privacybeleid, voorwaarden, cookies).
    Dezelfde tokens als de homepage, zodat ze aanvoelen als onderdeel van de site. */
 :root {

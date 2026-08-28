@@ -9,6 +9,9 @@
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
 <meta name="author" content="Jesse de Groot" />
 <meta name="theme-color" content="#F3EFEA" />
+<!-- De site heeft alleen een lichte uitvoering. Zonder deze regel forceert
+     Chrome op Android zijn eigen donkere weergave over de pagina heen. -->
+<meta name="color-scheme" content="light" />
 <link rel="stylesheet" href="cookiebalk.css" />
 
 <!-- Favicon: de oranje smiley. De SVG schaalt mee en houdt zijn transparantie;
@@ -73,6 +76,8 @@
 
 <style>
   :root {
+    /* houdt formuliervelden, scrollbars en autofill licht */
+    color-scheme: light;
     /* Google Labs tokens */
     --primary: #5E9BFF;
     --bg-light: #F3EFEA;
