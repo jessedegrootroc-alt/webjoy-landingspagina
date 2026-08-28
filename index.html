@@ -767,7 +767,7 @@
     padding: .06em 0;
     font-family: 'Google Sans Flex', 'Google Sans', Helvetica, Arial, sans-serif;
     font-weight: 500;
-    font-size: clamp(1.5rem, min(7.5vw, 6.2vh), 5.5rem);
+    font-size: clamp(2.4rem, 7.5vw, 5.5rem);
     line-height: 1.06;
     letter-spacing: -.02em;
     color: var(--fg-light);
@@ -841,12 +841,22 @@
 
   /* op tablet en mobiel alles binnen het scherm houden */
   @media (max-width: 899px) {
-    .menu-groot a { padding: 0; line-height: 1.1; }
+    .menu-groot a {
+      padding: 0;
+      line-height: 1.1;
+      /* hier telt de schermhoogte mee, zodat het menu in beeld past */
+      font-size: clamp(1.5rem, min(7.5vw, 6.2vh), 5.5rem);
+    }
     .menu-kopje { font-size: 10px; margin-bottom: clamp(2px, .9vh, 10px); }
     .menu-klein a { font-size: clamp(12px, 1.9vh, 15px); line-height: 1.35; }
     .menu-klein ul { margin-bottom: clamp(8px, 2.4vh, 28px); }
     .menu-klein li { margin-bottom: clamp(0px, .6vh, 6px); }
     .menu-klein a.btn-primary { font-size: 13px; padding: .8em 1.6em; line-height: 1.2; }
+  }
+
+  /* Een laag bureaubladvenster: laat de regels meekrimpen met de hoogte. */
+  @media (min-width: 900px) and (max-height: 780px) {
+    .menu-groot a { font-size: min(7.5vw, 10vh, 5.5rem); }
   }
 
   @media (prefers-reduced-motion: reduce) {
