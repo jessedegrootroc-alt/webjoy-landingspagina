@@ -284,6 +284,13 @@
         <a href="./" class="btn-primary text-[15px] inline-block">Terug naar de site</a>
       </section>
 
+      <!-- Onzichtbaar veld tegen spambots: mensen zien het niet, bots vullen het
+           in en dan gooit FormSubmit de inzending weg. -->
+      <input type="text" name="_honey" id="honeypot" tabindex="-1" autocomplete="off"
+             aria-hidden="true" style="position:absolute; left:-9999px; opacity:0; height:0; width:0">
+
+      <p id="verzendFout" class="text-[14px] leading-relaxed mt-6 hidden" style="color:#c0392b"></p>
+
       <!-- ---- Navigatie ---- -->
       <div class="flex items-center justify-between gap-4 pt-10 mt-auto" id="nav">
         <button type="button" class="btn-primary text-[15px]" id="okBtn">Oké</button>
@@ -414,12 +421,54 @@
     if (geldigNummer(telefoon.value)) telFout.classList.add('hidden');
   });
 
-  function verstuur() {
+  /* De antwoorden gaan per mail naar Jesse via FormSubmit. Dat werkt op een
+     e-mailadres alleen, zonder account. Wil je het adres uit de broncode halen,
+     vervang dan het adres hieronder door de alias die FormSubmit je geeft na de
+     eerste bevestiging; de rest hoeft niet te veranderen. */
+  const FORMULIER_ENDPOINT = 'https://formsubmit.co/ajax/jesse@webjoy.studio';
+  const honeypot = document.getElementById('honeypot');
+  const fout = document.getElementById('verzendFout');
+
+  const toonFout = (bericht) => {
+    fout.innerHTML = bericht;
+    fout.classList.remove('hidden');
+  };
+
+  async function verstuur() {
     antwoorden.telefoon = telefoon.value.trim();
-    /* Nog geen koppeling: de antwoorden gaan hier nergens heen. Zodra er een
-       endpoint is (Typeform, Formspree, eigen mailscript) volstaat één fetch. */
-    console.log('Kwalificatie ingevuld:', antwoorden);
-    toon(LAATSTE);
+    fout.classList.add('hidden');
+
+    /* Knop op slot tijdens het versturen, anders levert dubbelklikken twee
+       mailtjes op. */
+    okBtn.disabled = true;
+    const oudeTekst = okBtn.textContent;
+    okBtn.textContent = 'Versturen…';
+
+    try {
+      const antwoord = await fetch(FORMULIER_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          _subject: 'Nieuwe kwalificatie via de site',
+          _template: 'table',
+          _captcha: 'false',
+          _honey: honeypot.value,
+          Omzet: antwoorden.omzet || '',
+          Behoefte: antwoorden.behoefte || '',
+          Telefoon: antwoorden.telefoon,
+        }),
+      });
+      if (!antwoord.ok) throw new Error('Status ' + antwoord.status);
+      toon(LAATSTE);
+    } catch (e) {
+      /* Niet doen alsof het gelukt is: dan denkt iemand dat hij zich heeft
+         aangemeld terwijl er niets is aangekomen. */
+      console.error('Versturen mislukt:', e);
+      okBtn.disabled = false;
+      okBtn.textContent = oudeTekst;
+      toonFout('Het versturen lukte niet. Probeer het nog een keer, of mail me direct op ' +
+               '<a href="mailto:jesse@webjoy.studio" style="text-decoration:underline">jesse@webjoy.studio</a>.');
+    }
   }
 
   toon(0);
