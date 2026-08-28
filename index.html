@@ -617,6 +617,119 @@
     height: auto;
   }
 
+  /* ---- Schermvullend menu ----
+     Zelfde opzet als het voorbeeld: hamburger links, logo in het midden, en bij
+     openen een vlak dat het hele scherm vult met de hoofdlinks groot en de
+     bijzaken klein ernaast. Kleuren gewoon die van de site. */
+  .menu-knop {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: none;
+    border: 0;
+    padding: 6px 0;
+    font: inherit;
+    font-size: 14px;
+    color: var(--fg-light);
+    cursor: pointer;
+  }
+  .menu-streepjes {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 34px;
+    height: 26px;
+    border: 1px solid var(--border-mid);
+    border-radius: 8px;
+    padding: 0 7px;
+  }
+  .menu-streepjes span {
+    display: block;
+    height: 1.5px;
+    background: var(--fg-light);
+    border-radius: 2px;
+    transition: transform .35s cubic-bezier(.16, 1, .3, 1);
+  }
+  .menu-streepjes.is-kruis span:first-child { transform: translateY(3.25px) rotate(45deg); }
+  .menu-streepjes.is-kruis span:last-child  { transform: translateY(-3.25px) rotate(-45deg); }
+  .menu-label { line-height: 1; }
+
+  .menu-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    background: var(--bg-light);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    animation: menu-vlak .4s cubic-bezier(.16, 1, .3, 1) both;
+  }
+  .menu-overlay[hidden] { display: none; }
+  @keyframes menu-vlak { from { opacity: 0; } to { opacity: 1; } }
+
+  .menu-inhoud {
+    display: grid;
+    gap: 48px;
+    padding: 40px 0 64px;
+    min-height: calc(100vh - 4rem);
+    align-content: center;
+  }
+  @media (min-width: 900px) {
+    .menu-inhoud {
+      grid-template-columns: 1fr 1.6fr;
+      align-items: start;
+      gap: 64px;
+      padding: 40px 0 64px;
+    }
+    /* De kleine links links, de grote rechts, net als in het voorbeeld. */
+    .menu-groot { order: 2; }
+    .menu-klein { order: 1; }
+  }
+
+  .menu-groot { display: flex; flex-direction: column; }
+  .menu-groot a {
+    font-family: 'Google Sans Flex', 'Google Sans', Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    font-size: clamp(2.4rem, 7.5vw, 5.5rem);
+    line-height: 1.06;
+    letter-spacing: -.02em;
+    color: var(--fg-light);
+    text-decoration: none;
+    transition: color .25s ease, transform .35s cubic-bezier(.16, 1, .3, 1);
+    animation: menu-regel .5s cubic-bezier(.16, 1, .3, 1) both;
+    animation-delay: calc(var(--i) * .05s + .05s);
+  }
+  .menu-groot a:hover { color: var(--primary); transform: translateX(10px); }
+  @keyframes menu-regel {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .menu-klein { animation: menu-regel .5s cubic-bezier(.16, 1, .3, 1) .3s both; }
+  .menu-kopje {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--text-secondary);
+    margin: 0 0 10px;
+  }
+  .menu-klein ul { list-style: none; padding: 0; margin: 0 0 28px; }
+  .menu-klein li { margin-bottom: 6px; }
+  .menu-klein a {
+    color: var(--fg-light);
+    font-size: 15px;
+    text-decoration: none;
+    transition: color .2s ease;
+  }
+  .menu-klein a:hover { color: var(--primary); text-decoration: underline; text-underline-offset: 3px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .menu-overlay, .menu-groot a, .menu-klein { animation: none; }
+    .menu-groot a:hover { transform: none; }
+    .menu-streepjes span { transition: none; }
+  }
+
   .phase-tag {
     display: inline-block;
     font-size: 11px;
@@ -739,36 +852,58 @@
     <span></span><span></span><span></span>
   </div>
   <div class="max-w-content mx-auto h-16 px-5 md:px-8 flex items-center justify-between relative">
-    <div class="flex items-center gap-8">
-      <a href="#" class="flex items-center" aria-label="Webjoy, home">
-        <img src="assets/logo/webjoy-logo.svg" alt="Webjoy" style="height:20px; width:auto;">
-      </a>
-      <nav class="hidden lg:flex items-center gap-6 header__links" aria-label="Primair">
-        <a href="#cases">Cases</a>
-        <a href="#diensten">Diensten</a>
-        <a href="#werkwijze">Werkwijze</a>
-        <a href="#faq">FAQ</a>
-      </nav>
-    </div>
-
-    <div class="hidden md:flex items-center gap-5">
-      <a href="kwalificatie.html" class="btn-primary text-[14px] transition-spring">Doe de kwalificatie</a>
-    </div>
-
-    <button class="lg:hidden p-2 -mr-2" style="color:var(--fg-light)" aria-label="Open menu" id="mobileMenuBtn">
-      <svg class="ico" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12H22"/><path d="M2 5H22"/><path d="M2 19H22"/></svg>
+    <button type="button" id="menuKnop" class="menu-knop" aria-expanded="false" aria-controls="menuOverlay">
+      <span class="menu-streepjes" aria-hidden="true"><span></span><span></span></span>
+      <span class="menu-label">Menu</span>
     </button>
-  </div>
-  <div id="mobileMenu" class="hidden lg:hidden relative bg-card-light px-5 py-4 space-y-3 text-sm border-t border-low" style="color:var(--fg-light)">
-    <a href="#cases" class="block">Cases</a>
-    <a href="#diensten" class="block">Diensten</a>
-    <a href="#werkwijze" class="block">Werkwijze</a>
-    <a href="#faq" class="block">FAQ</a>
-    <div class="pt-2 border-t border-low flex flex-col gap-3">
-      <a href="kwalificatie.html" class="btn-primary text-center text-[13px]">Doe de kwalificatie</a>
-    </div>
+
+    <a href="#" class="absolute left-1/2 -translate-x-1/2 flex items-center" aria-label="Webjoy, home">
+      <img src="assets/logo/webjoy-logo.svg" alt="Webjoy" style="height:20px; width:auto;">
+    </a>
+
+    <a href="kwalificatie.html" class="btn-primary text-[14px] transition-spring hidden sm:inline-flex">Doe de kwalificatie</a>
   </div>
 </header>
+
+<!-- ================= SCHERMVULLEND MENU ================= -->
+<div id="menuOverlay" class="menu-overlay" hidden role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="max-w-content mx-auto h-16 px-5 md:px-8 flex items-center justify-between relative">
+    <button type="button" id="menuSluit" class="menu-knop">
+      <span class="menu-streepjes is-kruis" aria-hidden="true"><span></span><span></span></span>
+      <span class="menu-label">Sluiten</span>
+    </button>
+    <a href="#" class="absolute left-1/2 -translate-x-1/2 flex items-center" aria-label="Webjoy, home" data-menu-sluit>
+      <img src="assets/logo/webjoy-logo.svg" alt="Webjoy" style="height:20px; width:auto;">
+    </a>
+    <a href="kwalificatie.html" class="btn-primary text-[14px] transition-spring hidden sm:inline-flex">Doe de kwalificatie</a>
+  </div>
+
+  <div class="menu-inhoud max-w-content mx-auto px-5 md:px-8">
+    <nav class="menu-groot" aria-label="Hoofdmenu">
+      <a href="#cases" data-menu-sluit style="--i:0">Cases</a>
+      <a href="#diensten" data-menu-sluit style="--i:1">Diensten</a>
+      <a href="#werkwijze" data-menu-sluit style="--i:2">Werkwijze</a>
+      <a href="#faq" data-menu-sluit style="--i:3">FAQ</a>
+      <a href="#over-mij" data-menu-sluit style="--i:4">Over mij</a>
+      <a href="#contact" data-menu-sluit style="--i:5">Contact</a>
+    </nav>
+
+    <div class="menu-klein">
+      <p class="menu-kopje">Volg</p>
+      <ul>
+        <li><a href="https://www.instagram.com/jessedegroot__/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+        <li><a href="https://www.linkedin.com/in/2000-jesse-de-groot/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+      </ul>
+      <p class="menu-kopje">Juridisch</p>
+      <ul>
+        <li><a href="privacybeleid.html">Privacybeleid</a></li>
+        <li><a href="voorwaarden.html">Algemene voorwaarden</a></li>
+        <li><a href="cookies.html">Cookie-instellingen</a></li>
+      </ul>
+      <a href="kwalificatie.html" class="btn-primary text-[14px] sm:hidden mt-6 inline-flex">Doe de kwalificatie</a>
+    </div>
+  </div>
+</div>
 
 <!-- ================= 1. HERO ================= -->
 <section class="relative overflow-hidden">
@@ -1344,9 +1479,39 @@
 </aside>
 
 <script>
-  const mobileBtn = document.getElementById('mobileMenuBtn');
-  const mobileMenu = document.getElementById('mobileMenu');
-  mobileBtn?.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+  /* ---- Schermvullend menu ---- */
+  const menuKnop = document.getElementById('menuKnop');
+  const menuOverlay = document.getElementById('menuOverlay');
+  const menuSluit = document.getElementById('menuSluit');
+
+  if (menuKnop && menuOverlay) {
+    let vorigeFocus = null;
+
+    const zetMenu = (open) => {
+      menuOverlay.hidden = !open;
+      menuKnop.setAttribute('aria-expanded', String(open));
+      /* Achtergrond op slot, anders scrolt de pagina onder het menu door. */
+      document.body.style.overflow = open ? 'hidden' : '';
+      if (open) {
+        vorigeFocus = document.activeElement;
+        menuSluit.focus();
+      } else if (vorigeFocus) {
+        vorigeFocus.focus();
+      }
+    };
+
+    menuKnop.addEventListener('click', () => zetMenu(true));
+    menuSluit.addEventListener('click', () => zetMenu(false));
+
+    /* Elke link sluit het menu: de ankers springen binnen dezelfde pagina, dus
+       zonder sluiten zou je naar een sectie navigeren die je niet ziet. */
+    menuOverlay.querySelectorAll('[data-menu-sluit]').forEach(a =>
+      a.addEventListener('click', () => zetMenu(false)));
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !menuOverlay.hidden) zetMenu(false);
+    });
+  }
 
   const marqueeIcons = {
     briefcase: '<path d="M8 6V2H16V6"/><path d="M10 13H4C2.89543 13 2 12.1046 2 11V6H22V11C22 12.1046 21.1046 13 20 13H14"/><path d="M2 17V21H22V17"/><path d="M14 12H10V15C10 16.1046 10.8954 17 12 17C13.1046 17 14 16.1046 14 15V12Z"/>',
