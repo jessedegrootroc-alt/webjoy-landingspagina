@@ -97,9 +97,8 @@
     --shadow-flyout: 0 12px 32px -8px rgba(50, 50, 50, 0.16), 0 2px 8px rgba(50, 50, 50, 0.06);
   }
 
-  html {
-    scroll-behavior: smooth;
-  }
+  /* Geen scroll-behavior: smooth meer -- ScrollSmoother regelt het scrollen.
+     Laadt GSAP niet, dan springt de browser gewoon direct naar het anker. */
   html, body {
     background: var(--bg-light);
     color: var(--fg-light);
@@ -659,6 +658,10 @@
   }
   .menu-label { line-height: 1; }
 
+  /* De header staat fixed en neemt geen ruimte meer in; die 4rem geven we
+     hier terug, anders schuift de hero eronder. */
+  #smooth-content { padding-top: 4rem; }
+
   .menu-overlay {
     position: fixed;
     inset: 0;
@@ -927,7 +930,7 @@
 <body class="bg-bg-light text-fg-light font-sans antialiased">
 
 <!-- ================= HEADER / NAV ================= -->
-<header class="sticky top-0 z-50">
+<header class="fixed top-0 inset-x-0 z-50">
   <div aria-hidden="true" class="gl-header-blur absolute inset-0 -z-10">
     <span></span><span></span><span></span>
   </div>
@@ -1004,6 +1007,9 @@
 </div>
 
 <!-- ================= 1. HERO ================= -->
+<div id="smooth-wrapper">
+<div id="smooth-content">
+
 <section class="relative overflow-hidden">
   <div aria-hidden="true" class="gl-shape gl-float-1 gl-shape-1" style="top:8%; left:6%; width:64px; height:64px;">
     <img src="assets/smileys-v2/smiley-v-3.svg" alt="" class="hero-pop-in w-full h-full object-contain" style="--d:.15s">
@@ -1513,6 +1519,9 @@
     </ul>
   </div>
 </footer>
+
+</div>
+</div>
 
 <!-- ================= COOKIEMELDING ================= -->
 <aside id="cookiebalk" class="cookiebalk" hidden aria-label="Cookiemelding">
@@ -2371,6 +2380,10 @@
 </script>
 
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollSmoother.min.js"></script>
+<script src="smooth-scroll.js"></script>
 <script src="cookiebalk.js"></script>
 <script src="analytics.js"></script>
 
