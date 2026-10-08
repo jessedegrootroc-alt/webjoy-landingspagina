@@ -339,6 +339,7 @@
   </div>
 
   <p class="text-center text-secondary text-[12px] mt-6">Je gegevens worden alleen gebruikt om contact met je op te nemen.</p>
+  <p class="text-center text-secondary text-[12px] mt-3">Webjoy &middot; Purmerend &middot; <a href="tel:+31655287980" class="underline underline-offset-2">06 55287980</a></p>
 </main>
 
 <script>
@@ -494,6 +495,12 @@
         }),
       });
       if (!antwoord.ok) throw new Error('Status ' + antwoord.status);
+      /* Pas meten als het echt verstuurd is, niet al bij het indrukken. */
+      if (window.gtag) window.gtag('event', 'generate_lead', {
+        method: 'kwalificatieformulier',
+        omzet: antwoorden.omzet || '',
+        behoefte: antwoorden.behoefte || '',
+      });
       toon(LAATSTE);
     } catch (e) {
       /* Niet doen alsof het gelukt is: dan denkt iemand dat hij zich heeft
